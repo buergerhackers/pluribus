@@ -1,6 +1,6 @@
 [![Stories in Ready](https://badge.waffle.io/buergerhackers/pluribus.png?label=ready&title=Ready)](https://waffle.io/buergerhackers/pluribus)
 
-# Genesis #
+# Pluribus #
 
 <!--
 > This material was originally posted [here](http://www.quora.com/What-is-Amazons-approach-to-product-development-and-product-management). It is reproduced here for posterities sake.
