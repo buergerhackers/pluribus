@@ -12,3 +12,6 @@ public/dist
 .flooignore
 
 # API Keys
+
+# ENV files
+.env
