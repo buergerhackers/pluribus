@@ -1,1 +1,1 @@
-Maker.jsx
+// Define component

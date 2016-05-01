@@ -1,1 +1,1 @@
-index.js
+// defines relationship with other components

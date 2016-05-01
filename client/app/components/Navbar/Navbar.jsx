@@ -1,1 +1,1 @@
-Navbar.jsx
+// Define component

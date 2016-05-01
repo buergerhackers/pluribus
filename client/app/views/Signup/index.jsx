@@ -1,1 +1,1 @@
-index.jsx
+// defines relationship with other components

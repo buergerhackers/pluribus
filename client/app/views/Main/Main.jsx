@@ -1,1 +1,1 @@
-Main.jsx
+// Define component

@@ -1,1 +1,1 @@
-Message.jsx
+// Define component

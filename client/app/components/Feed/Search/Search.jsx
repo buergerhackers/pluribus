@@ -1,1 +1,1 @@
-Search.jsx
+// Define component
