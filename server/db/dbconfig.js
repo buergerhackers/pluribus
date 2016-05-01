@@ -5,12 +5,12 @@ var sequelize = null;
 
 //need something that chooses if it's local or on heroku
 
-if (process.env.HEROKU_){
+if (process.env.CLEARDB_DATABASE_URL){
   //initialize db on Heroku
-
+  sequelize = new Sequelize(process.env.CLEARDB_DATABASE_URL);
+  //initialize db on localhost
 } else {
-  sequelize = new Sequelize("pluribus", "root", "");
+  sequelize = new Sequelize("pluribus", "root", null);
 }
 
-//not sure if I need to export it
-module.exports = db;
+module.exports = sequelize;
