@@ -1,13 +1,14 @@
 // Define component
 var React = require('react');
 
-var Search = React.createClass({
+var Maker = React.createClass({
   render: function () {
     return (
-      <div> Hello Super Sweet Search
+      <div> Hello Super Sweet Maker
       </div>
     );
   },
 });
 
-module.exports = Search;
+module.exports = Maker;
+// Define component
