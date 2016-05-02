@@ -8,8 +8,8 @@ var sequelize = null;
 if (process.env.CLEARDB_DATABASE_URL){
   //initialize db on Heroku
   sequelize = new Sequelize(process.env.CLEARDB_DATABASE_URL);
-  //initialize db on localhost
 } else {
+  //initialize db on localhost
   sequelize = new Sequelize("pluribus", "root", null);
 }
 
