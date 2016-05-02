@@ -1,3 +1,6 @@
+// Front-End Dev Tips
+Chrome Extensions: React Developer Tools (by Facebook), Redux DevTools
+
 
 // React/Redux Relationship (FLUX)
 
