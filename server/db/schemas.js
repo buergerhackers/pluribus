@@ -1,6 +1,5 @@
-var sequelize = require('./db/dbconfig/sequelize');
+var sequelize = require('./db/dbconfig');
 
-// we define the models we need using js--we don't need a schema file!
 var User = sequelize.define('User', {
   firstName: Sequelize.STRING,
   lastName: Sequelize.STRING,
