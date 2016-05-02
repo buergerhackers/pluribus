@@ -1,4 +1,3 @@
-// defines relationship between all Feed sub-components
 var React = require('react');
 var Filter = require('./Filter/Filter.jsx');
 var Maker = require('./Maker/Maker.jsx');

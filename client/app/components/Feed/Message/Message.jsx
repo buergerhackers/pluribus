@@ -1,4 +1,3 @@
-// Define component
 var React = require('react');
 
 var Message = React.createClass({
@@ -11,5 +10,3 @@ var Message = React.createClass({
 });
 
 module.exports = Message;
-
-

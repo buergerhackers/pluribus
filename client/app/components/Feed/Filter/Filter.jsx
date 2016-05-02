@@ -1,4 +1,3 @@
-// Define component
 var React = require('react');
 
 var Filter = React.createClass({

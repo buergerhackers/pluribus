@@ -1,4 +1,3 @@
-// Define component
 var React = require('react');
 
 var Maker = React.createClass({
@@ -11,4 +10,3 @@ var Maker = React.createClass({
 });
 
 module.exports = Maker;
-// Define component
