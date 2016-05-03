@@ -1,12 +1,7 @@
-var React = require('react');
+import React from 'react';
 
-var Maker = React.createClass({
-  render: function () {
-    return (
-      <div> Hello Super Sweet Maker
-      </div>
-    );
-  },
-});
+const Maker = () => (
+  <div> Hello Super Sweet Maker </div>
+);
 
 module.exports = Maker;
