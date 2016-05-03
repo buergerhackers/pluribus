@@ -1,29 +1,41 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-var Map = require('./components/Map/Map.jsx');
-var Feed = require('./components/Feed/Feed.jsx');
-var Navbar = require('./components/Navbar/Navbar.jsx');
-var RaisedButton = require('material-ui/lib/raised-button');
-var TextField = require ('material-ui/lib/text-field');
-injectTapEventPlugin = require("react-tap-event-plugin");
-injectTapEventPlugin();
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-var Main = React.createClass({
-  render: function () {
-    return (
-      <div>Hello Freekin World!
-        <RaisedButton label="Default"/>
-        <TextField
-          hintText="Hint Text"
-        /><br/>
-          <br/>
-        <Map />
-        <Feed />
-        <Navbar />
-      </div>
-    );
-  },
-});
+// custom components
+import Map from './components/Map/Map.jsx';
+import Feed from './components/Feed/Feed.jsx';
+import Navbar from './components/Navbar/Navbar.jsx';
+
+// material injection
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import RaisedButton from 'material-ui/RaisedButton';
+import AppBar from 'material-ui/AppBar';
+
+// MATERIAL COMPONENT EX:
+// Must wrap single material component in context tags
+const MyMaterialComponent = () => (
+  <MuiThemeProvider muiTheme={getMuiTheme()}>
+    <AppBar />
+  </MuiThemeProvider>  
+);
+
+const MyOtherMC = () => (
+  <MuiThemeProvider muiTheme={getMuiTheme()}>
+    <RaisedButton label="Super Sweet Button"/>
+  </MuiThemeProvider>  
+);
+// END OF MATERIAL COMPONENT EX:
+
+const Main = () => (
+  <div>Hello Freekin World
+    <MyMaterialComponent />
+    <MyOtherMC />
+    <Map />
+    <Feed />
+    <Navbar />
+  </div>
+)
 
 
 ReactDOM.render(<Main />, document.getElementById('main'));
