@@ -20,5 +20,5 @@ module.exports = {
       { test: /\.jsx$/, include: __dirname + '/client', loader: "babel-loader" },
     ],
   },
-  plugins: [HTMLWebpackPluginConfig, mui],
+  plugins: [HTMLWebpackPluginConfig],
 };
