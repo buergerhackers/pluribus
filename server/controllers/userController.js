@@ -1,4 +1,4 @@
-var User = require('./db/schemas').User;
+var User = require('../db/dbconfig').User;
 
 module.exports = {
   findAll: function (req, res) {
