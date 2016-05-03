@@ -1,5 +1,4 @@
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-var mui = require('material-ui');
 
 var HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
   template: __dirname + '/client/app/index.html',
@@ -17,8 +16,16 @@ module.exports = {
   },
   module: {
     loaders: [
-      { test: /\.jsx$/, include: __dirname + '/client', loader: "babel-loader" },
+      { 
+        test: /\.jsx$/, 
+        include: __dirname + '/client', 
+        loader: "babel-loader",
+        exclude: /test/,
+        query: {
+          presets: ['es2015', 'react']
+        }, 
+      },
     ],
   },
-  plugins: [HTMLWebpackPluginConfig, mui],
+  plugins: [HTMLWebpackPluginConfig],
 };

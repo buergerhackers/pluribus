@@ -1,3 +1,6 @@
+// Front-End Dev Tips
+Chrome Extensions: React Developer Tools (by Facebook), Redux DevTools
+Testing: Use CLI mocha to run file tests individually
 
 // React/Redux Relationship (FLUX)
 
