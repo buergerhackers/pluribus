@@ -27,6 +27,7 @@
     "express": "^4.13.4",
     "mocha": "^2.4.5",
     "mysql": "^2.10.2",
+    "react": "^0.14.0",
     "react-tap-event-plugin": "^1.0.0",
     "sequelize": "^3.22.0",
     "webpack": "^1.13.0"
