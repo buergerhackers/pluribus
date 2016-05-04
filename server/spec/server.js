@@ -52,6 +52,18 @@ describe('User Controllers', function () {
       expect(userController.createUser).to.be.a('function');
     });
   });
+  describe('getUser()', function () {
+    it('should be a function', function () {
+      expect(userController.createUser).to.exist;
+      expect(userController.createUser).to.be.a('function');
+    });
+  });
+  describe('deleteUser()', function () {
+    it('should be a function', function () {
+      expect(userController.createUser).to.exist;
+      expect(userController.createUser).to.be.a('function');
+    });
+  });
 });
 
 //User Routes
