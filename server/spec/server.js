@@ -164,6 +164,18 @@ describe('Topic Controllers', function () {
       expect(topicController.createTopic).to.be.a('function');
     });
   });
+  describe('getTopicByName()', function () {
+    it('should be a function', function () {
+      expect(topicController.getTopicByName).to.exist;
+      expect(topicController.getTopicByName).to.be.a('function');
+    });
+  });
+  describe('deleteTopic', function () {
+    it('should be a function', function () {
+      expect(topicController.deleteTopic).to.exist;
+      expect(topicController.deleteTopic).to.be.a('function');
+    });
+  });
 });
 
 describe('API routes GET topics', function () {
