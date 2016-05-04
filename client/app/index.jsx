@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 // custom components
 import GoogleMap from './components/Map/Map.jsx';
 import Feed from './components/Feed/Feed.jsx';
-import Navbar from './components/Navbar/Navbar.jsx';
+// import Navbar from './components/Navbar/Navbar.jsx';
 
 // material injection
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -14,7 +14,7 @@ import AppBar from 'material-ui/AppBar';
 
 // MATERIAL COMPONENT EX:
 // Must wrap single material component in context tags
-const MyMaterialComponent = () => (
+const NavBar = () => (
   <MuiThemeProvider muiTheme={getMuiTheme()}>
     <AppBar />
   </MuiThemeProvider>  
@@ -26,20 +26,19 @@ const MyOtherMC = () => (
   </MuiThemeProvider>  
 );
 // END OF MATERIAL COMPONENT EX:
+let messages = ["i","am","here"];
+let message = "HELLO property transferring";
 
 class Main extends React.Component {
   render() {
     return (
-      <div>Hello Freekin World
-        <MyMaterialComponent />
-        <MyOtherMC />
-        <Feed />
-        <Navbar />
+      <div>
+        <NavBar />
+        <Feed messages={ this.props.messages } />
         <GoogleMap mlat="55.0000" mlong="-113.0000" />
       </div>
     )
   }
 }
 
-
-ReactDOM.render(<Main />, document.getElementById('main'));
+ReactDOM.render(<Main messages={messages} />, document.getElementById('main'));
