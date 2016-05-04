@@ -10,6 +10,7 @@ module.exports = {
       console.error(err);
     });
   },
+
   createPlurb: function (req, res) {
     var plurbData = {
       text: req.body.text,
@@ -18,6 +19,28 @@ module.exports = {
     Plurb.create(plurbData)
     .then(function (plurb) {
       res.status(201).json(plurb);
+    })
+    .catch(function (err) {
+      console.error (err);
+    });
+  },
+
+  getPlurb: function (req, res) {
+    var plurbId = req.params.plurbId;
+    Plurb.findById(plurbId)
+    .then(function (plurb) {
+      res.status(200).json(plurb);
+    })
+    .catch(function (err) {
+      console.error (err);
+    });
+  },
+
+  deletePlurb: function (req, res) {
+    var plurbId = req.params.plurbId;
+    Plurb.destroy({where: {id: plurbId}})
+    .then(function () {
+      res.status(201);
     })
     .catch(function (err) {
       console.error (err);
