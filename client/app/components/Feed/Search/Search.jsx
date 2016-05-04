@@ -1,12 +1,25 @@
-var React = require('react');
+import React from 'react';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-var Search = React.createClass({
-  render: function () {
+import TextField from 'material-ui/TextField';
+import AutoComplete from 'material-ui/AutoComplete';
+
+let Search = React.createClass({
+  getInitialState() {
+    return { search: '' };
+  },
+  render() {
     return (
-      <div> Hello Super Sweet Search
-      </div>
+      <MuiThemeProvider muiTheme={getMuiTheme()}>
+        <AutoComplete
+          animated={true}
+          anchorOrigin={{vertical: 'bottom', horizontal: 'left'}}
+          dataSource={["apple, banana, strawberry"]}
+        />
+      </MuiThemeProvider>
     );
   },
 });
 
-module.exports = Search;
+export default Search;
