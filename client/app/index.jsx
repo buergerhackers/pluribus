@@ -26,6 +26,8 @@ const MyOtherMC = () => (
   </MuiThemeProvider>  
 );
 // END OF MATERIAL COMPONENT EX:
+let messages = ["i","am","here"];
+let message = "HELLO property transferring";
 
 class Main extends React.Component {
   render() {
@@ -41,4 +43,4 @@ class Main extends React.Component {
   }
 }
 
-ReactDOM.render(<Main />, document.getElementById('main'));
+ReactDOM.render(<Main message={message} />, document.getElementById('main'));

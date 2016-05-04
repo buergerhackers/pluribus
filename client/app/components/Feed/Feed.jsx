@@ -1,16 +1,18 @@
 import React from 'react';
-import Filter from './Filter/Filter.jsx';
+import FilterMenu from './Filter/Filter.jsx';
 import Maker from './Maker/Maker.jsx';
-import Message from './Message/Message.jsx';
+import MessageContainer from './Message/Message.jsx';
 import Search from './Search/Search.jsx';
 
-const Feed = () => (
-  <div>
-    <Filter />
-    <Maker />
-    <Message />
-    <Search />
-  </div>
-);
+class Feed extends React.Component {
+  render() {
+    return <div>
+      <FilterMenu />
+      <Maker />
+      <MessageContainer message={ this.props.message } />
+      <Search />
+    </div>
+  }
+}
 
-module.exports = Feed;
+export default Feed;
