@@ -4,8 +4,10 @@ var request = require('supertest');
 var Sequelize = require("sequelize");
 var sequelize = new Sequelize('pluribus', 'root', '');
 var User = require('../db/dbconfig').User;
+var Topic = require('../db/dbconfig').Topic;
 var Plurb = require('../db/dbconfig').Plurb;
 var userController = require('../controllers/userController');
+var topicController = require('../controllers/topicController');
 var plurbController = require('../controllers/plurbController');
 var server = require(path.join(__dirname, '..', './server.js'));
 var app = require('../server');
@@ -69,6 +71,42 @@ describe('API routes GET users', function () {
   it('responds with a 200 (OK)', function (done) {
     request(app)
       .get('api/user')
+      .expect(200);
+      done();
+  });
+});
+
+/* Topic Tests */
+describe('getAllTopics()', function () {
+  it('should be a function', function () {
+    expect(topicController.getAllTopics).to.exist;
+    expect(topicController.getAllTopics).to.be.a('function');
+  });
+});
+
+describe('API routes GET topics', function () {
+
+  var newTopic = {
+    name: 'Animal Rights'
+  };
+
+  beforeEach(function (done) {
+    Topic.sync()
+    .then(function () {
+      done();
+    });
+  });
+
+  beforeEach(function (done) {
+    Topic.create(newTopic)
+    .then(function () {
+      done();
+    });
+  });
+
+  it('responds with a 200 (OK)', function (done) {
+    request(app)
+      .get('api/topic')
       .expect(200);
       done();
   });
