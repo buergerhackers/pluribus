@@ -23,5 +23,8 @@ module.exports = function (app) {
   //Get all topics
   
   /* Plurb Routes */
+  //Get all plurbs
+  app.route('/api/plurb')
+    .get(plurbController.getAllPlurbs);
 
 };
