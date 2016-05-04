@@ -203,7 +203,7 @@ describe('API routes GET plurbs', function () {
 
   var newPlurb = {
     text: 'I am a test Plurb. We will change the world!',
-    location: 'San Franciso'
+    location: 'New York'
   };
 
   beforeEach(function (done) {
