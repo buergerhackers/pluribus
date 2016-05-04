@@ -26,4 +26,26 @@ module.exports = {
       console.error (err);
     });
   },
+
+  getUser: function (req, res) {
+    var userId = req.params.userId;
+    User.findById(userId)
+    .then(function (user) {
+      res.status(200).json(user);
+    })
+    .catch(function (err) {
+      console.error (err);
+    });
+  },
+
+  deleteUser: function (req, res) {
+    var userId = req.params.userId;
+    User.destroy({where: {id: userId}})
+    .then(function () {
+      res.status(201);
+    })
+    .catch(function (err) {
+      console.error (err);
+    });
+  },
 };

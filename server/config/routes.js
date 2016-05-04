@@ -9,6 +9,10 @@ module.exports = function (app) {
     .get(userController.getAllUsers)
     .post(userController.createUser);
 
+  app.route('/api/user/:userId')
+    .get(userController.getUser)
+    .post(userController.deleteUser);
+
   /* Topic Routes */
   app.route('/api/topic')
     .get(topicController.getAllTopics)
