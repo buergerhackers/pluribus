@@ -32,15 +32,13 @@ let message = "HELLO property transferring";
 class Main extends React.Component {
   render() {
     return (
-      <div>Hello Freekin World
-        <MyMaterialComponent />
-        <MyOtherMC />
-        <Feed />
-        <Navbar />
+      <div>
+        <NavBar />
+        <Feed messages={ this.props.messages } />
         <GoogleMap mlat="55.0000" mlong="-113.0000" />
       </div>
     )
   }
 }
 
-ReactDOM.render(<Main message={message} />, document.getElementById('main'));
+ReactDOM.render(<Main messages={messages} />, document.getElementById('main'));
