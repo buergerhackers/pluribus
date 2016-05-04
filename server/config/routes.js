@@ -17,7 +17,9 @@ module.exports = function (app) {
   /* User Routes */
   //Get all users
   app.route('/api/route')
-    .get(userController.getAllUsers);
+    .get(userController.getAllUsers, function (err, data) {
+      sendResponse(res, err, data, 200);
+    });
 
 
   /* Topic Routes */

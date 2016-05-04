@@ -1,10 +1,10 @@
 var User = require('../db/dbconfig').User;
 
 module.exports = {
-  getAllUsers: function (req, res) {
+  getAllUsers: function (req, next) {
     User.findAll({})
-    .then(function (users) {
-      res.status(200).json(users);
+    .then(function (err, users) {
+      next(err, users);
     })
     .catch(function (err) {
       console.error(err);
