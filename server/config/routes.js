@@ -16,9 +16,8 @@ module.exports = function (app) {
 
   /* User Routes */
   //Get all users
-  app.route('/api/route')
+  app.route('/api/user')
     .get(userController.getAllUsers);
-
 
   /* Topic Routes */
   //Get all topics
