@@ -11,10 +11,12 @@ module.exports = function (app) {
 
   /* Topic Routes */
   app.route('/api/topic')
-    .get(topicController.getAllTopics);
+    .get(topicController.getAllTopics)
+    .post(topicController.createTopic);
   
   /* Plurb Routes */
   app.route('/api/plurb')
-    .get(plurbController.getAllPlurbs);
+    .get(plurbController.getAllPlurbs)
+    .post(plurbController.createPlurb);
 
 };
