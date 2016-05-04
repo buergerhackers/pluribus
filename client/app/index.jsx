@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 // custom components
 import GoogleMap from './components/Map/Map.jsx';
 import Feed from './components/Feed/Feed.jsx';
-import Navbar from './components/Navbar/Navbar.jsx';
+// import Navbar from './components/Navbar/Navbar.jsx';
 
 // material injection
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -14,7 +14,7 @@ import AppBar from 'material-ui/AppBar';
 
 // MATERIAL COMPONENT EX:
 // Must wrap single material component in context tags
-const MyMaterialComponent = () => (
+const NavBar = () => (
   <MuiThemeProvider muiTheme={getMuiTheme()}>
     <AppBar />
   </MuiThemeProvider>  
