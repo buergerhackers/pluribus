@@ -41,7 +41,7 @@ describe('getAllUsers()', function () {
   });
 });
 
-describe('API route GET users', function () {
+describe('API routes GET users', function () {
   var mockResponse = function (callback) {
     return {send: callback};
   };
@@ -52,19 +52,23 @@ describe('API route GET users', function () {
   };
 
   beforeEach(function (done) {
-    sequelize.sync({force: true})
+    User.sync({force: true})
     .then(function () {
       done();
     });
   });
 
-  it('should find created user', function (done) {
+  beforeEach(function (done) {
     User.create(newUser)
     .then(function () {
-      userController.getAllUsers({}, mockResponse(function (data) {
-        expect(200, data[0].username).to.eql(newUser.username);
-        done();
-      }));
+      done();
     });
+  });
+
+  it('responds with a 200 (OK)', function (done) {
+    request(app)
+      .get('api/user')
+      .expect(200);
+      done();
   });
 });
