@@ -2,7 +2,7 @@ var path = require('path');
 var expect = require('chai').expect;
 var request = require('supertest');
 var Sequelize = require("sequelize");
-var sequelize = new Sequelize('pluribus', 'root', '');
+//var sequelize = new Sequelize('pluribus', 'root', '', {logging: false});
 var User = require('../db/dbconfig').User;
 var Topic = require('../db/dbconfig').Topic;
 var Plurb = require('../db/dbconfig').Plurb;
@@ -39,7 +39,7 @@ describe('Invalid Routes', function () {
 });
 
 /* User Tests */
-//user controllers
+//User Controllers
 describe('User Controllers', function () {
   describe('getAllUsers()', function () {
     it('should be a function', function () {
@@ -55,8 +55,8 @@ describe('User Controllers', function () {
   });
 });
 
-describe('API routes GET users', function () {
-
+//User Routes
+describe('API routes GET users is functioning', function () {
   var newUser = {
     firstName: 'John',
     lastName: 'Doe',
@@ -85,8 +85,31 @@ describe('API routes GET users', function () {
   });
 });
 
-describe('API route POST users', function () {
+describe('It should GET all users', function (){
+    var idCount;
+    var newUser = {
+    firstName: 'Jane',
+    lastName: 'Doe',
+    email: 'jane@gmail.com',
+  };
+  
+  //get last id count
+  // before(function (done) {
+  //   request(app)
+  //   .get('/api/user')
+  //   .end(function (res){
+  //     idCount = res.body;
+  //     done();
+  //   });
+  // });
+  //   console.log("idCount: ", idCount);
+  //create new user
+  //get last id count
+  //compare it
+    //should be total+1
+});
 
+describe('API route POST users', function () {
   var newUser = {
     firstName: 'Post',
     lastName: 'Tester',
