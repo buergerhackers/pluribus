@@ -39,10 +39,19 @@ describe('Invalid Routes', function () {
 });
 
 /* User Tests */
-describe('getAllUsers()', function () {
-  it('should be a function', function () {
-    expect(userController.getAllUsers).to.exist;
-    expect(userController.getAllUsers).to.be.a('function');
+//user controllers
+describe('User Controllers', function () {
+  describe('getAllUsers()', function () {
+    it('should be a function', function () {
+      expect(userController.getAllUsers).to.exist;
+      expect(userController.getAllUsers).to.be.a('function');
+    });
+  });
+  describe('createUser()', function () {
+    it('should be a function', function () {
+      expect(userController.createUser).to.exist;
+      expect(userController.createUser).to.be.a('function');
+    });
   });
 });
 
@@ -72,6 +81,36 @@ describe('API routes GET users', function () {
     request(app)
       .get('api/user')
       .expect(200);
+      done();
+  });
+});
+
+describe('API route POST users', function () {
+
+  var newUser = {
+    firstName: 'Post',
+    lastName: 'Tester',
+    email: 'pt@gmail.com',
+  };
+
+  beforeEach(function (done) {
+    User.sync()
+    .then(function () {
+      done();
+    });
+  });
+
+  beforeEach(function (done) {
+    User.create(newUser)
+    .then(function () {
+      done();
+    });
+  });
+
+  it('responds with a 200 (OK)', function (done) {
+    request(app)
+      .post('api/user')
+      .expect(201);
       done();
   });
 });
