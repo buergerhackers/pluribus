@@ -19,10 +19,12 @@ class Message extends React.Component {
 class MessageContainer extends React.Component {
   render() {
     return <MuiThemeProvider muiTheme={getMuiTheme()}>
-      <List>
-        <Subheader>Message</Subheader>
-        <Message message={ this.props.message }></Message>
-      </List>
+      <Paper>
+        <List>
+          <Subheader>Messages</Subheader>
+          { this.props.messages.map( (message) => <Message message={message} /> ) }
+        </List>
+      </Paper>
     </MuiThemeProvider> 
   }
 };
