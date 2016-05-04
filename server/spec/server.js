@@ -139,10 +139,19 @@ describe('API route POST users', function () {
 });
 
 /* Topic Tests */
-describe('getAllTopics()', function () {
-  it('should be a function', function () {
-    expect(topicController.getAllTopics).to.exist;
-    expect(topicController.getAllTopics).to.be.a('function');
+//Topic Controllers
+describe('Topic Controllers', function () {
+  describe('getAllTopics()', function () {
+    it('should be a function', function () {
+      expect(topicController.getAllTopics).to.exist;
+      expect(topicController.getAllTopics).to.be.a('function');
+    });
+  });
+  describe('createTopic', function () {
+    it('should be a function', function () {
+      expect(topicController.createTopic).to.exist;
+      expect(topicController.createTopic).to.be.a('function');
+    });
   });
 });
 
