@@ -209,6 +209,18 @@ describe('Plurb Controllers', function () {
       expect(plurbController.createPlurb).to.be.a('function');
     });
   });
+  describe('getPlurb()', function () {
+    it('should be a function', function () {
+      expect(userController.createUser).to.exist;
+      expect(userController.createUser).to.be.a('function');
+    });
+  });
+  describe('deletePlurb()', function () {
+    it('should be a function', function () {
+      expect(userController.createUser).to.exist;
+      expect(userController.createUser).to.be.a('function');
+    });
+  });
 });
 
 describe('API routes GET plurbs', function () {
