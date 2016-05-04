@@ -5,10 +5,14 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import TextField from 'material-ui/TextField';
 import AutoComplete from 'material-ui/AutoComplete';
 
-let Search = React.createClass({
-  getInitialState() {
-    return { search: '' };
-  },
+// dummy store to be replaced with Redux Store
+let SearchStore = {getState: ""};
+
+class Search extends React.Component {
+  constructor() {
+    super();
+    this.state = SearchStore;
+  }
   render() {
     return (
       <MuiThemeProvider muiTheme={getMuiTheme()}>
@@ -19,7 +23,7 @@ let Search = React.createClass({
         />
       </MuiThemeProvider>
     );
-  },
-});
+  }
+}
 
 export default Search;

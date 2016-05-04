@@ -11,22 +11,25 @@ import Earth from 'material-ui/svg-icons/maps/terrain';
 import Pin from 'material-ui/svg-icons/maps/place';
 import Personal from 'material-ui/svg-icons/maps/person-pin';
 
-let Filter = React.createClass({
-  getInitialState() {
-    console.log('initial State:');
-    console.log(this.state);
-    return { filter: 0 };
-  },
-  handleSwitch(type) {
+// dummy store to be replaced with Redux Store
+let FilterStore = {getState: 0};
+
+class Filter extends React.Component {
+  constructor() {
+    super();
+    this._handleSwitch = this._handleSwitch;
+    this.state = FilterStore;
+  }
+  _handleSwitch(type) {
     this.setState({ filter: type });
     console.log('STATE:');
     console.log(this.state);
-  },
+  }
   render() {
     return <MuiThemeProvider muiTheme={getMuiTheme()}>
       <Tabs 
         value={this.state.filter}
-        onChange={this.handleSwitch}
+        onChange={this._handleSwitch}
       >
         <Tab value={0} icon={<Earth />} />
         <Tab value={1} icon={<Pin />} />
@@ -34,6 +37,6 @@ let Filter = React.createClass({
       </Tabs>
     </MuiThemeProvider>
   }
-});
+}
 
 export default Filter;

@@ -16,13 +16,18 @@ import Colors from 'material-ui/styles/colors.js';
 //   },
 // };
 
-let Maker = React.createClass({
-  getInitialState() {
-    return { input: 'nothing' };
-  },
-  sendPlurb() {
+// dummy store to be replaced with Redux Store
+let MakerStore = {getState: 'nothing'};
+
+class Maker extends React.Component {
+  constructor() {
+    super();
+    this._sendPlurb = this._sendPlurb;
+    this.state = MakerStore;
+  }
+  _sendPlurb() {
     console.log('sending a plurb');
-  },
+  }
   render() {
     return <MuiThemeProvider muiTheme={getMuiTheme()}>
     <TextField
@@ -31,6 +36,6 @@ let Maker = React.createClass({
     />
   </MuiThemeProvider>
   }
-});
+}
 
 export default Maker;

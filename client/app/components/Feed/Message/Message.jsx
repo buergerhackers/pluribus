@@ -28,7 +28,7 @@ class Message extends React.Component {
       </ListItem>
     </MuiThemeProvider> 
   }
-};
+}
 
 class MessageContainer extends React.Component {
   render() {
@@ -41,6 +41,6 @@ class MessageContainer extends React.Component {
       </Paper>
     </MuiThemeProvider> 
   }
-};
+}
 
 export default MessageContainer;
