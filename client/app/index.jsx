@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 // custom components
-import Map from './components/Map/Map.jsx';
+import GoogleMap from './components/Map/Map.jsx';
 import Feed from './components/Feed/Feed.jsx';
 import Navbar from './components/Navbar/Navbar.jsx';
 
@@ -27,15 +27,19 @@ const MyOtherMC = () => (
 );
 // END OF MATERIAL COMPONENT EX:
 
-const Main = () => (
-  <div>Hello Freekin World
-    <MyMaterialComponent />
-    <MyOtherMC />
-    <Map />
-    <Feed />
-    <Navbar />
-  </div>
-)
+class Main extends React.Component {
+  render() {
+    return (
+      <div>Hello Freekin World
+        <MyMaterialComponent />
+        <MyOtherMC />
+        <Feed />
+        <Navbar />
+        <GoogleMap mlat="55.0000" mlong="-113.0000" />
+      </div>
+    )
+  }
+}
 
 
 ReactDOM.render(<Main />, document.getElementById('main'));
