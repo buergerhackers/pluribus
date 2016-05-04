@@ -1,10 +1,13 @@
 var Topic = require('../db/dbconfig').Topic;
 
 module.exports = {
-  findAll: function (req, res) {
-    Topic.findAll()
-    .success(function (topics) {
-      res.json(topics);
+  getAllTopics: function (req, res) {
+    Topic.findAll({})
+    .then(function (topics) {
+      res.status(200).json(topics);
+    })
+    .catch(function (err) {
+      console.error(err);
     });
-  }
+  },
 };

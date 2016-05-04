@@ -4,7 +4,11 @@ var request = require('supertest');
 var Sequelize = require("sequelize");
 var sequelize = new Sequelize('pluribus', 'root', '');
 var User = require('../db/dbconfig').User;
+var Topic = require('../db/dbconfig').Topic;
+var Plurb = require('../db/dbconfig').Plurb;
 var userController = require('../controllers/userController');
+var topicController = require('../controllers/topicController');
+var plurbController = require('../controllers/plurbController');
 var server = require(path.join(__dirname, '..', './server.js'));
 var app = require('../server');
 
@@ -34,6 +38,7 @@ describe('Invalid Routes', function () {
   });
 });
 
+/* User Tests */
 describe('getAllUsers()', function () {
   it('should be a function', function () {
     expect(userController.getAllUsers).to.exist;
@@ -42,9 +47,7 @@ describe('getAllUsers()', function () {
 });
 
 describe('API routes GET users', function () {
-  var mockResponse = function (callback) {
-    return {send: callback};
-  };
+
   var newUser = {
     firstName: 'John',
     lastName: 'Doe',
@@ -52,7 +55,7 @@ describe('API routes GET users', function () {
   };
 
   beforeEach(function (done) {
-    User.sync({force: true})
+    User.sync()
     .then(function () {
       done();
     });
@@ -68,6 +71,78 @@ describe('API routes GET users', function () {
   it('responds with a 200 (OK)', function (done) {
     request(app)
       .get('api/user')
+      .expect(200);
+      done();
+  });
+});
+
+/* Topic Tests */
+describe('getAllTopics()', function () {
+  it('should be a function', function () {
+    expect(topicController.getAllTopics).to.exist;
+    expect(topicController.getAllTopics).to.be.a('function');
+  });
+});
+
+describe('API routes GET topics', function () {
+
+  var newTopic = {
+    name: 'Animal Rights'
+  };
+
+  beforeEach(function (done) {
+    Topic.sync()
+    .then(function () {
+      done();
+    });
+  });
+
+  beforeEach(function (done) {
+    Topic.create(newTopic)
+    .then(function () {
+      done();
+    });
+  });
+
+  it('responds with a 200 (OK)', function (done) {
+    request(app)
+      .get('api/topic')
+      .expect(200);
+      done();
+  });
+});
+
+/* Plurb Tests */
+describe('getAllPlurbs()', function () {
+  it('should be a function', function () {
+    expect(plurbController.getAllPlurbs).to.exist;
+    expect(plurbController.getAllPlurbs).to.be.a('function');
+  });
+});
+
+describe('API routes GET plurbs', function () {
+
+  var newPlurb = {
+    text: 'I am a test Plurb. We will change the world!'
+  };
+
+  beforeEach(function (done) {
+    Plurb.sync()
+    .then(function () {
+      done();
+    });
+  });
+
+  beforeEach(function (done) {
+    Plurb.create(newPlurb)
+    .then(function () {
+      done();
+    });
+  });
+
+  it('responds with a 200 (OK)', function (done) {
+    request(app)
+      .get('api/plurb')
       .expect(200);
       done();
   });
