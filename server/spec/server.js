@@ -184,10 +184,19 @@ describe('API routes GET topics', function () {
 });
 
 /* Plurb Tests */
-describe('getAllPlurbs()', function () {
-  it('should be a function', function () {
-    expect(plurbController.getAllPlurbs).to.exist;
-    expect(plurbController.getAllPlurbs).to.be.a('function');
+//Plurb Controllers
+describe('Plurb Controllers', function () {
+  describe('getAllPlurbs()', function () {
+    it('should be a function', function () {
+      expect(plurbController.getAllPlurbs).to.exist;
+      expect(plurbController.getAllPlurbs).to.be.a('function');
+    });
+  });
+  describe('createPlurb', function () {
+    it('should be a function', function () {
+      expect(plurbController.createPlurb).to.exist;
+      expect(plurbController.createPlurb).to.be.a('function');
+    });
   });
 });
 
