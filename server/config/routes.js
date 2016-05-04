@@ -17,6 +17,10 @@ module.exports = function (app) {
   app.route('/api/topic')
     .get(topicController.getAllTopics)
     .post(topicController.createTopic);
+
+  app.route('/api/topic/:topicName')
+    .get(topicController.getTopicByName)
+    .post(topicController.deleteTopic);
   
   /* Plurb Routes */
   app.route('/api/plurb')
