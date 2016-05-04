@@ -23,4 +23,7 @@ module.exports = function (app) {
     .get(plurbController.getAllPlurbs)
     .post(plurbController.createPlurb);
 
+  app.route('/api/plurb/:plurbId')
+    .get(plurbController.getPlurb)
+    .post(plurbController.deletePlurb);
 };
