@@ -2,7 +2,6 @@ var path = require('path');
 var expect = require('chai').expect;
 var request = require('supertest');
 var Sequelize = require("sequelize");
-//var sequelize = new Sequelize('pluribus', 'root', '', {logging: false});
 var User = require('../db/dbconfig').User;
 var Topic = require('../db/dbconfig').Topic;
 var Plurb = require('../db/dbconfig').Plurb;
