@@ -30,6 +30,7 @@ class Search extends React.Component {
     return (
       <MuiThemeProvider muiTheme={getMuiTheme()}>
         <AutoComplete
+          fullWidth={true}
           hintText="Search topics"
           animated={true}
           anchorOrigin={{vertical: 'bottom', horizontal: 'left'}}
