@@ -29,6 +29,8 @@ var Topic = sequelize.define('Topic', {
 var Plurb = sequelize.define('Plurb', {
   text: Sequelize.STRING,
   location: Sequelize.STRING,
+  //user:
+  //likes: default zero, no null
   createdAt: Sequelize.DATE,
   updatedAt: Sequelize.DATE
 });
