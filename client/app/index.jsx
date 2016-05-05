@@ -13,7 +13,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Toolbar, ToolbarGroup, ToolbarSeparator } from 'material-ui/Toolbar';
 
-let messages = ["Trump trumps life", "Bernie Sanders > Super PACs", "America needs Clinton","Where's Rubio?","Tom Cruise should run"];
+let messages = ["Trump trumps life", "Bernie Sanders > Super PACs", "Clinton","Where's Rubio?","Tom Cruise should run"];
 
 class Main extends React.Component {
   render() {

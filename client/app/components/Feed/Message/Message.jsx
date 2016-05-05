@@ -55,11 +55,11 @@ export default class MessageContainer extends React.Component {
   }
   render() {
     return <MuiThemeProvider muiTheme={getMuiTheme()}>
-      <Paper>
+      <div style={{height: '400px'}}>
         <Menu>
-          { this.props.messages.map( (message) => <Paper style={{width:'407px'}}><Message message={message} /></Paper> ) }
+          { this.props.messages.map( (message) => <Paper style={{width:'98%'}}><Message message={message} /></Paper> ) }
         </Menu>
-      </Paper>
+      </div>
     </MuiThemeProvider> 
   }
 }

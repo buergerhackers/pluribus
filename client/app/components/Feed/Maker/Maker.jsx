@@ -36,6 +36,7 @@ class MakePlurb extends React.Component {
       primary={true}
       children={<Plus />} 
       onClick={ this._sendPlurb }
+      style={{ position: 'absolute', bottom: '50', right:'320' }}
       />
     </MuiThemeProvider>
   }
@@ -54,6 +55,7 @@ export default class Maker extends React.Component {
       hintText="What is your opinion?"
       onKeyDown={this._sendPlurb}
       type="text"
+      style={{ position: 'absolute', bottom: '50', right:'50' }}
     />
     </div>
   }
