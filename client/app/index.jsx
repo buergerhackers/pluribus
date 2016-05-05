@@ -4,30 +4,16 @@ import ReactDOM from 'react-dom';
 // custom components
 import GoogleMap from './components/Map/Map.jsx';
 import Feed from './components/Feed/Feed.jsx';
-// import Navbar from './components/Navbar/Navbar.jsx';
+import NavBar from './components/Navbar/Navbar.jsx';
+import Search from './components/Feed/Search/Search.jsx';
 
 // material injection
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
-import AppBar from 'material-ui/AppBar';
+import { Toolbar, ToolbarGroup, ToolbarSeparator } from 'material-ui/Toolbar';
 
-// MATERIAL COMPONENT EX:
-// Must wrap single material component in context tags
-const NavBar = () => (
-  <MuiThemeProvider muiTheme={getMuiTheme()}>
-    <AppBar />
-  </MuiThemeProvider>  
-);
-
-const MyOtherMC = () => (
-  <MuiThemeProvider muiTheme={getMuiTheme()}>
-    <RaisedButton label="Super Sweet Button"/>
-  </MuiThemeProvider>  
-);
-// END OF MATERIAL COMPONENT EX:
-let messages = ["i","am","here"];
-let message = "HELLO property transferring";
+let messages = ["Trump trumps life", "Bernie Sanders > Super PACs", "America needs Clinton","Where's Rubio?","Tom Cruise should run"];
 
 class Main extends React.Component {
   render() {

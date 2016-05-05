@@ -21,7 +21,7 @@ export default class GoogleMap extends React.Component {
 
   render() {
     return (
-      <div id='map' className='map-gic' style={{ height:'1000px', width:'1000px' }}></div>
+      <div id='map' className='map-gic' style={{ "width": '70%', "height":'750px', "zIndex": '-1', "opacity":'.90' }}></div>
     );
   }
 }
