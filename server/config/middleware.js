@@ -11,6 +11,7 @@ if (!process.env.NODE_ENV) {
 var grant = new Grant({
   server: {
     protocol: 'http',
+    //may need to move localhost:3000 into .env file
     host: process.env.HOST || 'localhost:3000',
     callback: '/callback',
     transport: 'session',
@@ -31,6 +32,8 @@ var grant = new Grant({
 module.exports = function (app, express) {
   app.use(bodyParser.urlencoded({extended: true}));
   app.use(bodyParser.json());
-  //TODO app.use(session...)
+  app.use(session({
+    secret: process.env.SESSION_SECRET
+  }));
   app.use(grant);
 };
