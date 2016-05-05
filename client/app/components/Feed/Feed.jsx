@@ -24,7 +24,7 @@ class Feed extends React.Component {
   }
   render() {
     return <MuiThemeProvider muiTheme={getMuiTheme()}>
-      <Paper style={{float: 'right'}}>
+      <Paper style={{float:'right', width:'30%', height: '100%', zIndex:'1'}}>
         <Filter />
         <Searchbar 
           iconElementLeft={<EyeGlass color="white" />}
