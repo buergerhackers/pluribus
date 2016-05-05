@@ -15,4 +15,6 @@ public/
 # API Keys
 
 # ENV files
+server/.env
 .env
+*./.env

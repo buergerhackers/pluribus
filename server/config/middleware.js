@@ -1,12 +1,12 @@
-var dotenv = require('dotenv');
 var Grant = require('grant-express');
 var bodyParser = require('body-parser');
 var session = require('express-session');
+var dotenv = require('dotenv');
 
 /* This will check if the app is in production and finds a NODE_ENV or local.
 If local, it will load the .env file variables as if it were production */
 if (!process.env.NODE_ENV) {
-  dotenv.load();
+  dotenv.config();
 }
 
 /* New Grant For Google Authentication */
@@ -35,7 +35,9 @@ module.exports = function (app, express) {
   app.use(bodyParser.urlencoded({extended: true}));
   app.use(bodyParser.json());
   app.use(session({
-    secret: process.env.SESSION_SECRET
+    secret: process.env.SESSION_SECRET,
+    resave: true,
+    saveUninitialized: true
   }));
   app.use(grant);
 };
