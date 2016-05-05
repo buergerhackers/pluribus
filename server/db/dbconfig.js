@@ -9,7 +9,7 @@ if (process.env.CLEARDB_DATABASE_URL){
   sequelize = new Sequelize(process.env.CLEARDB_DATABASE_URL);
   } else {
   //initialize db on localhost
-  sequelize = new Sequelize('pluribus', 'root', '');
+  sequelize = new Sequelize('pluribus', 'root', '', {logging: false});
 }
 
 var User = sequelize.define('User', {

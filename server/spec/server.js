@@ -2,7 +2,6 @@ var path = require('path');
 var expect = require('chai').expect;
 var request = require('supertest');
 var Sequelize = require("sequelize");
-var sequelize = new Sequelize('pluribus', 'root', '');
 var User = require('../db/dbconfig').User;
 var Topic = require('../db/dbconfig').Topic;
 var Plurb = require('../db/dbconfig').Plurb;
@@ -39,15 +38,36 @@ describe('Invalid Routes', function () {
 });
 
 /* User Tests */
-describe('getAllUsers()', function () {
-  it('should be a function', function () {
-    expect(userController.getAllUsers).to.exist;
-    expect(userController.getAllUsers).to.be.a('function');
+//User Controllers
+describe('User Controllers', function () {
+  describe('getAllUsers()', function () {
+    it('should be a function', function () {
+      expect(userController.getAllUsers).to.exist;
+      expect(userController.getAllUsers).to.be.a('function');
+    });
+  });
+  describe('createUser()', function () {
+    it('should be a function', function () {
+      expect(userController.createUser).to.exist;
+      expect(userController.createUser).to.be.a('function');
+    });
+  });
+  describe('getUser()', function () {
+    it('should be a function', function () {
+      expect(userController.createUser).to.exist;
+      expect(userController.createUser).to.be.a('function');
+    });
+  });
+  describe('deleteUser()', function () {
+    it('should be a function', function () {
+      expect(userController.createUser).to.exist;
+      expect(userController.createUser).to.be.a('function');
+    });
   });
 });
 
-describe('API routes GET users', function () {
-
+//User Routes
+describe('API routes GET users is functioning', function () {
   var newUser = {
     firstName: 'John',
     lastName: 'Doe',
@@ -76,11 +96,85 @@ describe('API routes GET users', function () {
   });
 });
 
+describe('It should GET all users', function (){
+    var idCount;
+    var newUser = {
+    firstName: 'Jane',
+    lastName: 'Doe',
+    email: 'jane@gmail.com',
+  };
+  
+  //get last id count
+  // before(function (done) {
+  //   request(app)
+  //   .get('/api/user')
+  //   .end(function (res){
+  //     idCount = res.body;
+  //     done();
+  //   });
+  // });
+  //   console.log("idCount: ", idCount);
+  //create new user
+  //get last id count
+  //compare it
+    //should be total+1
+});
+
+describe('API route POST users', function () {
+  var newUser = {
+    firstName: 'Post',
+    lastName: 'Tester',
+    email: 'pt@gmail.com',
+  };
+
+  beforeEach(function (done) {
+    User.sync()
+    .then(function () {
+      done();
+    });
+  });
+
+  beforeEach(function (done) {
+    User.create(newUser)
+    .then(function () {
+      done();
+    });
+  });
+
+  it('responds with a 200 (OK)', function (done) {
+    request(app)
+      .post('api/user')
+      .expect(201);
+      done();
+  });
+});
+
 /* Topic Tests */
-describe('getAllTopics()', function () {
-  it('should be a function', function () {
-    expect(topicController.getAllTopics).to.exist;
-    expect(topicController.getAllTopics).to.be.a('function');
+//Topic Controllers
+describe('Topic Controllers', function () {
+  describe('getAllTopics()', function () {
+    it('should be a function', function () {
+      expect(topicController.getAllTopics).to.exist;
+      expect(topicController.getAllTopics).to.be.a('function');
+    });
+  });
+  describe('createTopic', function () {
+    it('should be a function', function () {
+      expect(topicController.createTopic).to.exist;
+      expect(topicController.createTopic).to.be.a('function');
+    });
+  });
+  describe('getTopicByName()', function () {
+    it('should be a function', function () {
+      expect(topicController.getTopicByName).to.exist;
+      expect(topicController.getTopicByName).to.be.a('function');
+    });
+  });
+  describe('deleteTopic', function () {
+    it('should be a function', function () {
+      expect(topicController.deleteTopic).to.exist;
+      expect(topicController.deleteTopic).to.be.a('function');
+    });
   });
 });
 
@@ -113,17 +207,39 @@ describe('API routes GET topics', function () {
 });
 
 /* Plurb Tests */
-describe('getAllPlurbs()', function () {
-  it('should be a function', function () {
-    expect(plurbController.getAllPlurbs).to.exist;
-    expect(plurbController.getAllPlurbs).to.be.a('function');
+//Plurb Controllers
+describe('Plurb Controllers', function () {
+  describe('getAllPlurbs()', function () {
+    it('should be a function', function () {
+      expect(plurbController.getAllPlurbs).to.exist;
+      expect(plurbController.getAllPlurbs).to.be.a('function');
+    });
+  });
+  describe('createPlurb', function () {
+    it('should be a function', function () {
+      expect(plurbController.createPlurb).to.exist;
+      expect(plurbController.createPlurb).to.be.a('function');
+    });
+  });
+  describe('getPlurb()', function () {
+    it('should be a function', function () {
+      expect(userController.createUser).to.exist;
+      expect(userController.createUser).to.be.a('function');
+    });
+  });
+  describe('deletePlurb()', function () {
+    it('should be a function', function () {
+      expect(userController.createUser).to.exist;
+      expect(userController.createUser).to.be.a('function');
+    });
   });
 });
 
 describe('API routes GET plurbs', function () {
 
   var newPlurb = {
-    text: 'I am a test Plurb. We will change the world!'
+    text: 'I am a test Plurb. We will change the world!',
+    location: 'New York'
   };
 
   beforeEach(function (done) {

@@ -2,31 +2,32 @@ var userController = require('../controllers/userController');
 var topicController = require('../controllers/topicController');
 var plurbController = require('../controllers/plurbController');
 
-/* Utilities */
-// handle errors and send response
-var sendResponse = function (res, err, data, status) {
-  if (err) {
-    res.status(400).send('Error: Record doesn\'t exist');
-  } else {
-    res.status(status).send(data);
-  }
-};
-
 module.exports = function (app) {
 
   /* User Routes */
-  //Get all users
   app.route('/api/user')
-    .get(userController.getAllUsers);
+    .get(userController.getAllUsers)
+    .post(userController.createUser);
+
+  app.route('/api/user/:userId')
+    .get(userController.getUser)
+    .post(userController.deleteUser);
 
   /* Topic Routes */
-  //Get all topics
   app.route('/api/topic')
-    .get(topicController.getAllTopics);
+    .get(topicController.getAllTopics)
+    .post(topicController.createTopic);
+
+  app.route('/api/topic/:topicName')
+    .get(topicController.getTopicByName)
+    .post(topicController.deleteTopic);
   
   /* Plurb Routes */
-  //Get all plurbs
   app.route('/api/plurb')
-    .get(plurbController.getAllPlurbs);
+    .get(plurbController.getAllPlurbs)
+    .post(plurbController.createPlurb);
 
+  app.route('/api/plurb/:plurbId')
+    .get(plurbController.getPlurb)
+    .post(plurbController.deletePlurb);
 };
