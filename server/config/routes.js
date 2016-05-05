@@ -30,4 +30,19 @@ module.exports = function (app) {
   app.route('/api/plurb/:plurbId')
     .get(plurbController.getPlurb)
     .post(plurbController.deletePlurb);
+
+  //TODO - callback route for OAuth
+//app.route('/callback')
+  //.get(function (req, res){})
+
+  app.route('/logout')
+    .get(function (req, res) {
+      req.session.destroy(function (err) {
+        if (err) {
+          console.error(err);
+        } else {
+          res.redirect('/');
+        }
+      });
+    });
 };
