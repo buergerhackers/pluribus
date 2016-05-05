@@ -5,6 +5,8 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import Colors from 'material-ui/styles/colors.js';
+import ActionButton from 'material-ui/FloatingActionButton';
+import Plus from 'material-ui/svg-icons/content/add';
 
 // console.log(Colors);
 // const styles = {
@@ -19,23 +21,41 @@ import Colors from 'material-ui/styles/colors.js';
 // dummy store to be replaced with Redux Store
 let MakerStore = {getState: 'nothing'};
 
-class Maker extends React.Component {
+class MakePlurb extends React.Component {
   constructor() {
     super();
-    this._sendPlurb = this._sendPlurb;
     this.state = MakerStore;
   }
   _sendPlurb() {
-    console.log('sending a plurb');
+    console.log(this);
+    console.log('sending plurb');
   }
   render() {
     return <MuiThemeProvider muiTheme={getMuiTheme()}>
-    <TextField
+      <ActionButton 
+      primary={true}
+      children={<Plus />} 
+      onClick={ this._sendPlurb }
+      />
+    </MuiThemeProvider>
+  }
+}
+
+class Maker extends React.Component {
+  _sendPlurb(input) {
+    console.log(this);
+    console.log('caught your plurb:');
+    console.log(input);
+  }
+  render() {
+    return <div><MakePlurb /><TextField
       value={ this.props.message }
       hintText="What is your opinion?"
+      onNewRequest={this._sendPlurb}
     />
-  </MuiThemeProvider>
+    </div>
   }
+
 }
 
 export default Maker;
