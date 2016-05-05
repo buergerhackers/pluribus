@@ -31,6 +31,10 @@ module.exports = function (app) {
     .get(plurbController.getPlurb)
     .post(plurbController.deletePlurb);
 
+  //TODO - callback route for OAuth
+//app.route('/callback')
+  //.get(function (req, res){})
+
   app.route('/logout')
     .get(function (req, res) {
       req.session.destroy(function (err) {
