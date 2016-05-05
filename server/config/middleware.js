@@ -40,4 +40,5 @@ module.exports = function (app, express) {
     saveUninitialized: true
   }));
   app.use(grant);
+  app.use(express.static(__dirname + '/../../public'));
 };
