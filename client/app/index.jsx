@@ -10,24 +10,19 @@ import Feed from './components/Feed/Feed.jsx';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
-import AppBar from 'material-ui/AppBar';
+import Navbar from 'material-ui/AppBar';
+import { Toolbar, ToolbarGroup, ToolbarSeparator } from 'material-ui/Toolbar';
+import Search from './components/Feed/Search/Search.jsx';
 
 // MATERIAL COMPONENT EX:
 // Must wrap single material component in context tags
 const NavBar = () => (
   <MuiThemeProvider muiTheme={getMuiTheme()}>
-    <AppBar />
+    <Navbar title="Pluribus" />
   </MuiThemeProvider>  
 );
 
-const MyOtherMC = () => (
-  <MuiThemeProvider muiTheme={getMuiTheme()}>
-    <RaisedButton label="Super Sweet Button"/>
-  </MuiThemeProvider>  
-);
-// END OF MATERIAL COMPONENT EX:
-let messages = ["i","am","here"];
-let message = "HELLO property transferring";
+let messages = ["Bernie","Trump", "John Wayne", "Clinton","Rubio","Tom Cruise"];
 
 class Main extends React.Component {
   render() {
