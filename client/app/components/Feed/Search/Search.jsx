@@ -8,7 +8,7 @@ import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 
 // dummy store to be replaced with Redux Store
-let SearchStore = {getState: "Search topics", currentTopic: "", allTopics: ["burn", "bernie", "beluga", "bryan bierce", "blues brothers"]};
+let SearchStore = {getState: "Search topics", currentTopic: "", allTopics: ["2016 Election","feel the burn", "bernie", "utilities", "bryan bierce", "blues brothers", "dog parks"]};
 
 class Search extends React.Component {
   constructor(props) {
