@@ -21,7 +21,7 @@ class Main extends React.Component {
       <div>
         <NavBar />
         <Feed messages={ this.props.messages } />
-        <GoogleMap mlat="55.0000" mlong="-113.0000" />
+        <GoogleMap />
       </div>
     )
   }
