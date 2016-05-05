@@ -11,15 +11,17 @@ import Private from 'material-ui/svg-icons/social/people';
 // dummy store to be replaced with Redux Store
 let FilterStore = {getState: 0};
 
-class Filter extends React.Component {
+export default class Filter extends React.Component {
   constructor() {
     super();
     this.state = FilterStore;
   }
   _handleSwitch(type) {
     this.setState({ getState: type });
+    
     console.log('STATE:');
     console.log(this.state);
+    console.log("ACTION: 'SET_FILTER'");
   }
   render() {
     return <MuiThemeProvider muiTheme={getMuiTheme()}>
@@ -32,5 +34,3 @@ class Filter extends React.Component {
     </MuiThemeProvider>
   }
 }
-
-export default Filter;
