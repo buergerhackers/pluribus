@@ -1,8 +1,10 @@
-var bodyParser = require('body-parser');
 var dotenv = require('dotenv');
-var session = require('express-session');
 var Grant = require('grant-express');
+var bodyParser = require('body-parser');
+var session = require('express-session');
 
+/* This will check if the app is in production and finds a NODE_ENV or local.
+If local, it will load the .env file variables as if it were production */
 if (!process.env.NODE_ENV) {
   dotenv.load();
 }
