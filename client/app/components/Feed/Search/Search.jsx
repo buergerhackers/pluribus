@@ -18,12 +18,13 @@ class Search extends React.Component {
     }
   }
   filter(input) {
-    console.log(this);
+    console.log(input);
     console.log('filtering input ...');
     return this.state.dataSource.filter(this.filter(input));
   }
   _selectTopic(selected) {
-    console.log('SELECTED TOPIC -> backend API call');
+    console.log(selected);
+    console.log("ACTION: 'SELECT_TOPIC'");
   }
   render() {
     return (
