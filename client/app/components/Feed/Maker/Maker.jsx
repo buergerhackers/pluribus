@@ -28,7 +28,7 @@ class MakePlurb extends React.Component {
   }
   _sendPlurb() {
     console.log(this);
-    console.log('sending plurb');
+    console.log("ACTION: 'CREATE_PLURB'");
   }
   render() {
     return <MuiThemeProvider muiTheme={getMuiTheme()}>
@@ -41,21 +41,21 @@ class MakePlurb extends React.Component {
   }
 }
 
-class Maker extends React.Component {
+export default class Maker extends React.Component {
   _sendPlurb(input) {
-    console.log(this);
     console.log('caught your plurb:');
     console.log(input);
+    // send on return
+    input.keyCode === 13 ? console.log(input.detail): false; 
   }
   render() {
     return <div><MakePlurb /><TextField
       value={ this.props.message }
       hintText="What is your opinion?"
-      onNewRequest={this._sendPlurb}
+      onKeyDown={this._sendPlurb}
+      type="text"
     />
     </div>
   }
 
 }
-
-export default Maker;
