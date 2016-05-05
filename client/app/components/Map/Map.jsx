@@ -59,7 +59,7 @@ export default class GoogleMap extends React.Component {
 
   render() {
     return (
-      <div id='map' className='map-gic' style={{ "width": '70%', "height":'500px', "opacity":'.90' }}></div>
+      <div id='map' className='map-gic' style={{ "width": '951px', "height":'672px', "opacity":'.90' }}></div>
     );
   }
 }
