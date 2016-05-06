@@ -28,7 +28,7 @@ module.exports = {
   },
 
   getUser: function (req, res) {
-    var userId = req.params._id;
+    var userId = req.params.googid;
     User.findById(userId)
     .then(function (user) {
       res.status(200).json(user);
@@ -39,8 +39,8 @@ module.exports = {
   },
 
   deleteUser: function (req, res) {
-    var userId = req.params.userId;
-    User.destroy({where: {id: userId}})
+    var userId = req.params.googid;
+    User.destroy({where: {googid: userId}})
     .then(function () {
       res.status(201);
     })
@@ -51,15 +51,16 @@ module.exports = {
 
   findOrCreateUser: function (body, res) {
     var userData = {
-      _id: body.id,
+      googid: body.id,
       firstName: body.given_name,
       lastName: body.family_name,
       email: body.email,
       picture: body.picture
     };
-    User.findOrCreate(userData)
+    User.findOrCreate({where: userData})
     .then(function (user) {
-      res.status(200).json(user);
+      //send data back to /callback route
+      //res.status(200).json(user);
     })
     .catch(function (err) {
       console.error (err);

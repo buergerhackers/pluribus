@@ -12,9 +12,10 @@ module.exports = function (app) {
     .post(userController.createUser);
 
     //find or delete a user based off their unique Google ID
-  app.route('/api/user/:_id')
+  app.route('/api/user/:googid')
     .get(userController.getUser)
-    .post(userController.deleteUser);
+    .post(userController.deleteUser)
+    .post(userController.findOrCreateUser);
 
   /* Topic Routes */
   app.route('/api/topic')
@@ -40,8 +41,8 @@ module.exports = function (app) {
       google.get('https://www.googleapis.com/oauth2/v2/userinfo?alt=json', {
         auth: { bearer: req.session.grant.response.access_token },
       }, function (err, nope, body) {
-        console.log(body);
         userController.findOrCreateUser(body);
+        //require callback from finOrCreateUser
         //set req.session.user
         }
       );

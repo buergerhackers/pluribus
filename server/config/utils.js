@@ -1,7 +1,6 @@
 // check current session
 module.exports = {
   checkAuthentication: function (req, res, next) {
-    console.log('I am checkAuth');
     if (req.session.user) {
       next();
     } else {
