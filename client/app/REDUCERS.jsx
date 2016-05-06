@@ -1,7 +1,7 @@
 //===================================================
 // REDUCER for APP component
-
-import { FeedFilters } from '.../ACTIONS.js'
+import { combineReducers } from 'redux'
+import { SET_FILTER, FeedFilters, SELECT_TOPIC, CREATE_PLURB, LOAD_PLURBS } from './ACTIONS.jsx'
 
 // define default initial state of app
 const initialState = {
@@ -9,19 +9,20 @@ const initialState = {
   plurbs: [],
   filter: FeedFilters.PUBLIC,
   map: {
-    center: {lat: default.lat, lng: default.lng},
+    center: {lat: "default.lat", lng: "default.lng"},
     zoom: 15
   },
   myTopics: [],
-  allTopics: []
+  allTopics: [],
+  fetching: false
 }
 
 // COMBINED REDUCER -> yield Store
-pluribusApp(state = initialState, action) {
+function pluribusReducer(state = initialState, action) {
   switch (action.type) {
     case CREATE_PLURB:
       return Object.assign({}, state, {
-        
+        fetching: action.fetching
       })
     case SET_FILTER:
       return Object.assign({}, state, {
@@ -38,3 +39,9 @@ pluribusApp(state = initialState, action) {
   }
   return state
 }
+
+const pluribusApp = combineReducers({
+  pluribusReducer
+})
+
+export default pluribusApp

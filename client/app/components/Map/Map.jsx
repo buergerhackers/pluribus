@@ -1,4 +1,5 @@
 import React from "react";
+import store from '../../STORE.jsx';
 import ReactDOM from 'react-dom';
 
 export default class GoogleMap extends React.Component {
