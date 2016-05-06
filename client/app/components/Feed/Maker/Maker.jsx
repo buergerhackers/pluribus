@@ -20,17 +20,17 @@ import Plus from 'material-ui/svg-icons/content/add';
 //     borderColor: Colors.orange500,
 //   },
 // };
-
-// dummy store to be replaced with Redux Store
-let MakerStore = {getState: 'nothing'};
+// listen for store changes!
+let unsubscribe = store.subscribe(() => console.log(store.getState()))
 
 class MakePlurb extends React.Component {
   constructor() {
     super();
-    this.state = MakerStore;
+    // this.state = props;
   }
   _sendPlurb() {
     console.log(this);
+    // super._sendPlurb(this.state.message);
     console.log("ACTION: 'CREATE_PLURB'");
   }
   render() {
@@ -46,15 +46,22 @@ class MakePlurb extends React.Component {
 }
 
 export default class Maker extends React.Component {
+  constructor(props) {
+    super();
+    console.log(store.getState());
+    this.state = {
+      message: ''
+    };
+  }
   _sendPlurb(input) {
-    console.log('caught your plurb:');
+    console.log("ACTION: 'CREATE_PLURB'");
     console.log(input);
     // send on return
-    input.keyCode === 13 ? console.log(input.detail): false; 
+    input.keyCode === 13 ? store.dispatch(createPlurb(this.state.message, this.state.user, this.state.location)): false; 
   }
   render() {
     return <div><MakePlurb /><TextField
-      value={ this.props.message }
+      value={ this.state.message }
       hintText="What is your opinion?"
       onKeyDown={this._sendPlurb}
       type="text"
