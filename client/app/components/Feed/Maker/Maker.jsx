@@ -1,4 +1,7 @@
 import React from 'react';
+import { store } from '../../../STORE.jsx';
+console.log(store);
+import { createPlurb } from '../../../ACTIONS.jsx';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 

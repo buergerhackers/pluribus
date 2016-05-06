@@ -8,7 +8,7 @@ var HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
 
 module.exports = {
   entry: [
-    './client/app/index.jsx',
+    './client/app/index.jsx'
   ],
   output: {
     path: __dirname + '/public',

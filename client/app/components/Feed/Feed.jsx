@@ -1,4 +1,5 @@
 import React from 'react';
+import store from '../../STORE.jsx';
 import Filter from './Filter/Filter.jsx';
 import Maker from './Maker/Maker.jsx';
 import MessageContainer from './Message/Message.jsx';
@@ -9,9 +10,6 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Paper from 'material-ui/Paper';
 import Searchbar from 'material-ui/AppBar';
 import EyeGlass from 'material-ui/svg-icons/action/search';
-
-// dummy store to be replaced with Redux Store
-let FeedStore = {getState: "Feed"};
 
 export default class Feed extends React.Component {
   constructor(props) {

@@ -1,4 +1,5 @@
 import React from 'react';
+import store from '../../../STORE.jsx';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import colors from 'material-ui/styles/colors';

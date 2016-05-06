@@ -1,6 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+// webpack compilation imports
+// import ACTIONS from './ACTIONS'
+// import REDUCERS from './REDUCERS'
+// import STORE from './STORE'
+
 // custom components
 import GoogleMap from './components/Map/Map.jsx';
 import Feed from './components/Feed/Feed.jsx';
