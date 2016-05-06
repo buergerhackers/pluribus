@@ -13,9 +13,12 @@ if (process.env.CLEARDB_DATABASE_URL){
 }
 
 var User = sequelize.define('User', {
+  //this is a unique 'id' property set by Google OAuth, it is NOT the 'id' set automatically by MySQL
+  _id: Sequelize.INTEGER,
   firstName: Sequelize.STRING,
   lastName: Sequelize.STRING,
   email: Sequelize.STRING,
+  picture: Sequelize.STRING,
   createdAt: Sequelize.DATE,
   updatedAt: Sequelize.DATE
 });

@@ -1,6 +1,9 @@
 var userController = require('../controllers/userController');
 var topicController = require('../controllers/topicController');
 var plurbController = require('../controllers/plurbController');
+var Purest = require('purest');
+
+var google = new Purest({ provider: 'google' });
 
 module.exports = function (app) {
 
@@ -9,7 +12,8 @@ module.exports = function (app) {
     .get(userController.getAllUsers)
     .post(userController.createUser);
 
-  app.route('/api/user/:userId')
+    //find or delete a user based off their unique Google ID
+  app.route('/api/user/:_id')
     .get(userController.getUser)
     .post(userController.deleteUser);
 
@@ -31,9 +35,16 @@ module.exports = function (app) {
     .get(plurbController.getPlurb)
     .post(plurbController.deletePlurb);
 
-  //TODO - callback route for OAuth
-//app.route('/callback')
-  //.get(function (req, res){})
+  //callback route for OAuth
+  app.route('/callback')
+    .get(function (req, res) {
+      google.get('https://www.googleapis.com/oauth2/v2/userinfo?alt=json', {
+        auth: { bearer: req.session.grant.response.access_token },
+      }, function (err, nope, body) {
+        userController.findOrCreateUser(body);
+        }
+      );
+    });
 
   app.route('/logout')
     .get(function (req, res) {
