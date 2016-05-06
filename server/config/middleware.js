@@ -14,7 +14,6 @@ if (!process.env.NODE_ENV) {
 var grant = new Grant({
   server: {
     protocol: 'http',
-    //may need to move localhost:3000 into .env file
     host: process.env.HOST || 'localhost:3000',
     callback: '/callback',
     transport: 'session',
@@ -41,8 +40,7 @@ module.exports = function (app, express) {
     saveUninitialized: true
   }));
   app.use(grant);
-  app.get('/', checkAuthentication, function (req, res, next){
-    next();
-  });
+  //checks if user it authenticated before sending to index.html
+  app.get('/', checkAuthentication);
   app.use(express.static(__dirname + '/../../public'));
 };

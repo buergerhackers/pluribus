@@ -1,5 +1,5 @@
 var express = require('express');
-//var checkAuthentication = require('./config/routes.js').checkAuthentication;
+var checkAuthentication = require('./config/utils').checkAuthentication;
 
 var app = express();
 

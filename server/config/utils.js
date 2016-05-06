@@ -4,7 +4,6 @@ module.exports = {
     if (req.session.user) {
       next();
     } else {
-      console.log('no user');
       res.redirect('http://localhost:3000/connect/google');
     }
   }

@@ -49,7 +49,7 @@ module.exports = {
     });
   },
 
-  findOrCreateUser: function (body, res) {
+  findOrCreateUser: function (body, next) {
     var userData = {
       googid: body.id,
       firstName: body.given_name,
@@ -60,7 +60,7 @@ module.exports = {
     User.findOrCreate({where: userData})
     .then(function (user) {
       //send data back to /callback route
-      //res.status(200).json(user);
+      next(user);
     })
     .catch(function (err) {
       console.error (err);

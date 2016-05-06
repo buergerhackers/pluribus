@@ -41,11 +41,12 @@ module.exports = function (app) {
       google.get('https://www.googleapis.com/oauth2/v2/userinfo?alt=json', {
         auth: { bearer: req.session.grant.response.access_token },
       }, function (err, nope, body) {
-        userController.findOrCreateUser(body);
-        //require callback from finOrCreateUser
-        //set req.session.user
-        }
-      );
+        userController.findOrCreateUser(body, function (user) {
+          //sets session to Google ID
+          req.session.user = user[0].dataValues.googid;       
+          res.redirect('/');
+        });
+      });
     });
 
   app.route('/logout')
