@@ -28,7 +28,7 @@ module.exports = {
   },
 
   getUser: function (req, res) {
-    var userId = req.params.userId;
+    var userId = req.params._id;
     User.findById(userId)
     .then(function (user) {
       res.status(200).json(user);
