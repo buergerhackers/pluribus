@@ -1,6 +1,9 @@
 var userController = require('../controllers/userController');
 var topicController = require('../controllers/topicController');
 var plurbController = require('../controllers/plurbController');
+var Purest = require('purest');
+
+var google = new Purest({ provider: 'google' });
 
 module.exports = function (app) {
 
@@ -31,9 +34,14 @@ module.exports = function (app) {
     .get(plurbController.getPlurb)
     .post(plurbController.deletePlurb);
 
-  //TODO - callback route for OAuth
-//app.route('/callback')
-  //.get(function (req, res){})
+  //callback route for OAuth
+  app.route('/callback')
+    .get(function (req, res) {
+      google.get('https://www.googleapis.com/oauth2/v2/userinfo?alt=json', {
+        auth: { bearer: req.session.grant.response.access_token },
+      }, function (err, nope, body) {}
+      );
+    });
 
   app.route('/logout')
     .get(function (req, res) {
