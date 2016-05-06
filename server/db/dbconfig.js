@@ -14,7 +14,7 @@ if (process.env.CLEARDB_DATABASE_URL){
 
 var User = sequelize.define('User', {
   //this is a unique 'id' property set by Google OAuth, it is NOT the 'id' set automatically by MySQL
-  _id: Sequelize.INTEGER,
+  googid: Sequelize.STRING,
   firstName: Sequelize.STRING,
   lastName: Sequelize.STRING,
   email: Sequelize.STRING,
@@ -32,8 +32,6 @@ var Topic = sequelize.define('Topic', {
 var Plurb = sequelize.define('Plurb', {
   text: Sequelize.STRING,
   location: Sequelize.STRING,
-  //user:
-  //likes: default zero, no null
   createdAt: Sequelize.DATE,
   updatedAt: Sequelize.DATE
 });

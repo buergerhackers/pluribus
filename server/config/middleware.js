@@ -2,6 +2,7 @@ var Grant = require('grant-express');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var dotenv = require('dotenv');
+var checkAuthentication = require('./utils').checkAuthentication;
 
 /* This will check if the app is in production and finds a NODE_ENV or local.
 If local, it will load the .env file variables as if it were production */
@@ -13,7 +14,6 @@ if (!process.env.NODE_ENV) {
 var grant = new Grant({
   server: {
     protocol: 'http',
-    //may need to move localhost:3000 into .env file
     host: process.env.HOST || 'localhost:3000',
     callback: '/callback',
     transport: 'session',
@@ -40,5 +40,7 @@ module.exports = function (app, express) {
     saveUninitialized: true
   }));
   app.use(grant);
+  //checks if user it authenticated before sending to index.html
+  app.get('/', checkAuthentication);
   app.use(express.static(__dirname + '/../../public'));
 };
