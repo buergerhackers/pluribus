@@ -6,7 +6,6 @@ var Purest = require('purest');
 var google = new Purest({ provider: 'google' });
 
 module.exports = function (app) {
-
   /* User Routes */
   app.route('/api/user')
     .get(userController.getAllUsers)
@@ -41,7 +40,9 @@ module.exports = function (app) {
       google.get('https://www.googleapis.com/oauth2/v2/userinfo?alt=json', {
         auth: { bearer: req.session.grant.response.access_token },
       }, function (err, nope, body) {
+        console.log(body);
         userController.findOrCreateUser(body);
+        //set req.session.user
         }
       );
     });

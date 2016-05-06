@@ -1,6 +1,5 @@
 var express = require('express');
-//require route for server to lookup database
-//var db = require('./server/db/config.js');
+//var checkAuthentication = require('./config/routes.js').checkAuthentication;
 
 var app = express();
 
