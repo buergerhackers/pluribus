@@ -32,12 +32,13 @@ export default class Maker extends React.Component {
 
   _sendPlurb() {
     // console.log(
-    store.dispatch(createPlurb(null,
-      {
-        location: this.state.location,
-        message: this.state.message,
-      }
+    store.dispatch(createPlurb(
+    {
+      location: this.state.location,
+      message: this.state.message,
+    }
     ));
+
     // );
 
     this.setState(
