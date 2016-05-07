@@ -12,8 +12,8 @@ if (process.env.CLEARDB_DATABASE_URL){
   sequelize = new Sequelize('pluribus', 'root', '', {logging: false});
 }
 
+//The unique 'googid' property set by Google OAuth, it is NOT the 'id' set automatically by MySQL
 var User = sequelize.define('User', {
-  //this is a unique 'id' property set by Google OAuth, it is NOT the 'id' set automatically by MySQL
   googid: Sequelize.STRING,
   firstName: Sequelize.STRING,
   lastName: Sequelize.STRING,
@@ -46,9 +46,10 @@ Plurb.belongsTo(Topic);
 
 // creates these tables in MySQL if they don't already exist. Pass in {force: true}
 // to drop any existing user and message tables and make new ones.
-User.sync();
-Topic.sync();
-Plurb.sync();
+// Plurb.sync();
+// User.sync();
+// Topic.sync();
+sequelize.sync();
 
 exports.User = User;
 exports.Topic = Topic;
