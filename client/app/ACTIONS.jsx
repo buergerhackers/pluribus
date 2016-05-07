@@ -15,15 +15,16 @@ export function selectTopic(currentTopic) {
 }
 
 // async
-export function createPlurb(text, user, location) {
-  // post plurb -> backend API
-  return { type: CREATE_PLURB, text, user, location }
+export function createPlurb(data) {
+  io.emit('createPlurb', data)
+
+  return { type: CREATE_PLURB, fetching: true }
 }
 
 export function loadPlurbs() {
   // get plurbs <- backend API
   let plurbs;
-  return { type: LOAD_PLURBS, plurbs }
+  return { type: LOAD_PLURBS, fetching:false, plurbs }
 }
 
 export const FeedFilters = {
