@@ -13,8 +13,8 @@ module.exports = {
 
   createPlurb: function (req, res) {
     var plurbData = {
-      text: req.body.text,
-      location: req.body.location
+      text: req.body.message,
+      location: JSON.stringify(req.body.location),
     };
     Plurb.create(plurbData)
     .then(function (plurb) {
