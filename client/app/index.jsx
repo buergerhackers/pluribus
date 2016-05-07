@@ -18,18 +18,16 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Toolbar, ToolbarGroup, ToolbarSeparator } from 'material-ui/Toolbar';
 
-let messages = ["Trump trumps life", "Bernie Sanders > Super PACs", "Clinton","Where's Rubio?","Tom Cruise should run"];
-
 class Main extends React.Component {
   render() {
     return (
       <div>
         <NavBar />
-        <Feed messages={ this.props.messages } />
+        <Feed />
         <GoogleMap />
       </div>
     )
   }
 }
 
-ReactDOM.render(<Main messages={messages} />, document.getElementById('main'));
+ReactDOM.render(<Main />, document.getElementById('main'));

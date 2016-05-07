@@ -32,10 +32,19 @@ export function createPlurb(data) {
   return { type: CREATE_PLURB, fetching: true }   
 }
 
-export function loadPlurbs() {
+export function loadPlurbs(callback) {
   // get plurbs <- backend API
-  let plurbs;
-  return { type: LOAD_PLURBS, fetching:false, plurbs }
+  fetch('/api/plurb', {
+    method: 'GET',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+  }).then((plurbs) => plurbs.text())
+  .then((response) => {
+    callback(response);
+  })
+  // return { type: LOAD_PLURBS, fetching:false, plurbs }
 }
 
 export const FeedFilters = {
