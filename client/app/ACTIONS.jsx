@@ -16,9 +16,20 @@ export function selectTopic(currentTopic) {
 
 // async
 export function createPlurb(data) {
-  io.emit('createPlurb', data)
+  fetch('/api/plurb', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  }).then((body) => {
+    console.log("We could totally use this promise to do something useful");
+  }).catch((error) => {
+    console.err(error);
+  });
 
-  return { type: CREATE_PLURB, fetching: true }
+  return { type: CREATE_PLURB, fetching: true }   
 }
 
 export function loadPlurbs() {
