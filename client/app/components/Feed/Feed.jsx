@@ -2,7 +2,7 @@ import React from 'react';
 import store from '../../STORE.jsx';
 import Filter from './Filter/Filter.jsx';
 import Maker from './Maker/Maker.jsx';
-import MessageContainer from './Message/Message.jsx';
+import MessageContainer from './Message/MessageContainer.jsx';
 import Search from './Search/Search.jsx';
 
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -23,14 +23,14 @@ export default class Feed extends React.Component {
   }
   render() {
     return <MuiThemeProvider muiTheme={getMuiTheme()}>
-      <Paper style={{float:'right', width:'30%', height:'600px', zIndex:'1'}}>
+      <Paper style={{float:'right', width:'50%', height:'600px', zIndex:'1'}}>
         <Filter />
         <Searchbar 
           iconElementLeft={<EyeGlass color="white" />}
           children={<Search />}
         >
         </Searchbar>
-        <MessageContainer messages={ this.props.messages } />
+        <MessageContainer />
         <Maker />
       </Paper>
     </MuiThemeProvider>
