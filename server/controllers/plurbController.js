@@ -19,7 +19,7 @@ module.exports = {
     Plurb.create(plurbData)
     .then(function (plurb) {
       plurb.setUser(req.session.user);
-      plurb.setTopic(2);
+      //plurb.setTopic(2);
       res.status(201).json(plurb);
     })
     .catch(function (err) {
