@@ -3,18 +3,26 @@ import store from '../../../STORE.jsx';
 
 import Message from './Message.jsx';
 import Menu from 'material-ui/Menu';
+import { loadPlurbs } from '../../../ACTIONS.jsx'
 
 export default class MessageContainer extends React.Component {
   constructor() {
     super();
     this.state = {
-      messages: ["Trump trumps life", "Bernie Sanders > Super PACs", "Clinton","Where's Rubio?","Tom Cruise should run"]
+      messages: []
     };
+    this._loadPlurbs = this._loadPlurbs.bind(this);
     this._loadPlurbs();
   }
 
   _loadPlurbs() {
+    let context = this;
     console.log("ACTION: 'LOAD_PLURBS'");
+    loadPlurbs(function(plurbs) {
+      context.setState({
+        messages: JSON.parse(plurbs)
+      })
+    });
 
   }
 
@@ -23,7 +31,7 @@ export default class MessageContainer extends React.Component {
       <div style={{height: '400px'}}>
         <Menu>
           { this.state.messages.map((message) => {
-            return <Message message={message} />
+            return <Message message={message.text} />
           }) }
         </Menu>
       </div>
