@@ -41,14 +41,15 @@ User.belongsToMany(Topic, {through: 'UserTopic'});
 Topic.belongsToMany(User, {through: 'UserTopic'});
 
 //add one to many relationship between one user and many plurbs and one topic with many plurbs.
-Plurb.belongsTo(User);
-Plurb.belongsTo(Topic);
+User.hasMany(Plurb, {foreignKey: 'userId'});
+//Plurb.belongsTo(Topic);
 
 // creates these tables in MySQL if they don't already exist. Pass in {force: true}
 // to drop any existing user and message tables and make new ones.
-User.sync();
-Topic.sync();
-Plurb.sync();
+// Plurb.sync();
+// User.sync();
+// Topic.sync();
+sequelize.sync();
 
 exports.User = User;
 exports.Topic = Topic;

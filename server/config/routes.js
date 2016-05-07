@@ -14,7 +14,7 @@ module.exports = function (app) {
     //find or delete a user based off their unique Google ID
   app.route('/api/user/:googid')
     .get(userController.getUser)
-    .post(userController.deleteUser)
+    //.post(userController.deleteUser)
     .post(userController.findOrCreateUser);
 
   /* Topic Routes */
