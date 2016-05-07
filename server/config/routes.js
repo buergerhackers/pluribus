@@ -35,6 +35,9 @@ module.exports = function (app) {
     .get(plurbController.getPlurb)
     .post(plurbController.deletePlurb);
 
+  app.route('/api/plurbs/:googId')
+    .get(plurbController.getPlurbsByGoogId);
+
   //callback route for OAuth
   app.route('/callback')
     .get(function (req, res) {
