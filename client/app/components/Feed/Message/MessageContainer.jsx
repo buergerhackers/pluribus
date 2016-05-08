@@ -1,40 +1,48 @@
 import React from 'react';
-import store from '../../../STORE.jsx';
 
 import Message from './Message.jsx';
 import Menu from 'material-ui/Menu';
-import { loadPlurbs } from '../../../ACTIONS.jsx'
+import { connect } from 'react-redux';
+import { loadPlurbs } from '../../../ACTIONS.jsx';
 
-export default class MessageContainer extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      messages: []
-    };
-    this._loadPlurbs = this._loadPlurbs.bind(this);
+class MessageContainer extends React.Component {
+  constructor(props) {
+    super(props);
     this._loadPlurbs();
   }
 
   _loadPlurbs() {
-    let context = this;
-    console.log("ACTION: 'LOAD_PLURBS'");
-    loadPlurbs(function(plurbs) {
-      context.setState({
-        messages: JSON.parse(plurbs)
-      })
+    fetch('/api/plurb', {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+    }).then((plurbs) => plurbs.text())
+    .then((plurbs) => {
+      this.props.dispatch(loadPlurbs(plurbs));
+      this.render();
     });
-
   }
 
   render() {
     return (
-      <div style={{height: '400px'}}>
+      <div style={{ height: '400px' }}>
         <Menu>
-          { this.state.messages.map((message) => {
-            return <Message message={message.text} />
+          { this.props.plurbs.map((message) => {
+            return <Message message={ message.text } />
           }) }
         </Menu>
       </div>
     );
   }
 }
+
+const mapStateToProps = (store) => {
+  return {
+    plurbs: store.pluribusReducer.plurbs,
+  };
+};
+
+export default connect(mapStateToProps)(MessageContainer);
+

@@ -15,8 +15,6 @@ export default class Feed extends React.Component {
   constructor(props) {
     super(props);
     this.state = props;
-    console.log('Feed state:');
-    console.log(props);
   }
   sendPlurb() {
     console.log('sending plurb');

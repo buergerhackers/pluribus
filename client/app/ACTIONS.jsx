@@ -7,6 +7,7 @@ export const SELECT_TOPIC = 'SELECT_TOPIC';
 // async
 export const CREATE_PLURB = 'CREATE_PLURB';
 export const LOAD_PLURBS = 'LOAD_PLURBS';
+export const FETCHING = 'FETCHING';
 
 // CREATORS--------------------
 // sync
@@ -32,19 +33,12 @@ export function createPlurb(data) {
   return { type: CREATE_PLURB, fetching: true }   
 }
 
-export function loadPlurbs(callback) {
-  // get plurbs <- backend API
-  fetch('/api/plurb', {
-    method: 'GET',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-    },
-  }).then((plurbs) => plurbs.text())
-  .then((response) => {
-    callback(response);
-  })
-  // return { type: LOAD_PLURBS, fetching:false, plurbs }
+export function loadPlurbs(plurbs) {
+  return { type: LOAD_PLURBS, fetching: false, plurbs }
+}
+
+export function fetching() {
+  return { type: FETCHING, fetching: true };
 }
 
 export const FeedFilters = {
