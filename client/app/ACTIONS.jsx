@@ -41,7 +41,7 @@ export function createPlurb(data) {
 // ASYNC ACTIONS
 export function getPlurbs(filter) {
   
-  // filter param for individual plurbs
+  // filter param 'PUBLIC' or 'PRIVATE' for individual plurbs
   fetch('/api/plurb', {
       method: 'GET',
       headers: {

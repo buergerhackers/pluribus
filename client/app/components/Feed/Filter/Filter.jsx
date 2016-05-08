@@ -1,5 +1,7 @@
 import React from 'react';
 import store from '../../../STORE.jsx';
+import { connect } from 'react-redux';
+import { loadPlurbs, getPlurbs } from '../../../ACTIONS.jsx';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
@@ -9,29 +11,37 @@ import Subheader from 'material-ui/Subheader';
 import Public from 'material-ui/svg-icons/social/public';
 import Private from 'material-ui/svg-icons/social/people';
 
-// dummy store to be replaced with Redux Store
-let FilterStore = {getState: 0};
-
 export default class Filter extends React.Component {
-  constructor() {
-    super();
-    this.state = FilterStore;
+  
+  constructor(props) {
+    super(props);
   }
+  
   _handleSwitch(type) {
-    this.setState({ getState: type });
-    
-    console.log('STATE:');
-    console.log(this.state);
-    console.log("ACTION: 'SET_FILTER'");
+    // update store with fetching status
+    this.props.dispatch(loadPlurbs());
+    // go get plurbs
+    this.props.dispatch(getPlurbs(type));
   }
+  
   render() {
     return <MuiThemeProvider muiTheme={getMuiTheme()}>
       <Tabs 
-        value={this.state.getState}
+        value={ this.props.filter }
       >
-        <Tab value={0} icon={<Public />} onClick={ () => this._handleSwitch(0) } />
-        <Tab value={1} icon={<Private />} onClick={ () => this._handleSwitch(1) } />
+        <Tab value={"PUBLIC"} icon={<Public />} onClick={ () => this._handleSwitch("PUBLIC") } />
+        <Tab value={"PRIVATE"} icon={<Private />} onClick={ () => this._handleSwitch("PRIVATE") } />
       </Tabs>
     </MuiThemeProvider>
   }
 }
+
+// map the portion of the state tree desired
+const mapStateToProps = (store) => {
+  return {
+    filter: store.pluribusReducer.filter,
+  };
+};
+
+// connect the desired state to the relevant component
+export default connect(mapStateToProps)(Filter);
