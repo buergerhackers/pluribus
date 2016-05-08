@@ -6,6 +6,7 @@ export const SET_FILTER = 'SET_FILTER';
 export const SELECT_TOPIC = 'SELECT_TOPIC';
 // async
 export const CREATE_PLURB = 'CREATE_PLURB';
+export const GET_PLURBS = 'GET_PLURBS';
 export const LOAD_PLURBS = 'LOAD_PLURBS';
 export const FETCHING = 'FETCHING';
 
@@ -31,6 +32,26 @@ export function createPlurb(data) {
   });
 
   return { type: CREATE_PLURB, fetching: true }   
+}
+
+// ASYNC ACTIONS
+export function getPlurbs(filter) {
+  
+  // filter param for individual plurbs
+  fetch('/api/plurb', {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+    }).then((plurbs) => plurbs.text())
+      .then((plurbs) => {
+      store.dispatch(loadPlurbs(plurbs));
+    }).catch((error) => {
+      console.err(error);
+    });
+    
+  return { type: GET_PLURBS, fetching: true }
 }
 
 export function loadPlurbs(plurbs) {
