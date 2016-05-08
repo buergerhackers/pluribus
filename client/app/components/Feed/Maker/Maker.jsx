@@ -62,8 +62,9 @@ export default class Maker extends React.Component {
         />
         <TextField
           hintText="Have something to contribute?"
-          onChange= { this._updateMessage }
-          value= { this.state.text }
+          onChange={ this._updateMessage }
+          onEnterKeyDown={ this._sendPlurb }
+          value={ this.state.text }
         /><br/>
       </div>
     );
