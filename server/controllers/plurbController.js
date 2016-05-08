@@ -1,5 +1,4 @@
 var Plurb = require('../db/dbconfig').Plurb;
-var User = require('../db/dbconfig').User;
 
 module.exports = {
   getAllPlurbs: function (req, res) {
@@ -20,7 +19,7 @@ module.exports = {
     Plurb.create(plurbData)
     .then(function (plurb) {
       plurb.setUser(req.session.user);
-      //plurb.setTopic(2);
+      //plurb.setTopic(TODO:);
       res.status(201).json(plurb);
     })
     .catch(function (err) {
@@ -51,15 +50,10 @@ module.exports = {
   },
 
   getPlurbsByGoogId: function (req, res) {
-    var userId;
     var googId = req.params.googId;
-    User.find({where: {googid: googId} })
-    .then(function (user) {
-      userId = user.dataValues.id;
-    });
-    Plurb.findAll({where: {UserId: userId}})
-    .then(function (plurb) {
-      res.status(200).json(plurb);
+    Plurb.findAll({where: {UserGoogid: googId}})
+    .then(function (plurbs) {
+      res.status(200).json(plurbs);
     })
     .catch(function (err) {
       console.error (err);

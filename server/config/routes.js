@@ -8,8 +8,8 @@ var google = new Purest({ provider: 'google' });
 module.exports = function (app) {
   /* User Routes */
   app.route('/api/user')
-    .get(userController.getAllUsers)
-    .post(userController.createUser);
+    .get(userController.getAllUsers);
+    //.post(userController.createUser);
 
     //find or delete a user based off their unique Google ID
   app.route('/api/user/:googid')

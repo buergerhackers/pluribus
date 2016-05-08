@@ -14,7 +14,12 @@ if (process.env.CLEARDB_DATABASE_URL){
 
 //The unique 'googid' property set by Google OAuth, it is NOT the 'id' set automatically by MySQL
 var User = sequelize.define('User', {
-  googid: Sequelize.STRING,
+  googid: {
+    type: Sequelize.STRING,
+    primaryKey: true,
+    autoIncrement: false,
+    allowNull: false,
+    },
   firstName: Sequelize.STRING,
   lastName: Sequelize.STRING,
   email: Sequelize.STRING,
@@ -43,7 +48,7 @@ Plurb.belongsTo(User);
 //Plurb.sync();
 // User.sync();
 // Topic.sync();
-sequelize.sync({force: true});
+sequelize.sync();
 
 exports.User = User;
 exports.Topic = Topic;
