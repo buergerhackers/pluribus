@@ -17,6 +17,10 @@ export function selectTopic(currentTopic) {
   return { type: SELECT_TOPIC, currentTopic }
 }
 
+export function setFilter(filter) {
+  return { type: SET_FILTER, filter }
+}
+
 // async
 export function createPlurb(data) {
   // data is plurb object from Maker

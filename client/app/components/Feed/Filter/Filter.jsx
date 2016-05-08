@@ -1,7 +1,7 @@
 import React from 'react';
-import store from '../../../STORE.jsx';
+import { store } from '../../../STORE.jsx';
 import { connect } from 'react-redux';
-import { loadPlurbs, getPlurbs } from '../../../ACTIONS.jsx';
+import { loadPlurbs, getPlurbs, setFilter } from '../../../ACTIONS.jsx';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
@@ -11,17 +11,18 @@ import Subheader from 'material-ui/Subheader';
 import Public from 'material-ui/svg-icons/social/public';
 import Private from 'material-ui/svg-icons/social/people';
 
-export default class Filter extends React.Component {
+class Filter extends React.Component {
   
   constructor(props) {
     super(props);
+    console.log(props);
+    this._handleSwitch = this._handleSwitch.bind(this);
   }
   
-  _handleSwitch(type) {
-    // update store with fetching status
-    this.props.dispatch(loadPlurbs());
-    // go get plurbs
-    this.props.dispatch(getPlurbs(type));
+  _handleSwitch() {
+    // this.props.dispatch(loadPlurbs());
+    var filt = this.props.filter === 'PUBLIC' ? 'PRIVATE' : 'PUBLIC';
+    this.props.dispatch(setFilter(filt));
   }
   
   render() {
@@ -29,8 +30,8 @@ export default class Filter extends React.Component {
       <Tabs 
         value={ this.props.filter }
       >
-        <Tab value={"PUBLIC"} icon={<Public />} onClick={ () => this._handleSwitch("PUBLIC") } />
-        <Tab value={"PRIVATE"} icon={<Private />} onClick={ () => this._handleSwitch("PRIVATE") } />
+        <Tab value="PUBLIC" icon={<Public />} onClick={ this._handleSwitch } />
+        <Tab value="PRIVATE" icon={<Private />} onClick={ this._handleSwitch } />
       </Tabs>
     </MuiThemeProvider>
   }
