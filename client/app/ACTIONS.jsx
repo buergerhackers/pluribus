@@ -1,3 +1,4 @@
+import store from './STORE.jsx';
 // ACTIONS for APP component
 
 // TYPES-----------------------
@@ -18,6 +19,7 @@ export function selectTopic(currentTopic) {
 
 // async
 export function createPlurb(data) {
+  // data is plurb object from Maker
   fetch('/api/plurb', {
     method: 'POST',
     headers: {
@@ -27,6 +29,8 @@ export function createPlurb(data) {
     body: JSON.stringify(data),
   }).then((body) => {
     console.log("We could totally use this promise to do something useful");
+    console.log("Mark, that's a splendid idea. How about we load them plurbs?");
+    store.dispatch(getPlurbs());
   }).catch((error) => {
     console.err(error);
   });
