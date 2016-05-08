@@ -1,5 +1,7 @@
 import React from 'react';
 import store from '../../../STORE.jsx';
+import { connect } from 'react-redux';
+import { loadPlurbs, getPlurbs } from '../../../ACTIONS.jsx';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
@@ -8,25 +10,25 @@ import AutoComplete from 'material-ui/AutoComplete';
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 
-// dummy store to be replaced with Redux Store
-let SearchStore = {getState: "Search topics", currentTopic: "", allTopics: ["2016 Election","feel the burn", "bernie", "utilities", "bryan bierce", "blues brothers", "dog parks"]};
-
 class Search extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      dataSource: SearchStore.allTopics,
-    }
+    this.props.dispatch(getPlurbs());
   }
+  
   filter(input) {
-    console.log(input);
-    console.log('filtering input ...');
-    return this.state.dataSource.filter(this.filter(input));
+    // optional custom filter function to wrap
+    // all below functions in
   }
+  
   _selectTopic(selected) {
-    console.log(selected);
-    console.log("ACTION: 'SELECT_TOPIC'");
+    // getPlurbs(selectedTopic)
   }
+  
+  _textSearch(text) {
+    this.props.dispatch(getPlurbs(text));
+  }
+  
   render() {
     return (
       <MuiThemeProvider muiTheme={getMuiTheme()}>
@@ -35,13 +37,20 @@ class Search extends React.Component {
           hintText="Search topics"
           animated={true}
           anchorOrigin={{vertical: 'bottom', horizontal: 'left'}}
-          dataSource={ this.state.dataSource }
-          onUpdateInput={ this._refineMenu }
-          onNewRequest={ this._selectTopic }
+          dataSource={ this.props.plurbs.map((p) => p.text) }
+          onNewRequst={ this._textSearch }
         />
       </MuiThemeProvider>  
     );
   }
 }
 
-export default Search;
+// map the portion of the state tree desired
+const mapStateToProps = (store) => {
+  return {
+    plurbs: store.pluribusReducer.plurbs
+  };
+};
+
+// connect the desired state to the relevant component
+export default connect(mapStateToProps)(Search);
