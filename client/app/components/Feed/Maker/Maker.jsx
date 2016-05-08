@@ -1,17 +1,19 @@
 import React from 'react';
 import { store } from '../../../STORE.jsx';
-import { createPlurb } from '../../../ACTIONS.jsx';
+import { connect } from 'react-redux';
+import { createPlurb, loadPlurbs } from '../../../ACTIONS.jsx';
 import TextField from 'material-ui/TextField';
 import ActionButton from 'material-ui/FloatingActionButton';
 import Plus from 'material-ui/svg-icons/content/add';
 
 export default class Maker extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      message: '',
+      text: '',
       location: '',
     };
+    // get location on first creation
     this._getLocation();
     this._updateMessage = this._updateMessage.bind(this);
     this._sendPlurb = this._sendPlurb.bind(this);
@@ -31,24 +33,22 @@ export default class Maker extends React.Component {
   }
 
   _sendPlurb() {
-    // console.log(
-    store.dispatch(createPlurb(
-    {
-      location: this.state.location,
-      message: this.state.message,
-    }
+    this.props.dispatch(createPlurb(
+      {
+        text: this.state.text,
+        location: this.state.location
+      }
     ));
-
-    // );
-
+    
+    // clear the text field
     this.setState(
-      { message: '' }
+      { text: '' }
     );
   }
 
   _updateMessage(e) {
     this.setState(
-      { message: e.target.value }
+      { text: e.target.value }
     );
   }
 
@@ -63,9 +63,19 @@ export default class Maker extends React.Component {
         <TextField
           hintText="Have something to contribute?"
           onChange= { this._updateMessage }
-          value= { this.state.message }
+          value= { this.state.text }
         /><br/>
       </div>
     );
   }
 }
+
+// map the portion of the state tree desired
+const mapStateToProps = (store) => {
+  return {
+    plurbs: store.pluribusReducer.currentPlurb,
+  };
+};
+
+// connect the desired state to the relevant component
+export default connect(mapStateToProps)(Maker);
