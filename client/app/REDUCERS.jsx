@@ -1,9 +1,8 @@
 //===================================================
 // REDUCER for APP component
 import { combineReducers } from 'redux'
-import { SET_FILTER, FeedFilters, SELECT_TOPIC, CREATE_PLURB, LOAD_PLURBS } from './ACTIONS.jsx'
+import { FETCHING, SET_FILTER, FeedFilters, SELECT_TOPIC, CREATE_PLURB, LOAD_PLURBS } from './ACTIONS.jsx'
 
-// define default initial state of app
 const initialState = {
   currentTopic: "",
   plurbs: [],
@@ -14,12 +13,16 @@ const initialState = {
   },
   myTopics: [],
   allTopics: [],
-  fetching: false
+  fetching: false,
 }
 
 // COMBINED REDUCER -> yield Store
 function pluribusReducer(state = initialState, action) {
   switch (action.type) {
+    case FETCHING:
+      return Object.assign({}, state, {
+        fetching: action.fetching
+      })
     case CREATE_PLURB:
       return Object.assign({}, state, {
         fetching: action.fetching
@@ -34,14 +37,16 @@ function pluribusReducer(state = initialState, action) {
       })
     case LOAD_PLURBS:
       return Object.assign({}, state, {
-        plurbs: action.plurbs
+        plurbs: JSON.parse(action.plurbs),
+        fetching: action.fetching
       })
+    default: 
+      return state;
   }
-  return state
 }
 
 const pluribusApp = combineReducers({
   pluribusReducer
 })
 
-export default pluribusApp
+export default pluribusApp;
