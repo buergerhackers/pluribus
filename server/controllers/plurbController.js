@@ -1,6 +1,7 @@
 var Plurb = require('../db/dbconfig').Plurb;
 
 module.exports = {
+  //currently not being used
   getAllPlurbs: function (req, res) {
     Plurb.findAll({})
     .then(function (plurbs) {
@@ -12,15 +13,17 @@ module.exports = {
   },
 
   createPlurb: function (req, res) {
+    var googId = req.session.user;
+    var topic = req.body.topic;
     var plurbData = {
       text: req.body.text,
-      location: JSON.stringify(req.body.location),
-      topic: req.body.topic
+      lat: req.body.lat,
+      long: req.body.long
     };
     Plurb.create(plurbData)
     .then(function (plurb) {
-      plurb.setUser(req.session.user);
-      //plurb.setTopic(TODO:);
+      plurb.setUser(googId);
+      plurb.setTopic(topic);
       res.status(201).json(plurb);
     })
     .catch(function (err) {
@@ -53,6 +56,26 @@ module.exports = {
   getPlurbsByGoogId: function (req, res) {
     var googId = req.params.googId;
     Plurb.findAll({where: {UserGoogid: googId}})
+    .then(function (plurbs) {
+      res.status(200).json(plurbs);
+    })
+    .catch(function (err) {
+      console.error (err);
+    });
+  }, 
+
+  getPlurbsByLocation: function (req, res) {
+    var minLat = req.body.mapBounds.minLat;
+    var maxLat = req.body.mapBounds.maxLat;
+    var minLng = req.body.mapBounds.minLng;
+    var maxLng = req.body.mapBounds.maxLng;
+    //find all plurbs that fit within the min-max range
+    Plurb.findAll({
+      where: {
+        lat: {$between: [minLat, maxLat]},
+        long: {$between: [minLng, maxLng]}
+      }
+    })
     .then(function (plurbs) {
       res.status(200).json(plurbs);
     })

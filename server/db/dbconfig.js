@@ -32,7 +32,8 @@ var Topic = sequelize.define('Topic', {
 
 var Plurb = sequelize.define('Plurb', {
   text: Sequelize.STRING,
-  location: Sequelize.STRING,
+  lat: Sequelize.DECIMAL(5,2),
+  long: Sequelize.DECIMAL(5,2)
 });
 
 //add many:many relationships between User and Topic
@@ -41,13 +42,10 @@ Topic.belongsToMany(User, {through: 'UserTopic'});
 
 //add one to many relationship between one user and many plurbs and one topic with many plurbs.
 Plurb.belongsTo(User);
-//Plurb.belongsTo(Topic);
+Plurb.belongsTo(Topic);
 
 // creates these tables in MySQL if they don't already exist. Pass in {force: true}
-// to drop any existing user and message tables and make new ones.
-//Plurb.sync();
-// User.sync();
-// Topic.sync();
+// to drop all existing tables and make new ones.
 sequelize.sync();
 
 exports.User = User;
