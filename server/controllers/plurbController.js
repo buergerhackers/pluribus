@@ -61,5 +61,25 @@ module.exports = {
     .catch(function (err) {
       console.error (err);
     });
+  }, 
+
+  getPlurbsByLocation: function (req, res) {
+    var minLat = req.body.mapBounds.minLat;
+    var maxLat = req.body.mapBounds.maxLat;
+    var minLng = req.body.mapBounds.minLng;
+    var maxLng = req.body.mapBounds.maxLng;
+    //find all plurbs that fit within the min-max range
+    Plurb.findAll({
+      where: {
+        lat: {$between: [minLat, maxLat]},
+        long: {$between: [minLng, maxLng]}
+      }
+    })
+    .then(function (plurbs) {
+      res.status(200).json(plurbs);
+    })
+    .catch(function (err) {
+      console.error (err);
+    });
   }
 };
