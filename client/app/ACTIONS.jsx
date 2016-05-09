@@ -5,6 +5,7 @@ import store from './STORE.jsx';
 // sync
 export const SET_FILTER = 'SET_FILTER';
 export const SELECT_TOPIC = 'SELECT_TOPIC';
+export const UPDATE_MAP_BOUNDS = 'UPDATE_MAP_BOUNDS';
 // async
 export const CREATE_PLURB = 'CREATE_PLURB';
 export const GET_PLURBS = 'GET_PLURBS';
@@ -22,6 +23,10 @@ export function setFilter(filter) {
 }
 
 // async
+export function updateMapBounds(mapBounds) {
+  return { type: UPDATE_MAP_BOUNDS, mapBounds }
+}
+
 export function createPlurb(data) {
   // data is plurb object from Maker
   fetch('/api/plurb', {
@@ -32,8 +37,6 @@ export function createPlurb(data) {
     },
     body: JSON.stringify(data),
   }).then((body) => {
-    console.log("We could totally use this promise to do something useful");
-    console.log("Mark, that's a splendid idea. How about we load them plurbs?");
     store.dispatch(getPlurbs());
   }).catch((error) => {
     console.err(error);

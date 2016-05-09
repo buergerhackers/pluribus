@@ -1,16 +1,18 @@
 //===================================================
 // REDUCER for APP component
 import { combineReducers } from 'redux'
-import { FETCHING, SET_FILTER, FeedFilters, SELECT_TOPIC, CREATE_PLURB, LOAD_PLURBS, GET_PLURBS } from './ACTIONS.jsx'
+import { FETCHING, SET_FILTER, FeedFilters, SELECT_TOPIC, CREATE_PLURB, LOAD_PLURBS, GET_PLURBS, UPDATE_MAP_BOUNDS } from './ACTIONS.jsx'
 
 const initialState = {
   currentTopic: "",
+  mapBounds: {
+    maxLat:38.87,
+    maxLng:-76.95,
+    minLat:38.91,
+    minLng:-77.00
+  },
   plurbs: [],
   filter: FeedFilters.PUBLIC,
-  map: {
-    center: {lat: "default.lat", lng: "default.lng"},
-    zoom: 15
-  },
   myTopics: [],
   allTopics: [],
   fetching: false,
@@ -34,6 +36,10 @@ function pluribusReducer(state = initialState, action) {
     case SELECT_TOPIC:
       return Object.assign({}, state, {
         currentTopic: action.currentTopic
+      })
+    case UPDATE_MAP_BOUNDS:
+      return Object.assign({}, state, {
+        mapBounds: action.mapBounds
       })
     case GET_PLURBS:
       return Object.assign({}, state, {
