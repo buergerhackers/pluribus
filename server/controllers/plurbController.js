@@ -12,16 +12,17 @@ module.exports = {
   },
 
   createPlurb: function (req, res) {
+    var googId = req.session.user;
+    var topic = req.body.topic;
     var plurbData = {
       text: req.body.text,
       lat: req.body.lat,
-      long: req.body.long,
-      topic: req.body.topic
+      long: req.body.long
     };
     Plurb.create(plurbData)
     .then(function (plurb) {
-      plurb.setUser(req.session.user);
-      //plurb.setTopic(TODO:);
+      plurb.setUser(googId);
+      plurb.setTopic(topic);
       res.status(201).json(plurb);
     })
     .catch(function (err) {
