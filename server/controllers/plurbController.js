@@ -15,6 +15,7 @@ module.exports = {
     var plurbData = {
       text: req.body.text,
       location: JSON.stringify(req.body.location),
+      topic: req.body.topic
     };
     Plurb.create(plurbData)
     .then(function (plurb) {
