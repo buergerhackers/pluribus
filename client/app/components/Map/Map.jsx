@@ -1,22 +1,28 @@
 import React from "react";
-import store from '../../STORE.jsx';
-import ReactDOM from 'react-dom';
+import { store } from '../../STORE.jsx';
+import { connect } from 'react-redux';
+import { updateMapBounds } from '../../ACTIONS.jsx';
 
-export default class GoogleMap extends React.Component {
+class GoogleMap extends React.Component {
 
+  constructor(props) {
+    super(props);
+  }
+  
+  // Once DOM node has rendered
   componentDidMount(rootNode) {
-    var mapOptions = {
-      center: {lat: -34.397, lng: 150.644},
+    let mapOptions = {
+      center: {lat: 38.91, lng: -77.04},
       zoom: 6,
     },
 
-    
+    // initialize map center on Washington, DC
     map = new google.maps.Map(document.getElementById('map'), mapOptions);
-    this.setState({ map: map });
-
+    
+    // re-center map on user
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(position) {
-        var pos = {
+        let pos = {
           lat: position.coords.latitude,
           lng: position.coords.longitude
         };
@@ -32,28 +38,36 @@ export default class GoogleMap extends React.Component {
     function handleLocationError(browserHasGeolocation) {
       if(browserHasGeolocation) {
         console.log("Looks like the browser blocked geolocation");
-        map.setCenter({lat: 28.538, lng: -81.380});
+        map.setCenter({lat: 38.91, lng: -77.04});
       } else {
         console.log("This browser does NOT support geolocation");
-        map.setCenter({lat: 41.428, lng: -75.650});
+        map.setCenter({lat: 38.91, lng: -77.04});
       }
     }
 
-    //Event listener that sends new bounds on map move
+    // When user pauses map movement, updates new bounds
     map.addListener('idle', () => {
-      var newBounds = map.getBounds();
+      let newBounds = map.getBounds();
       console.log("Bounds: ", newBounds);
-
-      //Create Action object
-      var sendMapBounds = {
-        type: "UPDATE_MAP_BOUNDS",
-        bounds: newBounds,
-      };
+      
+      let Lats = newBounds.H;
+      let Lngs = newBounds.j;
+            
+      let currentBounds = {
+        uLat: +Lats.H.toFixed(2),
+        uLng: +Lngs.H.toFixed(2),
+        lLat: +Lats.j.toFixed(2),
+        lLng: +Lngs.j.toFixed(2)
+      }
+      
+      // update bounds on store, then re-fetch plurbs
+      this.props.dispatch(updateMapBounds(currentBounds))
+      this.props.dispatch(getPlurbs(currentBounds))
     });
   }
 
   mapCenterLatLng() {
-    var props = this.props;
+    let props = this.props;
 
     return new google.maps.LatLng(props.mapCenterLat, props.mapCenterLng);
   }
@@ -64,3 +78,13 @@ export default class GoogleMap extends React.Component {
     );
   }
 }
+
+// map the portion of the state tree desired
+const mapStateToProps = (store) => {
+  return {
+    mapBounds: store.pluribusReducer.mapBounds,
+  };
+};
+
+// connect the desired state to the relevant component
+export default connect(mapStateToProps)(GoogleMap);
