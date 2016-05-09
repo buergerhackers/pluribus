@@ -14,26 +14,25 @@ if (process.env.CLEARDB_DATABASE_URL){
 
 //The unique 'googid' property set by Google OAuth, it is NOT the 'id' set automatically by MySQL
 var User = sequelize.define('User', {
-  googid: Sequelize.STRING,
+  googid: {
+    type: Sequelize.STRING,
+    primaryKey: true,
+    autoIncrement: false,
+    allowNull: false,
+    },
   firstName: Sequelize.STRING,
   lastName: Sequelize.STRING,
   email: Sequelize.STRING,
   picture: Sequelize.STRING,
-  createdAt: Sequelize.DATE,
-  updatedAt: Sequelize.DATE
 });
 
 var Topic = sequelize.define('Topic', {
   name: Sequelize.STRING,
-  createdAt: Sequelize.DATE,
-  updatedAt: Sequelize.DATE
 });
 
 var Plurb = sequelize.define('Plurb', {
   text: Sequelize.STRING,
   location: Sequelize.STRING,
-  createdAt: Sequelize.DATE,
-  updatedAt: Sequelize.DATE
 });
 
 //add many:many relationships between User and Topic
@@ -42,11 +41,11 @@ Topic.belongsToMany(User, {through: 'UserTopic'});
 
 //add one to many relationship between one user and many plurbs and one topic with many plurbs.
 Plurb.belongsTo(User);
-Plurb.belongsTo(Topic);
+//Plurb.belongsTo(Topic);
 
 // creates these tables in MySQL if they don't already exist. Pass in {force: true}
 // to drop any existing user and message tables and make new ones.
-// Plurb.sync();
+//Plurb.sync();
 // User.sync();
 // Topic.sync();
 sequelize.sync();
