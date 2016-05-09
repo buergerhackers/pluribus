@@ -54,10 +54,12 @@ class GoogleMap extends React.Component {
       let Lngs = newBounds.j;
             
       let currentBounds = {
-        maxLat: +Lats.H.toFixed(2),
-        maxLng: +Lngs.H.toFixed(2),
-        minLat: +Lats.j.toFixed(2),
-        minLng: +Lngs.j.toFixed(2)
+        mapBounds: {
+          maxLat: +Lats.H.toFixed(2),
+          maxLng: +Lngs.H.toFixed(2),
+          minLat: +Lats.j.toFixed(2),
+          minLng: +Lngs.j.toFixed(2)   
+        }
       }
       
       // update bounds on store, then re-fetch plurbs
