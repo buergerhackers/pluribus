@@ -1,6 +1,7 @@
 var Plurb = require('../db/dbconfig').Plurb;
 
 module.exports = {
+  //currently not being used
   getAllPlurbs: function (req, res) {
     Plurb.findAll({})
     .then(function (plurbs) {

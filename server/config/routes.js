@@ -28,7 +28,7 @@ module.exports = function (app) {
   
   /* Plurb Routes */
   app.route('/api/plurb')
-    .get(plurbController.getAllPlurbs)
+    .get(plurbController.getPlurbsByLocation)
     .post(plurbController.createPlurb);
 
   app.route('/api/plurb/:plurbId')
