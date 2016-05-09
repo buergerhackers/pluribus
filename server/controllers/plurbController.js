@@ -14,7 +14,9 @@ module.exports = {
   createPlurb: function (req, res) {
     var plurbData = {
       text: req.body.text,
-      location: JSON.stringify(req.body.location),
+      lat: req.body.lat,
+      long: req.body.long,
+      //location: JSON.stringify(req.body.location),
       topic: req.body.topic
     };
     Plurb.create(plurbData)
