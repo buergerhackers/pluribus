@@ -1,7 +1,7 @@
 //===================================================
 // REDUCER for APP component
 import { combineReducers } from 'redux'
-import { FETCHING, SET_FILTER, FeedFilters, SELECT_TOPIC, CREATE_PLURB, LOAD_PLURBS } from './ACTIONS.jsx'
+import { FETCHING, SET_FILTER, FeedFilters, SELECT_TOPIC, CREATE_PLURB, LOAD_PLURBS, GET_PLURBS } from './ACTIONS.jsx'
 
 const initialState = {
   currentTopic: "",
@@ -34,6 +34,10 @@ function pluribusReducer(state = initialState, action) {
     case SELECT_TOPIC:
       return Object.assign({}, state, {
         currentTopic: action.currentTopic
+      })
+    case GET_PLURBS:
+      return Object.assign({}, state, {
+        fetching: action.fetching
       })
     case LOAD_PLURBS:
       return Object.assign({}, state, {

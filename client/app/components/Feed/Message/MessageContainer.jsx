@@ -3,26 +3,17 @@ import React from 'react';
 import Message from './Message.jsx';
 import Menu from 'material-ui/Menu';
 import { connect } from 'react-redux';
-import { loadPlurbs } from '../../../ACTIONS.jsx';
+import { loadPlurbs, getPlurbs } from '../../../ACTIONS.jsx';
 
 class MessageContainer extends React.Component {
+  // pass relevant piece of store to component
   constructor(props) {
     super(props);
     this._loadPlurbs();
   }
 
   _loadPlurbs() {
-    fetch('/api/plurb', {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-    }).then((plurbs) => plurbs.text())
-    .then((plurbs) => {
-      this.props.dispatch(loadPlurbs(plurbs));
-      this.render();
-    });
+    this.props.dispatch(getPlurbs());
   }
 
   render() {
@@ -38,11 +29,12 @@ class MessageContainer extends React.Component {
   }
 }
 
+// map the portion of the state tree desired
 const mapStateToProps = (store) => {
   return {
     plurbs: store.pluribusReducer.plurbs,
   };
 };
 
+// connect the desired state to the relevant component
 export default connect(mapStateToProps)(MessageContainer);
-
