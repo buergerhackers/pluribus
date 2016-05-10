@@ -15,7 +15,7 @@ module.exports = {
     var topicData = {
       name: req.body.name
     };
-    Topic.findOrCreate(topicData)
+    Topic.findOrCreate({where: topicData})
     .then(function (topic) {
       res.status(201).json(topic);
     })
