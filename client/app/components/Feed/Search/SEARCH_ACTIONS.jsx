@@ -20,11 +20,11 @@ export function selectTopic(currentTopic, mapBounds) {
     .then((topicJSON) => {
     store.dispatch(getTopics());
     let topicObj = JSON.parse(topicJSON)[0];
-    let currentTopicId = topicObj.id;
-    store.dispatch({ type: SELECT_TOPIC, currentTopicId });
-    store.dispatch(getPlurbs({ currentTopicId, mapBounds }));
+    let topicId = topicObj.id;
+    store.dispatch({ type: SELECT_TOPIC, topicId });
+    store.dispatch(getPlurbs({ topicId, mapBounds }));
   }).catch((error) => {
-    console.err(error);
+    console.error("This is an Error in selectTopic ACTION", error);
   });
 }
 
@@ -39,7 +39,7 @@ export function getTopics() {
       .then((topics) => {
         store.dispatch(loadTopics(topics));
     }).catch((error) => {
-      console.log("This is the error in getTopics",error);
+      console.error("This is the error in getTopics",error);
     });
 
   return { type: GET_TOPICS, fetching: true };

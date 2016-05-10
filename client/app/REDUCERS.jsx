@@ -36,7 +36,7 @@ function pluribusReducer(state = initialState, action) {
       })
     case SELECT_TOPIC:
       return Object.assign({}, state, {
-        currentTopicId: action.currentTopicId
+        currentTopicId: action.topicId
       })
     case UPDATE_MAP_BOUNDS:
       return Object.assign({}, state, {

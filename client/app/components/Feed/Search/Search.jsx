@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { loadPlurbs, getPlurbs } from '../../../ACTIONS.jsx';
 import { getTopics, selectTopic } from './SEARCH_ACTIONS.jsx';
 
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
