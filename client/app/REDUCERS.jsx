@@ -1,7 +1,8 @@
 //===================================================
 // REDUCER for APP component
-import { combineReducers } from 'redux'
-import { FETCHING, SET_FILTER, SELECT_TOPIC, LOAD_TOPICS, GET_TOPICS, CREATE_PLURB, LOAD_PLURBS, GET_PLURBS, UPDATE_MAP_BOUNDS, FeedFilters } from './ACTIONS.jsx'
+import { combineReducers } from 'redux';
+import { SELECT_TOPIC, GET_TOPICS, LOAD_TOPICS } from './components/Feed/Search/SEARCH_ACTIONS.jsx';
+import { FETCHING, SET_FILTER, CREATE_PLURB, LOAD_PLURBS, GET_PLURBS, UPDATE_MAP_BOUNDS, FeedFilters } from './ACTIONS.jsx';
 
 const initialState = {
   currentTopicId: "",
