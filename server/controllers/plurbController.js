@@ -13,7 +13,8 @@ module.exports = {
   },
 
   createPlurb: function (req, res) {
-    var googId = req.session.user;
+    var googId = req.body.user;
+    console.log('googId from req.body: ', req.body.user);
     var topicId = req.body.topicId;
     var plurbData = {
       text: req.body.text,
