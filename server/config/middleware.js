@@ -38,7 +38,7 @@ module.exports = function (app, express) {
     secret: process.env.SESSION_SECRET,
     resave: true,
     saveUninitialized: true,
-    cookie: {}
+    cookie: {goodId: 987654321}
   }));
   app.use(grant);
   //checks if user it authenticated before sending to index.html
