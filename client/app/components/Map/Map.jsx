@@ -1,6 +1,5 @@
 import React from "react";
-//import Marker from './Marker.jsx';
-// import PlurbBlob from 'material-ui/maps/add-location';
+
 import { connect } from 'react-redux';
 import { updateMapBounds, getPlurbs } from '../../ACTIONS.jsx';
 

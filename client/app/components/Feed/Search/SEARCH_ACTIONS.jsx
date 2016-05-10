@@ -1,10 +1,12 @@
 import store from '../../../STORE.jsx';
 
+import { getPlurbs } from '../../../ACTIONS.jsx';
+
 export const SELECT_TOPIC = 'SELECT_TOPIC';
 export const GET_TOPICS = 'GET_TOPICS';
 export const LOAD_TOPICS = 'LOAD_TOPICS';
 
-export function selectTopic(currentTopic) {
+export function selectTopic(currentTopic, mapBounds) {
   fetch('/api/topic', {
     method: 'POST',
     headers: {
@@ -18,7 +20,9 @@ export function selectTopic(currentTopic) {
     .then((topicJSON) => {
     store.dispatch(getTopics());
     let topicObj = JSON.parse(topicJSON)[0];
-    store.dispatch({ type: SELECT_TOPIC, topicId: topicObj.id });
+    let currentTopicId = topicObj.id;
+    store.dispatch({ type: SELECT_TOPIC, currentTopicId });
+    store.dispatch(getPlurbs({ currentTopicId, mapBounds }));
   }).catch((error) => {
     console.err(error);
   });

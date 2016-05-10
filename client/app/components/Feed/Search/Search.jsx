@@ -20,7 +20,8 @@ class Search extends React.Component {
 
   _selectTopic(selected) {
     // Set store topic
-    selectTopic(selected);
+    let mapBounds = this.props.mapBounds;
+    selectTopic(selected, mapBounds);
   }
   
   _textSearch(text) {
@@ -45,7 +46,8 @@ class Search extends React.Component {
 const mapStateToProps = (store) => {
   return {
     allTopics: store.pluribusReducer.allTopics,
-    myTopics: store.pluribusReducer.myTopics
+    myTopics: store.pluribusReducer.myTopics,
+    mapBounds: store.pluribusReducer.mapBounds,
   };
 };
 
