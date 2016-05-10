@@ -12,8 +12,8 @@ export default class Maker extends React.Component {
       text: '',
       lat: 0,
       long: 0,
-
     };
+    
     // get location on first creation
     this._getLocation();
     this._updateMessage = this._updateMessage.bind(this);

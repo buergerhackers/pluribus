@@ -12,8 +12,6 @@ export const FETCHING = 'FETCHING';
 
 // CREATORS--------------------
 // sync
-
-
 export function setFilter(filter) {
   return { type: SET_FILTER, filter }
 }
@@ -23,7 +21,7 @@ export function updateMapBounds(mapBounds) {
   return { type: UPDATE_MAP_BOUNDS, mapBounds }
 }
 
-export function createPlurb(data, mapBounds) {
+export function createPlurb(plurb, mapBounds) {
   // data is plurb object from Maker
   fetch('/api/plurb', {
     method: 'POST',
@@ -31,9 +29,9 @@ export function createPlurb(data, mapBounds) {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify(plurb),
   }).then((body) => {
-    store.dispatch(getPlurbs(mapBounds));
+    store.dispatch(getPlurbs({topicId:plurb.topicId, mapBounds}));
   }).catch((error) => {
     console.error(error);
   });

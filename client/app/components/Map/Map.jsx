@@ -50,21 +50,23 @@ class GoogleMap extends React.Component {
     map.addListener('idle', () => {
       let newBounds = map.getBounds();
       
+      // pull map bounds off view port
       let Lats = newBounds.H;
       let Lngs = newBounds.j;
             
-      let currentBounds = {
+      let query = {
         mapBounds: {
           maxLat: +Lats.j.toFixed(2),
           maxLng: +Lngs.H.toFixed(2),
           minLat: +Lats.H.toFixed(2),
           minLng: +Lngs.j.toFixed(2)   
-        }
+        },
+        topicId: this.props.currentTopicId
       }
       
       // update bounds on store, then re-fetch plurbs
-      this.props.dispatch(updateMapBounds(currentBounds))
-      this.props.dispatch(getPlurbs(currentBounds))
+      this.props.dispatch(updateMapBounds(query.mapBounds))
+      this.props.dispatch(getPlurbs(query))
       
       // populate plurbs on map
       this.props.plurbs.map((plurb) => {
@@ -88,7 +90,8 @@ class GoogleMap extends React.Component {
 const mapStateToProps = (store) => {
   return {
     mapBounds: store.pluribusReducer.mapBounds,
-    plurbs: store.pluribusReducer.plurbs
+    plurbs: store.pluribusReducer.plurbs,
+    currentTopicId: store.pluribusReducer.currentTopicId
   };
 };
 
