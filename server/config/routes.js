@@ -20,7 +20,7 @@ module.exports = function (app) {
   /* Topic Routes */
   app.route('/api/topic')
     .get(topicController.getAllTopics)
-    .post(topicController.createTopic);
+    .post(topicController.findOrCreateTopic);
 
   app.route('/api/topic/:topicName')
     .get(topicController.getTopicByName)

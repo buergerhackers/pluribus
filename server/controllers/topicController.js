@@ -11,11 +11,11 @@ module.exports = {
     });
   },
   
-  createTopic: function (req, res) {
+  findOrCreateTopic: function (req, res) {
     var topicData = {
       name: req.body.name
     };
-    Topic.create(topicData)
+    Topic.findOrCreate(topicData)
     .then(function (topic) {
       res.status(201).json(topic);
     })
