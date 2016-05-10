@@ -2,6 +2,7 @@ var userController = require('../controllers/userController');
 var topicController = require('../controllers/topicController');
 var plurbController = require('../controllers/plurbController');
 var Purest = require('purest');
+var utils = require('./utils');
 
 var google = new Purest({ provider: 'google' });
 
@@ -40,6 +41,10 @@ module.exports = function (app) {
 
   app.route('/api/plurbs/:googId')
     .get(plurbController.getPlurbsByGoogId);
+
+    /* Utilities */
+  app.route('/getid')
+    .get(utils.getGoogId);
 
   //callback route for OAuth
   app.route('/callback')
