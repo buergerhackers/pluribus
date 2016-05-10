@@ -1,5 +1,4 @@
 import React from 'react';
-import { store } from '../../../STORE.jsx';
 import { connect } from 'react-redux';
 import { loadPlurbs, getPlurbs, setFilter } from '../../../ACTIONS.jsx';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';

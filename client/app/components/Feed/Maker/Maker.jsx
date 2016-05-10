@@ -1,5 +1,4 @@
 import React from 'react';
-import { store } from '../../../STORE.jsx';
 import { connect } from 'react-redux';
 import { createPlurb, loadPlurbs } from '../../../ACTIONS.jsx';
 import TextField from 'material-ui/TextField';

@@ -1,7 +1,6 @@
 import React from "react";
-import { store } from '../../STORE.jsx';
 import { connect } from 'react-redux';
-import { updateMapBounds } from '../../ACTIONS.jsx';
+import { updateMapBounds, getPlurbs } from '../../ACTIONS.jsx';
 
 class GoogleMap extends React.Component {
 
