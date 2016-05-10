@@ -1,4 +1,6 @@
 import React from "react";
+import Marker from './Marker.jsx';
+// import PlurbBlob from 'material-ui/maps/add-location';
 import { connect } from 'react-redux';
 import { updateMapBounds, getPlurbs } from '../../ACTIONS.jsx';
 
@@ -63,6 +65,15 @@ class GoogleMap extends React.Component {
       // update bounds on store, then re-fetch plurbs
       this.props.dispatch(updateMapBounds(currentBounds))
       this.props.dispatch(getPlurbs(currentBounds))
+      
+      // populate plurbs on map
+      this.props.plurbs.map((plurb) => {
+        new google.maps.Marker({
+          position: {lat: plurb.lat, lng: plurb.long},
+          map: map,
+          icon: "http://map.karaliki.ru/css/markbig.png"
+        });
+      });
     });
   }
 
@@ -77,8 +88,11 @@ class GoogleMap extends React.Component {
 const mapStateToProps = (store) => {
   return {
     mapBounds: store.pluribusReducer.mapBounds,
+    plurbs: store.pluribusReducer.plurbs
   };
 };
+
+// export map;
 
 // connect the desired state to the relevant component
 export default connect(mapStateToProps)(GoogleMap);
