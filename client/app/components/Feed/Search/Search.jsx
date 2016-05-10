@@ -18,9 +18,9 @@ class Search extends React.Component {
     this._selectTopic = this._selectTopic.bind(this);
   }
 
-  _selectTopic(selected, index) {
+  _selectTopic(selected) {
     // Set store topic
-    this.props.dispatch(selectTopic(selected, index));
+    selectTopic(selected);
   }
   
   _textSearch(text) {
