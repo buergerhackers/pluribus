@@ -1,5 +1,4 @@
 import React from 'react';
-import { store } from '../../../STORE.jsx';
 import { connect } from 'react-redux';
 import { loadPlurbs, getPlurbs, setFilter } from '../../../ACTIONS.jsx';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -21,7 +20,7 @@ class Filter extends React.Component {
   
   _handleSwitch() {
     // this.props.dispatch(loadPlurbs());
-    var filt = this.props.filter === 'PUBLIC' ? 'PRIVATE' : 'PUBLIC';
+    let filt = this.props.filter === 'PUBLIC' ? 'PRIVATE' : 'PUBLIC';
     this.props.dispatch(setFilter(filt));
   }
   

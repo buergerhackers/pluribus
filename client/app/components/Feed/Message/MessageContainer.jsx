@@ -1,5 +1,4 @@
 import React from 'react';
-
 import Message from './Message.jsx';
 import Menu from 'material-ui/Menu';
 import { connect } from 'react-redux';

@@ -1,5 +1,4 @@
 import React from 'react';
-import store from '../../STORE.jsx';
 import Filter from './Filter/Filter.jsx';
 import Maker from './Maker/Maker.jsx';
 import MessageContainer from './Message/MessageContainer.jsx';
