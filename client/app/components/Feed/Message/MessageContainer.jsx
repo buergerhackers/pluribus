@@ -8,7 +8,6 @@ class MessageContainer extends React.Component {
   // pass relevant piece of store to component
   constructor(props) {
     super(props);
-    this._loadPlurbs();
   }
 
   _loadPlurbs() {

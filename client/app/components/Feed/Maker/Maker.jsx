@@ -10,39 +10,47 @@ export default class Maker extends React.Component {
     super(props);
     this.state = {
       text: '',
-      location: '',
+      lat: 0,
+      long: 0,
+
     };
     // get location on first creation
     this._getLocation();
     this._updateMessage = this._updateMessage.bind(this);
     this._sendPlurb = this._sendPlurb.bind(this);
+    this._checkPlurb = this._checkPlurb.bind(this);
     this._getLocation = this._getLocation.bind(this);
   }
   _getLocation() {
     let context = this;
     navigator.geolocation.getCurrentPosition(function(position) {
-      let pos = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude,
-      };
-      context.setState({ location: pos });
+      context.setState({ lat: position.coords.latitude, long: position.coords.longitude });
     }, function () {
       console.log("Something Failed in grabbing geo coordinates");
     });
   }
 
-  _sendPlurb() {
+  _checkPlurb(e) {
+    if(e.key === 'Enter') {
+      this._sendPlurb(e)  
+    }
+  }
+
+  _sendPlurb(e) {
+    var context = this;
     this.props.dispatch(createPlurb(
       {
         text: this.state.text,
-        location: this.state.location
-      }
+        lat: this.state.lat,
+        long: this.state.long,
+        topicId: this.props.currentTopicId,
+      }, this.props.mapBounds
     ));
-    
+
     // clear the text field
     this.setState(
       { text: '' }
-    );
+    ); 
   }
 
   _updateMessage(e) {
@@ -62,7 +70,7 @@ export default class Maker extends React.Component {
         <TextField
           hintText="Have something to contribute?"
           onChange={ this._updateMessage }
-          onEnterKeyDown={ this._sendPlurb }
+          onKeyDown={ this._checkPlurb }
           value={ this.state.text }
         /><br/>
       </div>
@@ -74,6 +82,8 @@ export default class Maker extends React.Component {
 const mapStateToProps = (store) => {
   return {
     plurbs: store.pluribusReducer.currentPlurb,
+    currentTopicId: store.pluribusReducer.currentTopicId,
+    mapBounds: store.pluribusReducer.mapBounds,
   };
 };
 

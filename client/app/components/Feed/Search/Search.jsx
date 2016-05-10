@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { loadPlurbs, getPlurbs } from '../../../ACTIONS.jsx';
+import { loadPlurbs, getPlurbs, getTopics, selectTopic } from '../../../ACTIONS.jsx';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
@@ -12,34 +12,29 @@ import MenuItem from 'material-ui/MenuItem';
 class Search extends React.Component {
   constructor(props) {
     super(props);
-    this.props.dispatch(getPlurbs());
+    this.props.dispatch(getTopics());
+    this._selectTopic = this._selectTopic.bind(this);
   }
-  
-  filter(input) {
-    // optional custom filter function to wrap
-    // all below functions in
-  }
-  
-  _selectTopic(selected) {
-    // getPlurbs(selectedTopic)
+
+  _selectTopic(selected, index) {
+    // Set store topic
+    this.props.dispatch(selectTopic(selected, index));
   }
   
   _textSearch(text) {
-    this.props.dispatch(getPlurbs(text));
+    
   }
   
   render() {
     return (
-      <MuiThemeProvider muiTheme={getMuiTheme()}>
-        <AutoComplete
-          fullWidth={true}
-          hintText="Search topics"
-          animated={true}
-          anchorOrigin={{vertical: 'bottom', horizontal: 'left'}}
-          dataSource={ this.props.plurbs.map((p) => p.text) }
-          onNewRequst={ this._textSearch }
-        />
-      </MuiThemeProvider>  
+      <AutoComplete
+        fullWidth={true}
+        hintText="Search topics"
+        animated={true}
+        anchorOrigin={{vertical: 'bottom', horizontal: 'left'}}
+        dataSource={ this.props.allTopics.map((t) => t.name) }
+        onNewRequest={ this._selectTopic }
+      />
     );
   }
 }
@@ -47,7 +42,8 @@ class Search extends React.Component {
 // map the portion of the state tree desired
 const mapStateToProps = (store) => {
   return {
-    plurbs: store.pluribusReducer.plurbs
+    allTopics: store.pluribusReducer.allTopics,
+    myTopics: store.pluribusReducer.myTopics
   };
 };
 
