@@ -4,7 +4,7 @@ import { combineReducers } from 'redux'
 import { FETCHING, SET_FILTER, SELECT_TOPIC, LOAD_TOPICS, GET_TOPICS, CREATE_PLURB, LOAD_PLURBS, GET_PLURBS, UPDATE_MAP_BOUNDS, FeedFilters } from './ACTIONS.jsx'
 
 const initialState = {
-  currentTopic: "",
+  currentTopicId: "",
   mapBounds: {
     maxLat:38.87,
     maxLng:-76.95,

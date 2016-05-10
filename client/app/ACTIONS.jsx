@@ -16,7 +16,7 @@ export const LOAD_TOPICS = 'LOAD_TOPICS';
 
 // CREATORS--------------------
 // sync
-export function selectTopic(currentTopic) {
+export function selectTopic(currentTopic, index) {
   fetch('/api/topic', {
     method: 'POST',
     headers: {
@@ -31,7 +31,7 @@ export function selectTopic(currentTopic) {
   }).catch((error) => {
     console.err(error);
   });
-  return { type: SELECT_TOPIC, currentTopic }
+  return { type: SELECT_TOPIC, index }
 }
 
 export function setFilter(filter) {

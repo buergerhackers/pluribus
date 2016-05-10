@@ -14,7 +14,7 @@ module.exports = {
 
   createPlurb: function (req, res) {
     var googId = req.session.user;
-    var topic = req.body.topic;
+    var topicId = req.body.topicId;
     var plurbData = {
       text: req.body.text,
       lat: req.body.lat,
@@ -23,7 +23,7 @@ module.exports = {
     Plurb.create(plurbData)
     .then(function (plurb) {
       plurb.setUser(googId);
-      plurb.setTopic(topic);
+      plurb.setTopic(topicId);
       res.status(201).json(plurb);
     })
     .catch(function (err) {

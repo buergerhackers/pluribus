@@ -82,7 +82,8 @@ export default class Maker extends React.Component {
 const mapStateToProps = (store) => {
   return {
     plurbs: store.pluribusReducer.currentPlurb,
-    currentTopic: store.pluribusReducer.currentTopic,
+    currentTopicId: store.pluribusReducer.currentTopicId,
+    mapBounds: store.pluribusReducer.mapBounds,
   };
 };
 
