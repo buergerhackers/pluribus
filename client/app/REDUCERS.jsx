@@ -1,7 +1,7 @@
 //===================================================
 // REDUCER for APP component
 import { combineReducers } from 'redux'
-import { FETCHING, SET_FILTER, FeedFilters, SELECT_TOPIC, CREATE_PLURB, LOAD_PLURBS, GET_PLURBS, UPDATE_MAP_BOUNDS } from './ACTIONS.jsx'
+import { FETCHING, SET_FILTER, SELECT_TOPIC, CREATE_PLURB, LOAD_PLURBS, GET_PLURBS, UPDATE_MAP_BOUNDS } from './ACTIONS.jsx'
 
 const initialState = {
   currentTopic: "",
@@ -12,7 +12,7 @@ const initialState = {
     minLng:-77.00
   },
   plurbs: [],
-  filter: FeedFilters.PUBLIC,
+  filter: 'PUBLIC',
   myTopics: [],
   allTopics: [],
   fetching: false,

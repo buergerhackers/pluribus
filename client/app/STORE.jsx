@@ -12,7 +12,7 @@ const initialState = {
     minLng:-77.00
   },
   plurbs: [],
-  filter: FeedFilters.PUBLIC,
+  filter: 'PUBLIC',
   myTopics: [],
   allTopics: [],
   fetching: false,

@@ -21,7 +21,7 @@ class Filter extends React.Component {
   
   _handleSwitch() {
     // this.props.dispatch(loadPlurbs());
-    var filt = this.props.filter === 'PUBLIC' ? 'PRIVATE' : 'PUBLIC';
+    let filt = this.props.filter === 'PUBLIC' ? 'PRIVATE' : 'PUBLIC';
     this.props.dispatch(setFilter(filt));
   }
   
