@@ -67,12 +67,6 @@ class GoogleMap extends React.Component {
     });
   }
 
-  mapCenterLatLng() {
-    let props = this.props;
-
-    return new google.maps.LatLng(props.mapCenterLat, props.mapCenterLng);
-  }
-
   render() {
     return (
       <div id='map' className='map-gic' style={{ width: '50%', height:'600px', "opacity":'.90' }}></div>
