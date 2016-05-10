@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { loadPlurbs, getPlurbs, getTopics, selectTopic } from '../../../ACTIONS.jsx';
+import { loadPlurbs, getPlurbs } from '../../../ACTIONS.jsx';
+import { getTopics, selectTopic } from './SEARCH_ACTIONS.jsx';
+
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
@@ -16,9 +18,9 @@ class Search extends React.Component {
     this._selectTopic = this._selectTopic.bind(this);
   }
 
-  _selectTopic(selected, index) {
+  _selectTopic(selected) {
     // Set store topic
-    this.props.dispatch(selectTopic(selected, index));
+    selectTopic(selected);
   }
   
   _textSearch(text) {
