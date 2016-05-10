@@ -1,5 +1,5 @@
 import React from "react";
-
+import initMap, { heatMap } from './map_utils.jsx';
 import { connect } from 'react-redux';
 import { updateMapBounds, getPlurbs } from '../../ACTIONS.jsx';
 
@@ -36,14 +36,17 @@ class GoogleMap extends React.Component {
       this.props.dispatch(updateMapBounds(query.mapBounds))
       this.props.dispatch(getPlurbs(query))
       
-      // populate plurbs on map
-      this.props.plurbs.map((plurb) => {
-        new google.maps.Marker({
-          position: {lat: plurb.lat, lng: plurb.long},
-          map: map,
-          icon: "http://map.karaliki.ru/css/markbig.png"
-        });
-      });
+      // populate plurb markers on map
+      // this.props.plurbs.map((plurb) => {
+      //   new google.maps.Marker({
+      //     position: {lat: plurb.lat, lng: plurb.long},
+      //     map: map,
+      //     icon: "http://map.karaliki.ru/css/markbig.png"
+      //   });
+      // });
+      
+      // generate heatmap of plurbs
+      heatMap(this.props.plurbs);
     });
   }
 
