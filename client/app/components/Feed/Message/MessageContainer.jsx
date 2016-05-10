@@ -16,7 +16,7 @@ class MessageContainer extends React.Component {
 
   render() {
     return (
-      <div style={{ height: '400px' }}>
+      <div style={{ height: '400px', overflow:'scroll' }}>
         <Menu>
           { this.props.plurbs.map((message) => {
             return <Message message={ message.text } />
