@@ -43,7 +43,7 @@ export function updateMapBounds(mapBounds) {
   return { type: UPDATE_MAP_BOUNDS, mapBounds }
 }
 
-export function createPlurb(data) {
+export function createPlurb(data, mapBounds) {
   // data is plurb object from Maker
   fetch('/api/plurb', {
     method: 'POST',
@@ -53,9 +53,9 @@ export function createPlurb(data) {
     },
     body: JSON.stringify(data),
   }).then((body) => {
-    store.dispatch(getPlurbs());
+    store.dispatch(getPlurbs(mapBounds));
   }).catch((error) => {
-    console.err(error);
+    console.error(error);
   });
 
   return { type: CREATE_PLURB, fetching: true }   
@@ -67,18 +67,18 @@ export function getPlurbs(options) {
   // all plurbs are stored on client on first render, then filter on client-side
   // after initial load, only updates come from server
   // filter param 'PUBLIC', 'PRIVATE', {text}, {location}, etc. for individual plurbs
-  fetch('/api/plurb', {
-      method: 'GET',
+  fetch('/api/plurbs', {
+      method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       },
-      body: options
+      body: JSON.stringify(options),
     }).then((plurbs) => plurbs.text())
       .then((plurbs) => {
       store.dispatch(loadPlurbs(plurbs));
     }).catch((error) => {
-      console.err(error);
+      console.error(error);
     });
     
   return { type: GET_PLURBS, fetching: true }

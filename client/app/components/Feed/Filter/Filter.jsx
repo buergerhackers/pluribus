@@ -14,7 +14,6 @@ class Filter extends React.Component {
   
   constructor(props) {
     super(props);
-    console.log(props);
     this._handleSwitch = this._handleSwitch.bind(this);
   }
   

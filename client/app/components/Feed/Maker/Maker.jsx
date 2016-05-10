@@ -10,7 +10,9 @@ export default class Maker extends React.Component {
     super(props);
     this.state = {
       text: '',
-      location: '',
+      lat: 0,
+      long: 0,
+
     };
     // get location on first creation
     this._getLocation();
@@ -22,11 +24,7 @@ export default class Maker extends React.Component {
   _getLocation() {
     let context = this;
     navigator.geolocation.getCurrentPosition(function(position) {
-      let pos = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude,
-      };
-      context.setState({ location: pos });
+      context.setState({ lat: position.coords.latitude, long: position.coords.longitude });
     }, function () {
       console.log("Something Failed in grabbing geo coordinates");
     });
@@ -39,12 +37,14 @@ export default class Maker extends React.Component {
   }
 
   _sendPlurb(e) {
+    var context = this;
     this.props.dispatch(createPlurb(
       {
         text: this.state.text,
-        location: this.state.location,
-        topic: this.props.currentTopic,
-      }
+        lat: this.state.lat,
+        long: this.state.long,
+        topicId: this.props.currentTopicId,
+      }, this.props.mapBounds
     ));
 
     // clear the text field

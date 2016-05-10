@@ -47,16 +47,15 @@ class GoogleMap extends React.Component {
     // When user pauses map movement, updates new bounds
     map.addListener('idle', () => {
       let newBounds = map.getBounds();
-      console.log("Bounds: ", newBounds);
       
       let Lats = newBounds.H;
       let Lngs = newBounds.j;
             
       let currentBounds = {
         mapBounds: {
-          maxLat: +Lats.H.toFixed(2),
+          maxLat: +Lats.j.toFixed(2),
           maxLng: +Lngs.H.toFixed(2),
-          minLat: +Lats.j.toFixed(2),
+          minLat: +Lats.H.toFixed(2),
           minLng: +Lngs.j.toFixed(2)   
         }
       }

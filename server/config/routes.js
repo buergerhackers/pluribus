@@ -28,8 +28,10 @@ module.exports = function (app) {
   
   /* Plurb Routes */
   app.route('/api/plurb')
-    .get(plurbController.getPlurbsByLocation)
     .post(plurbController.createPlurb);
+
+  app.route('/api/plurbs')
+    .post(plurbController.getPlurbsByLocation)
 
   app.route('/api/plurb/:plurbId')
     .get(plurbController.getPlurb)
