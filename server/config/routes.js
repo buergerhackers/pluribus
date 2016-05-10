@@ -5,6 +5,7 @@ var Purest = require('purest');
 
 var google = new Purest({ provider: 'google' });
 
+
 module.exports = function (app) {
   /* User Routes */
   app.route('/api/user')
@@ -48,7 +49,7 @@ module.exports = function (app) {
       }, function (err, nope, body) {
         userController.findOrCreateUser(body, function (user) {
           //sets session to Google ID
-          req.session.user = user[0].dataValues.googid;       
+          req.session.user = user[0].dataValues.googid;
           res.redirect('/');
         });
       });

@@ -36,7 +36,7 @@ module.exports = function (app, express) {
   app.use(bodyParser.json());
   app.use(session({
     secret: process.env.SESSION_SECRET,
-    resave: true,
+    resave: false,
     saveUninitialized: true
   }));
   app.use(grant);
