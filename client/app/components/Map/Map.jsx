@@ -11,39 +11,8 @@ class GoogleMap extends React.Component {
   
   // Once DOM node has rendered
   componentDidMount(rootNode) {
-    let mapOptions = {
-      center: {lat: 38.91, lng: -77.04},
-      zoom: 6,
-    },
-
-    // initialize map center on Washington, DC
-    map = new google.maps.Map(document.getElementById('map'), mapOptions);
-    
-    // re-center map on user
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function(position) {
-        let pos = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude
-        };
-        map.setCenter(pos);
-      }, function() {
-        handleLocationError(true);
-      });
-    } else {
-      // Browser doesn't support Geolocation
-      handleLocationError(false);
-    }
-
-    function handleLocationError(browserHasGeolocation) {
-      if(browserHasGeolocation) {
-        console.log("Looks like the browser blocked geolocation");
-        map.setCenter({lat: 38.91, lng: -77.04});
-      } else {
-        console.log("This browser does NOT support geolocation");
-        map.setCenter({lat: 38.91, lng: -77.04});
-      }
-    }
+    // initialize map
+    let map = initMap();
 
     // When user pauses map movement, updates new bounds
     map.addListener('idle', () => {
