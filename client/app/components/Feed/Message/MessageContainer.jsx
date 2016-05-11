@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import Message from './Message.jsx';
 import Menu from 'material-ui/Menu';
 import Paper from 'material-ui/Paper';
@@ -21,8 +22,13 @@ class MessageContainer extends React.Component {
         <Menu>
         {
           this.props.plurbs.map((plurb, index) => {
-            console.log(index);
-              return <Paper><Message key={ index } plurb={ plurb } /></Paper>
+              return <ReactCSSTransitionGroup
+                        transitionName="example"
+                        transitionAppear={true}
+                        transitionAppearTimeout={500}
+                     >
+                <Paper><Message key={ index } plurb={ plurb } /></Paper>
+              </ReactCSSTransitionGroup>
           }) 
         }
         </Menu>
