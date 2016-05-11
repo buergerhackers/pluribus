@@ -22,29 +22,16 @@ export function updateMapBounds(mapBounds) {
 }
 
 export function createPlurb(plurb, mapBounds) {
-  // data is plurb object from Maker
-  fetch('/api/user', {
-    method: 'GET',
+  fetch('/api/plurb', {
+    method: 'POST',
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
     },
-  }).then((user) => user.text())
-    .then((userJSON) => {
-      let plurbObj = plurb;
-      plurbObj.googId = JSON.parse(userJSON)[0].googid;
-      fetch('/api/plurb', {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(plurbObj),
-      }).then((body) => {
-        store.dispatch(getPlurbs({topicId:plurb.topicId, mapBounds}));
-      }).catch((error) => {
-        console.error(error);
-      })
+    credentials: 'same-origin',
+    body: JSON.stringify(plurb),
+  }).then((body) => {
+    store.dispatch(getPlurbs({topicId:plurb.topicId, mapBounds}));
   }).catch((error) => {
     console.error(error);
   });
@@ -85,5 +72,5 @@ export function fetching() {
 
 export const FeedFilters = {
   PUBLIC: 'PUBLIC',
-  PRIVATE: 'PRIVATE'
+  PRIVATE: 'PRIVATE',
 }

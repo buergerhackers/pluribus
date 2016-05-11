@@ -42,13 +42,6 @@ module.exports = function (app) {
   app.route('/api/plurbs/:googId')
     .get(plurbController.getPlurbsByGoogId);
 
-    /* Utilities */
-  app.route('/getid')
-    .get(function (req, res) {
-      console.log('getid route: ', req.session.user);
-      utils.getGoogId(req, res);
-    });
-
   //callback route for OAuth
   app.route('/callback')
     .get(function (req, res) {
