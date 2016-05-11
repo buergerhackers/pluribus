@@ -44,7 +44,10 @@ module.exports = function (app) {
 
     /* Utilities */
   app.route('/getid')
-    .get(utils.getGoogId);
+    .get(function (req, res) {
+      console.log('getid route: ', req.session.user);
+      utils.getGoogId(req, res);
+    });
 
   //callback route for OAuth
   app.route('/callback')
