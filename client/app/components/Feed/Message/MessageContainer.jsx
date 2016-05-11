@@ -20,8 +20,9 @@ class MessageContainer extends React.Component {
       <div style={{ height: '400px', overflowY:'scroll' }}>
         <Menu>
         {
-          this.props.plurbs.map((plurb) => {
-              return <Paper><Message plurb={ plurb } /></Paper>
+          this.props.plurbs.map((plurb, index) => {
+            console.log(index);
+              return <Paper><Message key={ index } plurb={ plurb } /></Paper>
           }) 
         }
         </Menu>
