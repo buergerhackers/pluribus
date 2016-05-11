@@ -1,25 +1,49 @@
 import React from 'react';
+
 import MenuItem from 'material-ui/MenuItem';
 import Person from 'material-ui/svg-icons/social/person';
-import Pin from 'material-ui/svg-icons/maps/pin-drop';
+import Counter from 'material-ui/svg-icons/image/filter-none';
+import Follow from 'material-ui/svg-icons/content/add-circle';
+import UnFollow from 'material-ui/svg-icons/content/remove-circle';
+
+import { timeStamp } from './message_utils.jsx';
 
 export default class Message extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    this._reLoc = this._reLoc.bind(this);
+    this._userPlurbs = this._userPlurbs.bind(this);
+    this._timeStamp = this._timeStamp.bind(this);
+    this._increment = this._increment.bind(this);
   }
-  _showLoc() {
-    this.setState({location: "you FOUND me"});
+  componentDidMount() {
+    // decorate plurb with likes property
+    this.state = {likes:0};
   }
-  _showFace() {
-    this.setState({photo: "you SEE me"});
+  _reLoc() {
+    // navigate map-center to selected plurb
+    console.log({lat: this.props.plurb.lat, long: this.props.plurb.long});
+  }
+  _followUser() {
+    // flip profile pic to 'add-circle' or 'remove-circle'
+    // on tap, toggle gentle highlight on plurbs with googId
+    console.log({photo: "googId profile pic"});
+  }
+  _timeStamp() {
+    console.log(this.props.plurb);
+    return timeStamp(this.props.plurb);
+  }
+  _incrementLikes() {
+    console.log('i want likes:',likes);
+    this.setState({likes:++likes});
   }
   render() {
     return (
       <MenuItem
-        leftIcon={<Person onClick={this._showFace.bind(this)} />}
-        primaryText={ this.props.message }
-        rightIcon={<Pin onClick={this._showLoc.bind(this)} />}
-        style={{width: '96%'}}
+        leftIcon={<Person onClick={ this._followUser } />}
+        primaryText={ this.props.plurb.text }
+        onTouchTap={ this._reLoc }
+        rightIcon={<Counter onClick={this._incrementLikes}>{ this.state }</Counter>}
       />
     )
   }
