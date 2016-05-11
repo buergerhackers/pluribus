@@ -37,7 +37,6 @@ class NavBar extends React.Component {
           >
             <MenuItem primaryText="Sign Out" />
             <MenuItem primaryText="Sign In" />
-            <MenuItem primaryText="Sign Up" />
           </IconMenu>
         }
       />
