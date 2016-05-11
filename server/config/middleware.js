@@ -37,10 +37,14 @@ module.exports = function (app, express) {
   app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: true,
+    cookie: {
+      secure: false,
+      maxAge: 864000000
+    }
   }));
+  app.get('/', checkAuthentication);
   app.use(grant);
   //checks if user it authenticated before sending to index.html
-  app.get('/', checkAuthentication);
   app.use(express.static(__dirname + '/../../public'));
 };

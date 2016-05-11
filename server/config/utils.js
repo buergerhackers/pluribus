@@ -10,6 +10,10 @@ module.exports = {
 
   getGoogId: function (req, res) {
     var googId = req.session.user;
-    res.status(200).json(googId);
+    if(googId) {
+      res.status(200).json(googId);
+    } else {
+      res.status(200).json({googId: 0});
+    }
   }
 };
