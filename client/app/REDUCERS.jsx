@@ -5,6 +5,7 @@ import { SELECT_TOPIC, GET_TOPICS, LOAD_TOPICS } from './components/Feed/Search/
 import { FETCHING, SET_FILTER, CREATE_PLURB, LOAD_PLURBS, GET_PLURBS, UPDATE_MAP_BOUNDS, FeedFilters } from './ACTIONS.jsx';
 
 const initialState = {
+  userId: 0,
   currentTopicId: 0,
   mapBounds: {
     maxLat:38.87,
