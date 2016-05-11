@@ -23,15 +23,28 @@ export function updateMapBounds(mapBounds) {
 
 export function createPlurb(plurb, mapBounds) {
   // data is plurb object from Maker
-  fetch('/api/plurb', {
-    method: 'POST',
+  fetch('/api/user', {
+    method: 'GET',
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(plurb),
-  }).then((body) => {
-    store.dispatch(getPlurbs({topicId:plurb.topicId, mapBounds}));
+  }).then((user) => user.text())
+    .then((userJSON) => {
+      let plurbObj = plurb;
+      plurbObj.googId = JSON.parse(userJSON)[0].googid;
+      fetch('/api/plurb', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(plurbObj),
+      }).then((body) => {
+        store.dispatch(getPlurbs({topicId:plurb.topicId, mapBounds}));
+      }).catch((error) => {
+        console.error(error);
+      })
   }).catch((error) => {
     console.error(error);
   });
