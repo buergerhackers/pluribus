@@ -22,13 +22,13 @@ export function updateMapBounds(mapBounds) {
 }
 
 export function createPlurb(plurb, mapBounds) {
-  // data is plurb object from Maker
   fetch('/api/plurb', {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
     },
+    credentials: 'same-origin',
     body: JSON.stringify(plurb),
   }).then((body) => {
     store.dispatch(getPlurbs({topicId:plurb.topicId, mapBounds}));
@@ -72,5 +72,5 @@ export function fetching() {
 
 export const FeedFilters = {
   PUBLIC: 'PUBLIC',
-  PRIVATE: 'PRIVATE'
+  PRIVATE: 'PRIVATE',
 }
