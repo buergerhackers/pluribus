@@ -7,34 +7,32 @@ let mapOptions = {
   zoom: 6,
 }
 
+// pluribus color scheme
+let gradient = [
+  'rgba(0, 255, 255, 0)',
+  'rgba(0, 188, 212, 1)',
+  'rgba(18, 179, 201, 1)',
+  'rgba(56, 163, 181, 1)',
+  'rgba(75, 155, 171, 1)',
+  'rgba(94, 146, 161, 1)',
+  'rgba(113, 138, 151, 1)',
+  'rgba(132, 130, 141, 1)',
+  'rgba(151, 122, 131, 1)',
+  'rgba(170, 113, 121, 1)',
+  'rgba(189, 105, 111, 1)',
+  'rgba(208, 97, 101, 1)',
+  'rgba(227, 89, 91, 1)',
+  'rgba(246, 81, 81, 1)'
+];
+//default opacity is .6 and radius is 20px
+
 /*
   HEATMAP HELPERS
 */
 export function toggleHeatmap() {
   heatmap.setMap(heatmap.getMap() ? null: map);
 }
-
-function changeGradient() {
-  // pluribus color scheme
-  let gradient = [
-    'rgba(0, 255, 255, 0)',
-    'rgba(0, 188, 212, 1)',
-    'rgba(18, 179, 201, 1)',
-    'rgba(56, 163, 181, 1)',
-    'rgba(75, 155, 171, 1)',
-    'rgba(94, 146, 161, 1)',
-    'rgba(113, 138, 151, 1)',
-    'rgba(132, 130, 141, 1)',
-    'rgba(151, 122, 131, 1)',
-    'rgba(170, 113, 121, 1)',
-    'rgba(189, 105, 111, 1)',
-    'rgba(208, 97, 101, 1)',
-    'rgba(227, 89, 91, 1)',
-    'rgba(246, 81, 81, 1)'
-  ];
-  console.log(heatmap.get('gradient'));
-  heatmap.set('gradient', heatmap.get('gradient') ? null: gradient);
-}
+// render variables
 function changeRadius() {
   heatmap.set('radius', heatmap.get('radius') ? null: 20);
 }
@@ -43,7 +41,8 @@ function changeOpacity() {
 }
 function getPoints(plurbs) {
   return plurbs.map((plurb) => {
-    return new google.maps.LatLng(plurb.lat, plurb.long)
+    // set weight to plurb.likes to intensify blob accordingly
+    return {location: new google.maps.LatLng(plurb.lat, plurb.long), weight: 3}
   });
 }
 /*
@@ -81,11 +80,12 @@ export function heatMap(plurbs) {
   // initialize heatmap layer on map
   heatmap = new google.maps.visualization.HeatmapLayer({
     data: getPoints(plurbs),
-    map: map
+    dissipating: true,
+    gradient,
+    map
   });
   
   // middleware for heatmap
-  changeGradient();
 }
 
 export default function initMap() {
