@@ -7,8 +7,7 @@ import Search from './Search/Search.jsx';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Paper from 'material-ui/Paper';
-import Searchbar from 'material-ui/AppBar';
-import EyeGlass from 'material-ui/svg-icons/action/search';
+
 
 export default class Feed extends React.Component {
   constructor(props) {
@@ -22,11 +21,7 @@ export default class Feed extends React.Component {
     return <MuiThemeProvider muiTheme={getMuiTheme()}>
       <Paper style={{float:'right', width:'50%', height:'600px', zIndex:'1'}}>
         <Filter />
-        <Searchbar 
-          iconElementLeft={<EyeGlass color="white" />}
-          children={<Search />}
-        >
-        </Searchbar>
+        <Search />
         <MessageContainer />
         <Maker />
       </Paper>
