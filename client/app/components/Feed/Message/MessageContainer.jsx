@@ -1,6 +1,7 @@
 import React from 'react';
 import Message from './Message.jsx';
 import Menu from 'material-ui/Menu';
+import Paper from 'material-ui/Paper';
 import { connect } from 'react-redux';
 import { loadPlurbs, getPlurbs } from '../../../ACTIONS.jsx';
 
@@ -16,11 +17,13 @@ class MessageContainer extends React.Component {
 
   render() {
     return (
-      <div style={{ height: '400px', overflow:'scroll' }}>
+      <div style={{ height: '400px', overflowY:'scroll' }}>
         <Menu>
-          { this.props.plurbs.map((message) => {
-            return <Message message={ message.text } />
-          }) }
+        {
+          this.props.plurbs.map((plurb) => {
+              return <Paper><Message plurb={ plurb } /></Paper>
+          }) 
+        }
         </Menu>
       </div>
     );
