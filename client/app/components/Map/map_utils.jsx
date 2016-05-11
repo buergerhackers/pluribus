@@ -15,22 +15,24 @@ export function toggleHeatmap() {
 }
 
 function changeGradient() {
+  // pluribus color scheme
   let gradient = [
     'rgba(0, 255, 255, 0)',
-    'rgba(0, 255, 255, 1)',
-    'rgba(0, 191, 255, 1)',
-    'rgba(0, 127, 255, 1)',
-    'rgba(0, 63, 255, 1)',
-    'rgba(0, 0, 255, 1)',
-    'rgba(0, 0, 223, 1)',
-    'rgba(0, 0, 191, 1)',
-    'rgba(0, 0, 159, 1)',
-    'rgba(0, 0, 127, 1)',
-    'rgba(63, 0, 91, 1)',
-    'rgba(127, 0, 63, 1)',
-    'rgba(191, 0, 31, 1)',
-    'rgba(255, 0, 0, 1)'
+    'rgba(0, 188, 212, 1)',
+    'rgba(18, 179, 201, 1)',
+    'rgba(56, 163, 181, 1)',
+    'rgba(75, 155, 171, 1)',
+    'rgba(94, 146, 161, 1)',
+    'rgba(113, 138, 151, 1)',
+    'rgba(132, 130, 141, 1)',
+    'rgba(151, 122, 131, 1)',
+    'rgba(170, 113, 121, 1)',
+    'rgba(189, 105, 111, 1)',
+    'rgba(208, 97, 101, 1)',
+    'rgba(227, 89, 91, 1)',
+    'rgba(246, 81, 81, 1)'
   ];
+  console.log(heatmap.get('gradient'));
   heatmap.set('gradient', heatmap.get('gradient') ? null: gradient);
 }
 function changeRadius() {
@@ -81,6 +83,9 @@ export function heatMap(plurbs) {
     data: getPoints(plurbs),
     map: map
   });
+  
+  // middleware for heatmap
+  changeGradient();
 }
 
 export default function initMap() {
