@@ -12,9 +12,9 @@ export default class Message extends React.Component {
   constructor(props) {
     super(props);
     this._reLoc = this._reLoc.bind(this);
-    this._userPlurbs = this._userPlurbs.bind(this);
+    this._followUser = this._followUser.bind(this);
     this._timeStamp = this._timeStamp.bind(this);
-    this._increment = this._increment.bind(this);
+    this._incrementLikes = this._incrementLikes.bind(this);
   }
   componentDidMount() {
     // decorate plurb with likes property
