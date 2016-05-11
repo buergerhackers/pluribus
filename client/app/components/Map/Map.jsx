@@ -66,7 +66,5 @@ const mapStateToProps = (store) => {
   };
 };
 
-// export map;
-
 // connect the desired state to the relevant component
 export default connect(mapStateToProps)(GoogleMap);
