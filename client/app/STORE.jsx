@@ -3,6 +3,7 @@ import { createStore, compose } from 'redux'
 import pluribusApp from './REDUCERS.jsx'
 
 const initialState = {
+  authenticated: false,
   currentTopicId: 0,
   mapBounds: {
     maxLat:38.87,
