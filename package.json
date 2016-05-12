@@ -34,6 +34,7 @@
     "express": "^4.13.4",
     "express-session": "^1.13.0",
     "grant-express": "^3.6.1",
+    "html-webpack-plugin": "^2.16.1",
     "material-ui": "^0.15.0-beta.2",
     "mysql": "^2.10.2",
     "purest": "^2.0.1",
@@ -48,7 +49,6 @@
   "devDependencies": {
     "enzyme": "^2.2.0",
     "expect": "^1.19.0",
-    "html-webpack-plugin": "^2.16.1",
     "mocha": "^2.4.5",
     "react-addons-test-utils": "^15.0.2",
     "redux-devtools": "^3.2.0",
