@@ -20,15 +20,18 @@ class NavBar extends React.Component {
     this.state = {
       open: false
     };
-    this._verifyUser = this._verifyUser.bind(this);
+    // each render, check URL for authentication
+    this._verifyUser();
     this._handleTouchTap = this._handleTouchTap.bind(this);
   }
   
   _verifyUser() {
-    console.log(this.props);
-    // get '/' 
-    // this.props.dispatch(authenticate(valueReturnedFromGetROUTE));
-   
+    let auth = window.location.search.match(/true/);
+    
+    // user is authenticated
+    if (auth) {
+      this.props.dispatch(authenticate(true));
+    }   
   }
   
   _handleTouchTap(event) {
@@ -41,7 +44,7 @@ class NavBar extends React.Component {
     });
   }
   
-  _handleRequestClose() {
+  _handleClose() {
     this.setState({
       open: false
     });
@@ -58,17 +61,23 @@ class NavBar extends React.Component {
           anchorEl={this.state.anchorEl}
           targetOrigin={{horizontal: 'left', vertical: 'top'}}
           anchorOrigin={{horizontal: 'left', vertical: 'top'}}
-          onRequestClose={this._handlRequestClose}
           animation={PopoverAnimationVertical}
           useLayerForClickAway={false}
         >
           <List>
-            <ListItem primaryText="Sign Out"
-                      onClick={(e) => {console.log('sign out',e)}}
-            />
-            <ListItem primaryText="Sign In"
-                      onClick={(e) => {console.log('send to google',e)}}
-            />
+            {
+              (this.props.authenticated && 
+              <ListItem 
+                primaryText="Sign Out"
+                onClick={(e) => { window.location.pathname = "/logout" }}
+              />) 
+              || 
+              (!this.props.authenticated &&
+              <ListItem 
+                primaryText="Sign In"
+                onClick={(e) => { window.location.pathname = "/connect/google" }}
+              />)
+            }
           </List>
         </Popover>
       </Navbar>

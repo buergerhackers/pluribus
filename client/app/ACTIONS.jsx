@@ -17,13 +17,14 @@ export function setFilter(filter) {
   return { type: SET_FILTER, filter }
 }
 
-export function authenticate(verified) {
-  return { type: AUTHENTICATE, verified }
-}
 
 // async
 export function updateMapBounds(mapBounds) {
   return { type: UPDATE_MAP_BOUNDS, mapBounds }
+}
+
+export function authenticate(verified) {
+  return { type: AUTHENTICATE, verified }
 }
 
 export function createPlurb(plurb, mapBounds) {
