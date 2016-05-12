@@ -5,21 +5,17 @@ import { connect } from 'react-redux';
 import { loadPlurbs, getPlurbs } from '../../../ACTIONS.jsx';
 
 class MessageContainer extends React.Component {
-  // pass relevant piece of store to component
+  
   constructor(props) {
     super(props);
-  }
-
-  _loadPlurbs() {
-    this.props.dispatch(getPlurbs());
   }
 
   render() {
     return (
       <div style={{ height: '400px', overflow:'scroll' }}>
         <Menu>
-          { this.props.plurbs.map((message) => {
-            return <Message message={ message.text } />
+          { this.props.plurbs.map((plurb) => {
+            return <Message plurb={ plurb } />
           }) }
         </Menu>
       </div>
@@ -31,6 +27,8 @@ class MessageContainer extends React.Component {
 const mapStateToProps = (store) => {
   return {
     plurbs: store.pluribusReducer.plurbs,
+    mapBounds: store.pluribusReducer.mapBounds,
+    topicId: store.pluribusReducer.currentTopicId
   };
 };
 
