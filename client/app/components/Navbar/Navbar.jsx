@@ -47,7 +47,7 @@ class NavBar extends React.Component {
 // map the portion of the state tree desired
 const mapStateToProps = (store) => {
   return {
-    userId: store.pluribusReducer.userId
+    authenticated: store.pluribusReducer.authenticated
   };
 };
 
