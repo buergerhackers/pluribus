@@ -1,11 +1,17 @@
 import React from 'react';
 
+// material-ui components
 import MenuItem from 'material-ui/MenuItem';
 import Person from 'material-ui/svg-icons/social/person';
 import Counter from 'material-ui/svg-icons/image/filter-none';
 import Follow from 'material-ui/svg-icons/content/add-circle';
 import UnFollow from 'material-ui/svg-icons/content/remove-circle';
 
+// map 
+import { map } from '../../Map/Map.jsx';
+import { rePosition } from '../../Map/map_utils.jsx';
+
+// utils
 import { timeStamp } from './message_utils.jsx';
 
 export default class Message extends React.Component {
@@ -22,7 +28,7 @@ export default class Message extends React.Component {
   }
   _reLoc() {
     // navigate map-center to selected plurb
-    console.log({lat: this.props.plurb.lat, long: this.props.plurb.long});
+    rePosition(this.props.plurb);
   }
   _followUser() {
     // flip profile pic to 'add-circle' or 'remove-circle'
@@ -30,20 +36,17 @@ export default class Message extends React.Component {
     console.log({photo: "googId profile pic"});
   }
   _timeStamp() {
-    console.log(this.props.plurb);
     return timeStamp(this.props.plurb);
   }
   _incrementLikes() {
-    console.log('i want likes:',likes);
-    this.setState({likes:++likes});
+    console.log('i need likes:');
   }
   render() {
     return (
       <MenuItem
         leftIcon={<Person onClick={ this._followUser } />}
         primaryText={ this.props.plurb.text }
-        onTouchTap={ this._reLoc }
-        rightIcon={<Counter onClick={this._incrementLikes}>{ this.state }</Counter>}
+        rightIcon={<Counter onClick={ this._reLoc }>{ 3 }</Counter>}
       />
     )
   }

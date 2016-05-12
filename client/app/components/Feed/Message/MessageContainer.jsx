@@ -22,13 +22,7 @@ class MessageContainer extends React.Component {
         <Menu>
         {
           this.props.plurbs.map((plurb, index) => {
-              return <ReactCSSTransitionGroup
-                        transitionName="example"
-                        transitionAppear={true}
-                        transitionAppearTimeout={500}
-                     >
-                <Paper><Message key={ index } plurb={ plurb } /></Paper>
-              </ReactCSSTransitionGroup>
+              return <Paper><Message plurb={ plurb } /></Paper>
           }) 
         }
         </Menu>
