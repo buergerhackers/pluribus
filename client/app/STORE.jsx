@@ -1,7 +1,6 @@
 // Create and configure app store
 import { createStore, compose } from 'redux'
 import pluribusApp from './REDUCERS.jsx'
-import { FeedFilters } from './ACTIONS.jsx'
 
 const initialState = {
   currentTopicId: 0,

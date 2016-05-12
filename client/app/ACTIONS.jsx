@@ -69,8 +69,3 @@ export function loadPlurbs(plurbs) {
 export function fetching() {
   return { type: FETCHING, fetching: true };
 }
-
-export const FeedFilters = {
-  PUBLIC: 'PUBLIC',
-  PRIVATE: 'PRIVATE',
-}
