@@ -10,8 +10,7 @@
     "start": "node ./server/server.js",
     "webpack:deploy": "NODE_ENV=production webpack --config webpack.prod.config.js --progress --colors",
     "test:watch": "npm test -- --watch",
-    "heroku-postbuild": "npm run webpack:deploy",
-    "postinstall": "webpack -p"
+    "heroku-postbuild": "npm run webpack:deploy"
   },
   "repository": {
     "type": "git",
