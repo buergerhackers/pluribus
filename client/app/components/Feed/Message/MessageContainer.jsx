@@ -1,6 +1,8 @@
 import React from 'react';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import Message from './Message.jsx';
 import Menu from 'material-ui/Menu';
+import Paper from 'material-ui/Paper';
 import { connect } from 'react-redux';
 import { loadPlurbs, getPlurbs } from '../../../ACTIONS.jsx';
 
@@ -10,17 +12,15 @@ class MessageContainer extends React.Component {
     super(props);
   }
 
-  _loadPlurbs() {
-    this.props.dispatch(getPlurbs());
-  }
-
   render() {
     return (
-      <div style={{ height: '400px', overflow:'scroll' }}>
+      <div style={{ height: '400px', overflowY:'scroll' }}>
         <Menu>
-          { this.props.plurbs.map((message) => {
-            return <Message message={ message.text } />
-          }) }
+        {
+          this.props.plurbs.map((plurb) => {
+              return <Paper><Message plurb={ plurb } /></Paper>
+          }) 
+        }
         </Menu>
       </div>
     );
@@ -30,6 +30,8 @@ class MessageContainer extends React.Component {
 // map the portion of the state tree desired
 const mapStateToProps = (store) => {
   return {
+    mapBounds: store.pluribusReducer.mapBounds,
+    topicId: store.pluribusReducer.currentTopicId,
     plurbs: store.pluribusReducer.plurbs,
   };
 };
