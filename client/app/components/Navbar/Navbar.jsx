@@ -1,9 +1,11 @@
 import React from 'react';
+import { authenticate } from '../../ACTIONS.jsx';
 import { connect } from 'react-redux';
 import Navbar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
-import IconMenu from 'material-ui/IconMenu';
-import MenuItem from 'material-ui/MenuItem';
+// import IconMenu from 'material-ui/IconMenu'; NOT WORKING
+import { Popover, PopoverAnimationVertical } from 'material-ui/Popover';
+import { List, ListItem } from 'material-ui/List';
 import ClosedMenuIcon from 'material-ui/svg-icons/navigation/chevron-right';
 import OpenMenuIcon from 'material-ui/svg-icons/navigation/expand-more';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -15,32 +17,62 @@ class NavBar extends React.Component {
   
   constructor(props) {
     super(props);
-    this._userSession = this._userSession.bind(this);
+    this.state = {
+      open: false
+    };
+    this._verifyUser = this._verifyUser.bind(this);
+    this._handleTouchTap = this._handleTouchTap.bind(this);
   }
   
-  _userSession() {
+  _verifyUser() {
     console.log(this.props);
-    // naive check for user verification
-    // return this.props.googId ? true: false;
-    return true;
+    // get '/' 
+    // this.props.dispatch(authenticate(valueReturnedFromGetROUTE));
+   
+  }
+  
+  _handleTouchTap(event) {
+    // no page refresh
+    event.preventDefault();
+    
+    this.setState({
+      open: true,
+      anchorEl: event.currentTarget
+    });
+  }
+  
+  _handleRequestClose() {
+    this.setState({
+      open: false
+    });
   }
   
   render() {
     return <MuiThemeProvider muiTheme={getMuiTheme()}>
-    <Navbar 
+      <Navbar 
         title="Pluribus"
-        iconElementLeft={
-          <IconMenu
-            iconButtonElement={<IconButton><OpenMenuIcon color="white" /></IconButton>}
-            targetOrigin={{horizontal: 'left', vertical: 'top'}}
-            anchorOrigin={{horizontal: 'left', vertical: 'top'}}
-          >
-            <MenuItem primaryText="Sign Out" />
-            <MenuItem primaryText="Sign In" />
-          </IconMenu>
-        }
-      />
-    </MuiThemeProvider>
+        iconElementLeft={<IconButton onClick={this._handleTouchTap}><OpenMenuIcon color="white" /></IconButton>}
+      >
+        <Popover
+          open={this.state.open}
+          anchorEl={this.state.anchorEl}
+          targetOrigin={{horizontal: 'left', vertical: 'top'}}
+          anchorOrigin={{horizontal: 'left', vertical: 'top'}}
+          onRequestClose={this._handlRequestClose}
+          animation={PopoverAnimationVertical}
+          useLayerForClickAway={false}
+        >
+          <List>
+            <ListItem primaryText="Sign Out"
+                      onClick={(e) => {console.log('sign out',e)}}
+            />
+            <ListItem primaryText="Sign In"
+                      onClick={(e) => {console.log('send to google',e)}}
+            />
+          </List>
+        </Popover>
+      </Navbar>
+      </MuiThemeProvider>
   }
 }
 
