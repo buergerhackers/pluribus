@@ -43,7 +43,8 @@ module.exports = function (app, express) {
       maxAge: 864000000
     }
   }));
-  app.get('/', checkAuthentication);
+  // app.get('/', checkAuthentication);
+  console.log('no need for authentication check on server');
   app.use(grant);
   //checks if user it authenticated before sending to index.html
   app.use(express.static(__dirname + '/../../public'));
