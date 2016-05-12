@@ -6,7 +6,6 @@ var utils = require('./utils');
 
 var google = new Purest({ provider: 'google' });
 
-
 module.exports = function (app) {
   /* User Routes */
   app.route('/api/user')

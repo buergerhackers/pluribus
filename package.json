@@ -8,7 +8,8 @@
   },
   "scripts": {
     "test": "mocha --compilers js:babel-register --recursive client/**/*-spec*",
-    "test:watch": "npm test -- --watch"
+    "test:watch": "npm test -- --watch",
+    "postinstall": "webpack -p --config ./webpack.config.js --progress --colors"
   },
   "repository": {
     "type": "git",
