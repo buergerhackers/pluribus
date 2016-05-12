@@ -12,16 +12,12 @@ class MessageContainer extends React.Component {
     super(props);
   }
 
-  _loadPlurbs() {
-    this.props.dispatch(getPlurbs());
-  }
-
   render() {
     return (
       <div style={{ height: '400px', overflowY:'scroll' }}>
         <Menu>
         {
-          this.props.plurbs.map((plurb, index) => {
+          this.props.plurbs.map((plurb) => {
               return <Paper><Message plurb={ plurb } /></Paper>
           }) 
         }
@@ -34,6 +30,8 @@ class MessageContainer extends React.Component {
 // map the portion of the state tree desired
 const mapStateToProps = (store) => {
   return {
+    mapBounds: store.pluribusReducer.mapBounds,
+    topicId: store.pluribusReducer.currentTopicId,
     plurbs: store.pluribusReducer.plurbs,
   };
 };
