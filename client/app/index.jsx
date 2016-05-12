@@ -2,11 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux'
 
-// webpack compilation imports
-// import ACTIONS from './ACTIONS'
-// import REDUCERS from './REDUCERS'
-// import STORE from './STORE'
-
 // custom components
 import GoogleMap from './components/Map/Map.jsx';
 import Feed from './components/Feed/Feed.jsx';
@@ -24,11 +19,11 @@ class Main extends React.Component {
   render() {
     return (
       <Provider store={ store } >
-        <div>
+        <span>
           <NavBar />
           <Feed />
           <GoogleMap />
-        </div>
+        </span>
       </Provider>
     )
   }

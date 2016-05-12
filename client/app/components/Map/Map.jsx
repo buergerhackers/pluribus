@@ -2,6 +2,7 @@ import React from "react";
 import initMap, { heatMap } from './map_utils.jsx';
 import { connect } from 'react-redux';
 import { updateMapBounds, getPlurbs } from '../../ACTIONS.jsx';
+let map;
 
 class GoogleMap extends React.Component {
 
@@ -12,7 +13,7 @@ class GoogleMap extends React.Component {
   // Once DOM node has rendered
   componentDidMount(rootNode) {
     // initialize map
-    let map = initMap();
+    map = initMap();
 
     // When user pauses map movement, updates new bounds
     map.addListener('idle', () => {
@@ -35,15 +36,6 @@ class GoogleMap extends React.Component {
       // update bounds on store, then re-fetch plurbs
       this.props.dispatch(updateMapBounds(query.mapBounds))
       this.props.dispatch(getPlurbs(query))
-      
-      // populate plurb markers on map
-      // this.props.plurbs.map((plurb) => {
-      //   new google.maps.Marker({
-      //     position: {lat: plurb.lat, lng: plurb.long},
-      //     map: map,
-      //     icon: "http://map.karaliki.ru/css/markbig.png"
-      //   });
-      // });
       
       // generate heatmap of plurbs
       heatMap(this.props.plurbs);
@@ -68,3 +60,6 @@ const mapStateToProps = (store) => {
 
 // connect the desired state to the relevant component
 export default connect(mapStateToProps)(GoogleMap);
+
+// expose map for feed access
+export { map };

@@ -2,6 +2,7 @@ import store from './STORE.jsx';
 // ACTIONS for APP component
 
 // sync
+export const AUTHENTICATE = 'AUTHENTICATE';
 export const SET_FILTER = 'SET_FILTER';
 export const UPDATE_MAP_BOUNDS = 'UPDATE_MAP_BOUNDS';
 // async
@@ -16,9 +17,14 @@ export function setFilter(filter) {
   return { type: SET_FILTER, filter }
 }
 
+
 // async
 export function updateMapBounds(mapBounds) {
   return { type: UPDATE_MAP_BOUNDS, mapBounds }
+}
+
+export function authenticate(verified) {
+  return { type: AUTHENTICATE, verified }
 }
 
 export function createPlurb(plurb, mapBounds) {
@@ -68,9 +74,4 @@ export function loadPlurbs(plurbs) {
 
 export function fetching() {
   return { type: FETCHING, fetching: true };
-}
-
-export const FeedFilters = {
-  PUBLIC: 'PUBLIC',
-  PRIVATE: 'PRIVATE',
 }

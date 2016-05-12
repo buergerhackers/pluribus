@@ -2,9 +2,10 @@
 // REDUCER for APP component
 import { combineReducers } from 'redux';
 import { SELECT_TOPIC, GET_TOPICS, LOAD_TOPICS } from './components/Feed/Search/SEARCH_ACTIONS.jsx';
-import { FETCHING, SET_FILTER, CREATE_PLURB, LOAD_PLURBS, GET_PLURBS, UPDATE_MAP_BOUNDS, FeedFilters } from './ACTIONS.jsx';
+import { FETCHING, SET_FILTER, CREATE_PLURB, LOAD_PLURBS, GET_PLURBS, UPDATE_MAP_BOUNDS, AUTHENTICATE } from './ACTIONS.jsx';
 
 const initialState = {
+  authenticated: false,
   currentTopicId: 0,
   mapBounds: {
     maxLat:38.87,
@@ -22,6 +23,10 @@ const initialState = {
 // COMBINED REDUCER -> yield Store
 function pluribusReducer(state = initialState, action) {
   switch (action.type) {
+    case AUTHENTICATE:
+      return Object.assign({}, state, {
+        authenticated: action.verified
+      })
     case FETCHING:
       return Object.assign({}, state, {
         fetching: action.fetching
