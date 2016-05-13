@@ -48,9 +48,17 @@ function getPoints(plurbs) {
 /*
   MAP HELPERS
 */
-export function rePosition() {
-  // re-center map on user
-  if (navigator.geolocation) {
+export function rePosition(plurb) {
+  let pos;
+  
+  // re-center map on plurb
+  if (plurb) {
+    pos = {
+      lat: plurb.lat,
+      lng: plurb.long
+    };
+    map.setCenter(pos);
+  } else if (navigator.geolocation) { // re-center map on user
     navigator.geolocation.getCurrentPosition(function(position) {
       let pos = {
         lat: position.coords.latitude,
