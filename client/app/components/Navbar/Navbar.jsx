@@ -52,10 +52,25 @@ class NavBar extends React.Component {
   }
   
   render() {
+    let activeElement;
+    
+    // check authentication for render
+    if (this.props.authenticated) {
+      activeElement = <ListItem 
+        primaryText="Sign Out" 
+        onClick={(e) => {window.location.pathname = "/logout"}}  
+      /> 
+    } else {
+      activeElement = <ListItem 
+        primaryText="Sign In" 
+        onClick={(e) => {window.location.pathname = "/connect/google"}}  
+      /> 
+    }
+    
     return <MuiThemeProvider muiTheme={getMuiTheme()}>
     <Navbar 
       title="Pluribus"
-      iconElementLeft={<IconButton><OpenMenuIcon color="white" /></IconButton>}
+      iconElementLeft={<IconButton onClick={this._handleTouchTap}><OpenMenuIcon color="white" /></IconButton>}
     >
       <Popover 
         open={this.state.open}
@@ -65,15 +80,7 @@ class NavBar extends React.Component {
         animation={PopoverAnimationVertical}
         useLayerForClickAway={false}
       >
-        <List>
-        {
-          if (this.props.authenticated) {
-            <ListItem primaryText="Sign Out" onClick{(e) => {window.location.pathname = "/logout"}} />)
-          } else {
-            <ListItem primaryText="Sign In" onClick{(e) => {window.location.pathname = "/connect/google"}} />)
-          }
-        }
-        </List>
+        <List children={activeElement} />
       </Popover>
     </Navbar>
     </MuiThemeProvider>
