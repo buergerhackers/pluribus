@@ -20,7 +20,7 @@ module.exports = {
       { 
         test: /\.jsx$/, 
         include: __dirname + '/client', 
-        loader: "babel-loader",
+        loader: "babel",
         exclude: /test/,
         query: {
           presets: ['es2015', 'react']
