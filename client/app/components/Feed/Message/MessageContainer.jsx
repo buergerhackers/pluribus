@@ -1,4 +1,6 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
+
 import Message from './Message.jsx';
 import Menu from 'material-ui/Menu';
 import Paper from 'material-ui/Paper';
@@ -6,9 +8,13 @@ import { connect } from 'react-redux';
 import { loadPlurbs, getPlurbs } from '../../../ACTIONS.jsx';
 
 class MessageContainer extends React.Component {
-  
   constructor(props) {
     super(props);
+  }
+
+  componentDidUpdate() {
+    var node = ReactDOM.findDOMNode(this);
+    node.scrollTop = node.scrollHeight;
   }
 
   render() {
