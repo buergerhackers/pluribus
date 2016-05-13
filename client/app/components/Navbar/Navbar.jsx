@@ -2,8 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Navbar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
-import IconMenu from 'material-ui/IconMenu';
-import MenuItem from 'material-ui/MenuItem';
+import { List, ListItem } from 'material-ui/List';
 import ClosedMenuIcon from 'material-ui/svg-icons/navigation/chevron-right';
 import OpenMenuIcon from 'material-ui/svg-icons/navigation/expand-more';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -30,14 +29,14 @@ class NavBar extends React.Component {
     <Navbar 
         title="Pluribus"
         iconElementLeft={
-          <IconMenu
+          <List
             iconButtonElement={<IconButton><OpenMenuIcon color="white" /></IconButton>}
             targetOrigin={{horizontal: 'left', vertical: 'top'}}
             anchorOrigin={{horizontal: 'left', vertical: 'top'}}
           >
-            <MenuItem primaryText="Sign Out" />
-            <MenuItem primaryText="Sign In" />
-          </IconMenu>
+            <ListItem primaryText="Sign Out" />
+            <ListItem primaryText="Sign In" />
+          </List>
         }
       />
     </MuiThemeProvider>
