@@ -42,7 +42,7 @@ function changeOpacity() {
 function getPoints(plurbs) {
   return plurbs.map((plurb) => {
     // set weight to plurb.likes to intensify blob accordingly
-    return {location: new google.maps.LatLng(plurb.lat, plurb.long), weight: 3}
+    return {location: new google.maps.LatLng(plurb.lat, plurb.long), weight: 1}
   });
 }
 /*
