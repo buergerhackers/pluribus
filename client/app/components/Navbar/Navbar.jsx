@@ -1,7 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
+
+// material-ui components
 import Navbar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
+import { Popover, PopoverAnimationVertical } from 'material-ui/Popover';
 import { List, ListItem } from 'material-ui/List';
 import ClosedMenuIcon from 'material-ui/svg-icons/navigation/chevron-right';
 import OpenMenuIcon from 'material-ui/svg-icons/navigation/expand-more';
@@ -27,18 +30,27 @@ class NavBar extends React.Component {
   render() {
     return <MuiThemeProvider muiTheme={getMuiTheme()}>
     <Navbar 
-        title="Pluribus"
-        iconElementLeft={
-          <List
-            iconButtonElement={<IconButton><OpenMenuIcon color="white" /></IconButton>}
-            targetOrigin={{horizontal: 'left', vertical: 'top'}}
-            anchorOrigin={{horizontal: 'left', vertical: 'top'}}
-          >
-            <ListItem primaryText="Sign Out" />
-            <ListItem primaryText="Sign In" />
-          </List>
-        }
-      />
+      title="Pluribus"
+      iconElementLeft={<IconButton><OpenMenuIcon color="white" /></IconButton>}
+    >
+      <Popover 
+        open={true}
+        anchorEl={this.state.anchorEl}
+        targetOrigin={{horizontal: 'left', vertical: 'top'}}
+        anchorOrigin={{horizontal: 'left', vertical: 'top'}}
+        animation={PopoverAnimationVertical}
+        useLayerForClickAway={false}
+      >
+        <List>
+          <ListItem
+            primaryText="Sign Out"
+          />
+          <ListItem
+            primaryText="Sign In"
+          />
+        </List>
+      </Popover>
+    </Navbar>
     </MuiThemeProvider>
   }
 }
