@@ -138,6 +138,7 @@ class Search extends React.Component {
                         onChange={ this._textSearch }
                         onKeyDown={ this._check }
                         value= { this.state.currentTopic }
+                        inputStyle={{ color : 'white' }}
                       />
     }
     return (
