@@ -50,7 +50,9 @@ module.exports = function (app) {
         userController.findOrCreateUser(body, function (user) {
           //sets session to Google ID
           req.session.user = user[0].dataValues.googid;
-          res.redirect('/');
+          // notify client of successful authentication
+          var authenticated = encodeURIComponent(true);
+          res.redirect('/?authenticated=' + authenticated);
         });
       });
     });
