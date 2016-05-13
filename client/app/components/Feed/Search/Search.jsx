@@ -15,6 +15,8 @@ import Searchbar from 'material-ui/AppBar';
 import EyeGlass from 'material-ui/svg-icons/action/search';
 import Label from 'material-ui/svg-icons/action/label-outline';
 import {Popover, PopoverAnimationVertical} from 'material-ui/Popover';
+import FlatButton from 'material-ui/FlatButton';
+import Loyalty from 'material-ui/svg-icons/action/loyalty';
 
 class Search extends React.Component {
   constructor(props) {
@@ -86,16 +88,30 @@ class Search extends React.Component {
   }
   
   render() {
+    let activeElement;
+    if(this.props.currentTopicId) {
+      let topic = this.state.currentTopic;
+      activeElement = <FlatButton
+                        label={topic}
+                        labelPosition="before"
+                        primary={true}
+                        icon={<Loyalty />}  
+                        backgroundColor={'#627072'}
+                        hoverColor={'#F93E7E'}                      
+                      />
+    } else {
+      activeElement = <TextField
+                        hintText="Choose a topic!"
+                        fullWidth={ true }
+                        onChange={ this._textSearch }
+                        onKeyDown={ this._check }
+                        value= { this.state.currentTopic }
+                      />
+    }
     return (
       <Searchbar 
           iconElementLeft={<IconButton><EyeGlass color="white" /></IconButton>}
-          title={<TextField
-              hintText="Choose a topic!"
-              fullWidth={ true }
-              onChange={ this._textSearch }
-              onKeyDown={ this._check }
-              value= { this.state.currentTopic }
-            />}
+          title={activeElement}
       >
         <Popover
             open={this.state.open}
@@ -131,6 +147,7 @@ const mapStateToProps = (store) => {
     allTopics: store.pluribusReducer.allTopics,
     myTopics: store.pluribusReducer.myTopics,
     mapBounds: store.pluribusReducer.mapBounds,
+    currentTopicId: store.pluribusReducer.currentTopicId
   };
 };
 
