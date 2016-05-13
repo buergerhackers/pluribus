@@ -42,15 +42,23 @@ function changeOpacity() {
 function getPoints(plurbs) {
   return plurbs.map((plurb) => {
     // set weight to plurb.likes to intensify blob accordingly
-    return {location: new google.maps.LatLng(plurb.lat, plurb.long), weight: 3}
+    return {location: new google.maps.LatLng(plurb.lat, plurb.long), weight: 1}
   });
 }
 /*
   MAP HELPERS
 */
-export function rePosition() {
-  // re-center map on user
-  if (navigator.geolocation) {
+export function rePosition(plurb) {
+  let pos;
+  
+  // re-center map on plurb
+  if (plurb) {
+    pos = {
+      lat: plurb.lat,
+      lng: plurb.long
+    };
+    map.setCenter(pos);
+  } else if (navigator.geolocation) { // re-center map on user
     navigator.geolocation.getCurrentPosition(function(position) {
       let pos = {
         lat: position.coords.latitude,
