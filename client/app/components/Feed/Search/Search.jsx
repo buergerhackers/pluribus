@@ -1,15 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import tapEvents from 'react-tap-event-plugin';
+tapEvents();
 
 // ACTIONS
 import { getTopics, selectTopic } from './SEARCH_ACTIONS.jsx';
 
 // MATERIAL COMPONENTS
 import {List, ListItem} from 'material-ui/List';
+import IconButton from 'material-ui/IconButton';
 import Subheader from 'material-ui/Subheader';
 import TextField from 'material-ui/TextField';
 import Searchbar from 'material-ui/AppBar';
 import EyeGlass from 'material-ui/svg-icons/action/search';
+import Label from 'material-ui/svg-icons/action/label-outline';
 import {Popover, PopoverAnimationVertical} from 'material-ui/Popover';
 
 class Search extends React.Component {
@@ -27,8 +31,18 @@ class Search extends React.Component {
     this._check = this._check.bind(this);
   }
 
-  _selectTopic(selected) {
-    // Set store topic
+  _selectTopic(e) {
+    // This is how to retreive the topic...
+    let selected = '';
+
+    // Check is e is coming from _check
+    if (typeof e === 'string') {
+      selected = e;
+    } else {
+      // This means e is coming from clicking the List Item
+      selected = e._targetInst._ancestorInfo.current.instance._currentElement.props.children;
+    }
+
     let mapBounds = this.props.mapBounds;
     selectTopic(selected, mapBounds);
     this._handleRequestClose();
@@ -74,7 +88,7 @@ class Search extends React.Component {
   render() {
     return (
       <Searchbar 
-          iconElementLeft={<EyeGlass color="white" />}
+          iconElementLeft={<IconButton><EyeGlass color="white" /></IconButton>}
           title={<TextField
               hintText="Choose a topic!"
               fullWidth={ true }
@@ -96,8 +110,10 @@ class Search extends React.Component {
               {
                 this.state.filtered.map((topic) => {
                   return (
-                    <ListItem primaryText={ topic.name } 
-                              onClick={ (e) => this._selectTopic(e.target.innerHTML) }
+                    <ListItem key={ topic.id }
+                              onTouchTap={ this._selectTopic }
+                              primaryText={ topic.name }
+                              leftIcon={<Label />}
                     />
                   );
                 })
