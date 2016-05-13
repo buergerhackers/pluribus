@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { authenticate } from '../../ACTIONS.jsx';
 
 // material-ui components
 import Navbar from 'material-ui/AppBar';
@@ -30,7 +31,7 @@ class NavBar extends React.Component {
     
     // naive check for user authentication
     if (auth) {
-      console.log('AUTHENTICATE: true');
+      this.props.dispatch(authentication(true));
     }
   }
   
@@ -65,12 +66,13 @@ class NavBar extends React.Component {
         useLayerForClickAway={false}
       >
         <List>
-          <ListItem
-            primaryText="Sign Out"
-          />
-          <ListItem
-            primaryText="Sign In"
-          />
+        {
+          if (this.props.authenticated) {
+            <ListItem primaryText="Sign Out" onClick{(e) => {window.location.pathname = "/logout"}} />)
+          } else {
+            <ListItem primaryText="Sign In" onClick{(e) => {window.location.pathname = "/connect/google"}} />)
+          }
+        }
         </List>
       </Popover>
     </Navbar>
@@ -81,7 +83,7 @@ class NavBar extends React.Component {
 // map the portion of the state tree desired
 const mapStateToProps = (store) => {
   return {
-    userId: store.pluribusReducer.userId
+    authenticated: store.pluribusReducer.authenticated
   };
 };
 
