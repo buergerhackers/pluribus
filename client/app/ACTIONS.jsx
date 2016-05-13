@@ -4,6 +4,7 @@ import store from './STORE.jsx';
 // sync
 export const SET_FILTER = 'SET_FILTER';
 export const UPDATE_MAP_BOUNDS = 'UPDATE_MAP_BOUNDS';
+export const AUTHENTICATE = 'AUTHENTICATE';
 // async
 export const CREATE_PLURB = 'CREATE_PLURB';
 export const GET_PLURBS = 'GET_PLURBS';
@@ -16,6 +17,9 @@ export function setFilter(filter) {
   return { type: SET_FILTER, filter }
 }
 
+export function authenticate(verified) {
+  return { type: AUTHENTICATE, verified}
+}
 // async
 export function updateMapBounds(mapBounds) {
   return { type: UPDATE_MAP_BOUNDS, mapBounds }
@@ -68,9 +72,4 @@ export function loadPlurbs(plurbs) {
 
 export function fetching() {
   return { type: FETCHING, fetching: true };
-}
-
-export const FeedFilters = {
-  PUBLIC: 'PUBLIC',
-  PRIVATE: 'PRIVATE',
 }

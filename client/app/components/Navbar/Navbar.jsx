@@ -1,9 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { authenticate } from '../../ACTIONS.jsx';
+
+// material-ui components
 import Navbar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
-import IconMenu from 'material-ui/IconMenu';
-import MenuItem from 'material-ui/MenuItem';
+import { Popover, PopoverAnimationVertical } from 'material-ui/Popover';
+import { List, ListItem } from 'material-ui/List';
 import ClosedMenuIcon from 'material-ui/svg-icons/navigation/chevron-right';
 import OpenMenuIcon from 'material-ui/svg-icons/navigation/expand-more';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -15,31 +18,71 @@ class NavBar extends React.Component {
   
   constructor(props) {
     super(props);
-    this._userSession = this._userSession.bind(this);
+    this.state = {
+      open: false
+    };
+    // each render, check URL for authentication
+    this._verifyUser();
+    this._handleTouchTap = this._handleTouchTap.bind(this);
   }
   
-  _userSession() {
-    console.log(this.props);
-    // naive check for user verification
-    // return this.props.googId ? true: false;
-    return true;
+  _verifyUser() {
+    let auth = window.location.search.match(/true/);
+    
+    // naive check for user authentication
+    if (auth) {
+      this.props.dispatch(authenticate(true));
+    }
+  }
+  
+  _handleTouchTap(event) {
+    // no page refresh, please
+    event.preventDefault();
+    
+    this.setState({
+      open: true,
+      anchorEl: event.currentTarget
+    });
+  }
+  
+  _handleClose() {
+    this.setState({
+      open: false
+    });
   }
   
   render() {
+    let activeElement;
+    
+    // check authentication for render
+    if (this.props.authenticated) {
+      activeElement = <ListItem 
+        primaryText="Sign Out" 
+        onClick={(e) => {window.location.pathname = "/logout"}}  
+      /> 
+    } else {
+      activeElement = <ListItem 
+        primaryText="Sign In" 
+        onClick={(e) => {window.location.pathname = "/connect/google"}}  
+      /> 
+    }
+    
     return <MuiThemeProvider muiTheme={getMuiTheme()}>
     <Navbar 
-        title="Pluribus"
-        iconElementLeft={
-          <IconMenu
-            iconButtonElement={<IconButton><OpenMenuIcon color="white" /></IconButton>}
-            targetOrigin={{horizontal: 'left', vertical: 'top'}}
-            anchorOrigin={{horizontal: 'left', vertical: 'top'}}
-          >
-            <MenuItem primaryText="Sign Out" />
-            <MenuItem primaryText="Sign In" />
-          </IconMenu>
-        }
-      />
+      title="Pluribus"
+      iconElementLeft={<IconButton onClick={this._handleTouchTap}><OpenMenuIcon color="white" /></IconButton>}
+    >
+      <Popover 
+        open={this.state.open}
+        anchorEl={this.state.anchorEl}
+        targetOrigin={{horizontal: 'left', vertical: 'top'}}
+        anchorOrigin={{horizontal: 'left', vertical: 'top'}}
+        animation={PopoverAnimationVertical}
+        useLayerForClickAway={false}
+      >
+        <List children={activeElement} />
+      </Popover>
+    </Navbar>
     </MuiThemeProvider>
   }
 }
@@ -47,7 +90,7 @@ class NavBar extends React.Component {
 // map the portion of the state tree desired
 const mapStateToProps = (store) => {
   return {
-    userId: store.pluribusReducer.userId
+    authenticated: store.pluribusReducer.authenticated
   };
 };
 

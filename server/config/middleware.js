@@ -2,7 +2,6 @@ var Grant = require('grant-express');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var dotenv = require('dotenv');
-var checkAuthentication = require('./utils').checkAuthentication;
 
 /* This will check if the app is in production and finds a NODE_ENV or local.
 If local, it will load the .env file variables as if it were production */
@@ -43,7 +42,6 @@ module.exports = function (app, express) {
       maxAge: 864000000
     }
   }));
-  app.get('/', checkAuthentication);
   app.use(grant);
   //checks if user it authenticated before sending to index.html
   app.use(express.static(__dirname + '/../../public'));
