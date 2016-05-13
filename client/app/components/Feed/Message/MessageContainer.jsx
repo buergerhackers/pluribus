@@ -1,4 +1,6 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
+
 import Message from './Message.jsx';
 import Menu from 'material-ui/Menu';
 import Paper from 'material-ui/Paper';
