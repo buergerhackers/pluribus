@@ -22,6 +22,7 @@ class NavBar extends React.Component {
     };
     // each render, check URL for authentication
     this._verifyUser();
+    this._handleTouchTap = this._handleTouchTap.bind(this);
   }
   
   _verifyUser() {
@@ -33,6 +34,22 @@ class NavBar extends React.Component {
     }
   }
   
+  _handleTouchTap(event) {
+    // no page refresh, please
+    event.preventDefault();
+    
+    this.setState({
+      open: true,
+      anchorEl: event.currentTarget
+    });
+  }
+  
+  _handleClose() {
+    this.setState({
+      open: false
+    });
+  }
+  
   render() {
     return <MuiThemeProvider muiTheme={getMuiTheme()}>
     <Navbar 
@@ -40,7 +57,7 @@ class NavBar extends React.Component {
       iconElementLeft={<IconButton><OpenMenuIcon color="white" /></IconButton>}
     >
       <Popover 
-        open={true}
+        open={this.state.open}
         anchorEl={this.state.anchorEl}
         targetOrigin={{horizontal: 'left', vertical: 'top'}}
         anchorOrigin={{horizontal: 'left', vertical: 'top'}}
