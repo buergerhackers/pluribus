@@ -1,5 +1,5 @@
-const path = require('path')
-const webpack = require('webpack')
+var path = require('path');
+var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 var HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
