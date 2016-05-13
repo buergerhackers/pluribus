@@ -118,7 +118,7 @@ class Search extends React.Component {
         topic = "REMOVE";
         icon = <Backspace />;
       } else {
-        topic = context.state.currentTopic;
+        topic = this.state.currentTopic;
         icon = <Loyalty />;
       };
       activeElement = <FlatButton
