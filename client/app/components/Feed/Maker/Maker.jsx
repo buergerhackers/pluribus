@@ -61,11 +61,13 @@ export default class Maker extends React.Component {
   }
 
   render() {
+    let auth = this.props.authenticated;
     return (
       <MakerBar
         iconElementLeft={
           <ActionButton
             primary={true}
+            disabled={ !auth }
             children={<Plus />} 
             onClick={ this._sendPlurb }
           />
@@ -73,7 +75,8 @@ export default class Maker extends React.Component {
         title={
           <TextField
             fullWidth={true}
-            floatingLabelText={"Login to contribute"}
+            floatingLabelText={ !auth ? "Login to contribute": "" }
+            disabled={ !auth }
             hintText="Have something to contribute?"
             onChange={ this._updateMessage }
             onKeyDown={ this._checkPlurb }
@@ -91,6 +94,7 @@ const mapStateToProps = (store) => {
     plurbs: store.pluribusReducer.currentPlurb,
     currentTopicId: store.pluribusReducer.currentTopicId,
     mapBounds: store.pluribusReducer.mapBounds,
+    authenticated: store.pluribusReducer.authenticated
   };
 };
 
