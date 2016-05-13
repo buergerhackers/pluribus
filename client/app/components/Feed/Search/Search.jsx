@@ -1,5 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import tapEvents from 'react-tap-event-plugin';
+tapEvents();
 
 // ACTIONS
 import { getTopics, selectTopic } from './SEARCH_ACTIONS.jsx';
@@ -27,8 +29,18 @@ class Search extends React.Component {
     this._check = this._check.bind(this);
   }
 
-  _selectTopic(selected) {
-    // Set store topic
+  _selectTopic(e) {
+    // This is how to retreive the topic...
+    let selected = '';
+
+    // Check is e is coming from _check
+    if (typeof e === 'string') {
+      selected = e;
+    } else {
+      // This means e is coming from clicking the List Item
+      selected = e._targetInst._ancestorInfo.current.instance._currentElement.props.children;
+    }
+
     let mapBounds = this.props.mapBounds;
     selectTopic(selected, mapBounds);
     this._handleRequestClose();
@@ -96,8 +108,10 @@ class Search extends React.Component {
               {
                 this.state.filtered.map((topic) => {
                   return (
-                    <ListItem primaryText={ topic.name } 
-                              onClick={ (e) => this._selectTopic(e.target.innerHTML) }
+                    <ListItem key={ topic.id }
+                              onTouchTap={ this._selectTopic }
+                              primaryText={ topic.name }
+                              leftIcon={<Label />}
                     />
                   );
                 })
