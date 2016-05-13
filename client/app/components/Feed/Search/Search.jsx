@@ -14,6 +14,7 @@ import TextField from 'material-ui/TextField';
 import Searchbar from 'material-ui/AppBar';
 import EyeGlass from 'material-ui/svg-icons/action/search';
 import Label from 'material-ui/svg-icons/action/label-outline';
+import Backspace from 'material-ui/svg-icons/hardware/keyboard-backspace';
 import {Popover, PopoverAnimationVertical} from 'material-ui/Popover';
 import FlatButton from 'material-ui/FlatButton';
 import Loyalty from 'material-ui/svg-icons/action/loyalty';
@@ -25,12 +26,15 @@ class Search extends React.Component {
       filtered: [],
       open: false,
       currentTopic: '',
+      clickCount: '',
     };
     this.props.dispatch(getTopics());
     this._selectTopic = this._selectTopic.bind(this);
     this._textSearch = this._textSearch.bind(this);
     this._handleRequestClose = this._handleRequestClose.bind(this);
     this._check = this._check.bind(this);
+    this._setCount = this._setCount.bind(this);
+    this._removeTopic = this._removeTopic.bind(this);
   }
 
   _selectTopic(e) {
@@ -86,22 +90,50 @@ class Search extends React.Component {
       open: false,
     });
   }
+
+  _setCount() {
+    this.setState({
+      clickCount: 0,
+    })
+  }
+
+  _removeTopic(e) {
+    this.setState({
+      clickCount: this.state.clickCount+=1,
+    });
+    if(this.state.clickCount === 2) {
+      this.props.dispatch(setTopic(0, this.props.mapBounds));
+      this.setState({
+        currentTopic: '',
+      });
+    }
+  }
   
   render() {
     let activeElement;
     if(this.props.currentTopicId) {
-      let topic = this.state.currentTopic;
+      let topic;
+      let icon;
+      if(this.state.clickCount === 1) {
+        topic = "REMOVE";
+        icon = <Backspace />;
+      } else {
+        topic = context.state.currentTopic;
+        icon = <Loyalty />;
+      };
       activeElement = <FlatButton
                         label={topic}
                         labelPosition="before"
                         primary={true}
-                        icon={<Loyalty />}  
+                        icon={icon}  
                         backgroundColor={'#627072'}
-                        hoverColor={'#F93E7E'}                      
+                        hoverColor={'#F93E7E'}
+                        onMouseEnter={ this._setCount }
+                        onTouchTap={ this._removeTopic }
                       />
     } else {
       activeElement = <TextField
-                        hintText="Choose a topic!"
+                        hintText="Start typing to find a Topic!"
                         fullWidth={ true }
                         onChange={ this._textSearch }
                         onKeyDown={ this._check }
