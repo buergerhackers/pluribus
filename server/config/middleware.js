@@ -2,7 +2,6 @@ var Grant = require('grant-express');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var dotenv = require('dotenv');
-var checkAuthentication = require('./utils').checkAuthentication;
 
 /* This will check if the app is in production and finds a NODE_ENV or local.
 If local, it will load the .env file variables as if it were production */

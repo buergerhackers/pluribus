@@ -2,7 +2,6 @@ var userController = require('../controllers/userController');
 var topicController = require('../controllers/topicController');
 var plurbController = require('../controllers/plurbController');
 var Purest = require('purest');
-var utils = require('./utils');
 
 var google = new Purest({ provider: 'google' });
 
