@@ -4,6 +4,7 @@ import pluribusApp from './REDUCERS.jsx'
 import { FeedFilters } from './ACTIONS.jsx'
 
 const initialState = {
+  authenticated: false,
   currentTopicId: 0,
   mapBounds: {
     maxLat:38.87,
