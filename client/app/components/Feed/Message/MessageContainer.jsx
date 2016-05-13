@@ -8,9 +8,13 @@ import { connect } from 'react-redux';
 import { loadPlurbs, getPlurbs } from '../../../ACTIONS.jsx';
 
 class MessageContainer extends React.Component {
-  
   constructor(props) {
     super(props);
+  }
+
+  componentDidUpdate() {
+    var node = ReactDOM.findDOMNode(this);
+    node.scrollTop = node.scrollHeight;
   }
 
   render() {
