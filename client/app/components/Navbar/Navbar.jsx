@@ -31,7 +31,7 @@ class NavBar extends React.Component {
     
     // naive check for user authentication
     if (auth) {
-      this.props.dispatch(authentication(true));
+      this.props.dispatch(authenticate(true));
     }
   }
   
