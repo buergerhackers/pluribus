@@ -8,10 +8,12 @@ import { getTopics, selectTopic } from './SEARCH_ACTIONS.jsx';
 
 // MATERIAL COMPONENTS
 import {List, ListItem} from 'material-ui/List';
+import IconButton from 'material-ui/IconButton';
 import Subheader from 'material-ui/Subheader';
 import TextField from 'material-ui/TextField';
 import Searchbar from 'material-ui/AppBar';
 import EyeGlass from 'material-ui/svg-icons/action/search';
+import Label from 'material-ui/svg-icons/action/label-outline';
 import {Popover, PopoverAnimationVertical} from 'material-ui/Popover';
 
 class Search extends React.Component {
@@ -86,7 +88,7 @@ class Search extends React.Component {
   render() {
     return (
       <Searchbar 
-          iconElementLeft={<EyeGlass color="white" />}
+          iconElementLeft={<IconButton><EyeGlass color="white" /></IconButton>}
           title={<TextField
               hintText="Choose a topic!"
               fullWidth={ true }
