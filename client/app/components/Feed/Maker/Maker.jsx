@@ -4,6 +4,7 @@ import { createPlurb, loadPlurbs } from '../../../ACTIONS.jsx';
 import TextField from 'material-ui/TextField';
 import ActionButton from 'material-ui/FloatingActionButton';
 import Plus from 'material-ui/svg-icons/content/add';
+import MakerBar from 'material-ui/AppBar';
 
 export default class Maker extends React.Component {
   constructor(props) {
@@ -60,20 +61,29 @@ export default class Maker extends React.Component {
   }
 
   render() {
+    let auth = this.props.authenticated;
     return (
-      <div>
-        <ActionButton
-          primary={true}
-          children={<Plus />} 
-          onClick={ this._sendPlurb }
-        />
-        <TextField
-          hintText="Have something to contribute?"
-          onChange={ this._updateMessage }
-          onKeyDown={ this._checkPlurb }
-          value={ this.state.text }
-        /><br/>
-      </div>
+      <MakerBar
+        iconElementLeft={
+          <ActionButton
+            backgroundColor={"rgba(246, 81, 81, 1)"}
+            disabled={ !auth }
+            children={<Plus />} 
+            onClick={ this._sendPlurb }
+          />
+        }
+        title={
+          <TextField
+            fullWidth={true}
+            floatingLabelText={ !auth ? "Login to contribute": "" }
+            disabled={ !auth }
+            hintText="Have something to contribute?"
+            onChange={ this._updateMessage }
+            onKeyDown={ this._checkPlurb }
+            value={ this.state.text }
+          />
+        }
+      />
     );
   }
 }
@@ -84,6 +94,7 @@ const mapStateToProps = (store) => {
     plurbs: store.pluribusReducer.currentPlurb,
     currentTopicId: store.pluribusReducer.currentTopicId,
     mapBounds: store.pluribusReducer.mapBounds,
+    authenticated: store.pluribusReducer.authenticated
   };
 };
 
