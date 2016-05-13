@@ -4,7 +4,7 @@ import tapEvents from 'react-tap-event-plugin';
 tapEvents();
 
 // ACTIONS
-import { getTopics, selectTopic } from './SEARCH_ACTIONS.jsx';
+import { getTopics, selectTopic, setTopic } from './SEARCH_ACTIONS.jsx';
 
 // MATERIAL COMPONENTS
 import {List, ListItem} from 'material-ui/List';
