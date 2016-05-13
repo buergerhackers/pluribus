@@ -33,7 +33,10 @@ var Topic = sequelize.define('Topic', {
 var Plurb = sequelize.define('Plurb', {
   text: Sequelize.STRING,
   lat: Sequelize.DECIMAL(5,2),
-  long: Sequelize.DECIMAL(5,2)
+  long: Sequelize.DECIMAL(5,2),
+  firstName: Sequelize.STRING,
+  lastName: Sequelize.STRING,
+  picture: Sequelize.STRING
 });
 
 //add many:many relationships between User and Topic
