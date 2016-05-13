@@ -17,14 +17,20 @@ class NavBar extends React.Component {
   
   constructor(props) {
     super(props);
-    this._userSession = this._userSession.bind(this);
+    this.state = {
+      open: false
+    };
+    // each render, check URL for authentication
+    this._verifyUser();
   }
   
-  _userSession() {
-    console.log(this.props);
-    // naive check for user verification
-    // return this.props.googId ? true: false;
-    return true;
+  _verifyUser() {
+    let auth = window.location.search.match(/true/);
+    
+    // naive check for user authentication
+    if (auth) {
+      console.log('AUTHENTICATE: true');
+    }
   }
   
   render() {
