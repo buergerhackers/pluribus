@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "node ./server/server.js",
-    "webpack:deploy": "NODE_ENV=production webpack --config webpack.prod.config.js --progress --colors",
+    "webpack:deploy": "NODE_ENV=production webpack --config webpack.prod.config.js --colors",
     "heroku-postbuild": "npm run webpack:deploy"
   },
   "repository": {
