@@ -66,7 +66,7 @@ export default class Maker extends React.Component {
       <MakerBar
         iconElementLeft={
           <ActionButton
-            primary={true}
+            backgroundColor={"rgba(246, 81, 81, 1)"}
             disabled={ !auth }
             children={<Plus />} 
             onClick={ this._sendPlurb }
