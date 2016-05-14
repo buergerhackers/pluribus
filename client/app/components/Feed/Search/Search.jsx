@@ -7,17 +7,18 @@ tapEvents();
 import { getTopics, selectTopic, setTopic } from './SEARCH_ACTIONS.jsx';
 
 // MATERIAL COMPONENTS
-import {List, ListItem} from 'material-ui/List';
+import {List} from 'material-ui/List';
 import IconButton from 'material-ui/IconButton';
 import Subheader from 'material-ui/Subheader';
 import TextField from 'material-ui/TextField';
 import Searchbar from 'material-ui/AppBar';
 import EyeGlass from 'material-ui/svg-icons/action/search';
-import Label from 'material-ui/svg-icons/action/label-outline';
 import Backspace from 'material-ui/svg-icons/hardware/keyboard-backspace';
 import {Popover, PopoverAnimationVertical} from 'material-ui/Popover';
 import FlatButton from 'material-ui/FlatButton';
 import Loyalty from 'material-ui/svg-icons/action/loyalty';
+
+import DropdownListItem from './dropdownListItem.jsx';
 
 class Search extends React.Component {
   constructor(props) {
@@ -37,21 +38,17 @@ class Search extends React.Component {
     this._removeTopic = this._removeTopic.bind(this);
   }
 
-  _selectTopic(e) {
-    // This is how to retreive the topic...
-    let selected = '';
-
-    // Check is e is coming from _check
-    if (typeof e === 'string') {
-      selected = e;
-    } else {
-      // This means e is coming from clicking the List Item
-      selected = e._targetInst._ancestorInfo.current.instance._currentElement.props.children;
-    }
-
+  _selectTopic(topic) {
+    let selected = topic.name || topic;
     let mapBounds = this.props.mapBounds;
+
+    // Function that checks the DB for the topic name
     selectTopic(selected, mapBounds);
+
+    // Closes the dropdown
     this._handleRequestClose();
+
+    // Set's the local state
     this.setState({
       currentTopic: selected,
     });
@@ -66,11 +63,16 @@ class Search extends React.Component {
   _textSearch(e) {
     let text = e.target.value;
     let allTopics = this.props.allTopics;
-    this.setState({
-      filtered: allTopics.filter((topic) => {
-        return topic.name.includes(text); 
-      }),
-    });
+
+    // Only try to filter if there are topics
+    if(allTopics.length) {
+      this.setState({
+        filtered: allTopics.filter((topic) => {
+          return topic.name.includes(text); 
+        }),
+      });
+    }
+    // Update state as topic changes
     this._handleTouchTap(e);
   }
 
@@ -159,11 +161,7 @@ class Search extends React.Component {
               {
                 this.state.filtered.map((topic) => {
                   return (
-                    <ListItem key={ topic.id }
-                              onTouchTap={ this._selectTopic }
-                              primaryText={ topic.name }
-                              leftIcon={<Label />}
-                    />
+                    <DropdownListItem key={topic.id} topic={topic} onClick={ this._selectTopic.bind(this,topic) } />
                   );
                 })
               }
