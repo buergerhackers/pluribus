@@ -16,7 +16,7 @@ module.exports = function (app) {
     .post(userController.findOrCreateUser);
 
     //find or add user friends
-  app.route('api/user/friend')
+  app.route('/api/user/friend')
     //TODO: uncomment and fleshout method
     //.get(userController.getFriends)
     .post(userController.addFriend);
