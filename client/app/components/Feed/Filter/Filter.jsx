@@ -27,6 +27,8 @@ class Filter extends React.Component {
     return <MuiThemeProvider muiTheme={getMuiTheme()}>
       <Tabs 
         value={ this.props.filter }
+        inkBarStyle={{ backgroundColor:'#F65151' }}
+
       >
         <Tab value="PUBLIC" icon={<Public />} onClick={ this._handleSwitch } />
         <Tab value="PRIVATE" icon={<Private />} onClick={ this._handleSwitch } />
