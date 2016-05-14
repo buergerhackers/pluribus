@@ -28,6 +28,11 @@ export function selectTopic(currentTopic, mapBounds) {
   });
 }
 
+export function setTopic (topicId, mapBounds) {
+  store.dispatch(getPlurbs({ topicId, mapBounds }));
+  return { type: SELECT_TOPIC, topicId };
+}
+
 export function getTopics() {
   fetch('/api/topic', {
       method: 'GET',

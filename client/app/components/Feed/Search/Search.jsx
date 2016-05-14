@@ -4,7 +4,7 @@ import tapEvents from 'react-tap-event-plugin';
 tapEvents();
 
 // ACTIONS
-import { getTopics, selectTopic } from './SEARCH_ACTIONS.jsx';
+import { getTopics, selectTopic, setTopic } from './SEARCH_ACTIONS.jsx';
 
 // MATERIAL COMPONENTS
 import {List, ListItem} from 'material-ui/List';
@@ -14,7 +14,10 @@ import TextField from 'material-ui/TextField';
 import Searchbar from 'material-ui/AppBar';
 import EyeGlass from 'material-ui/svg-icons/action/search';
 import Label from 'material-ui/svg-icons/action/label-outline';
+import Backspace from 'material-ui/svg-icons/hardware/keyboard-backspace';
 import {Popover, PopoverAnimationVertical} from 'material-ui/Popover';
+import FlatButton from 'material-ui/FlatButton';
+import Loyalty from 'material-ui/svg-icons/action/loyalty';
 
 class Search extends React.Component {
   constructor(props) {
@@ -23,12 +26,15 @@ class Search extends React.Component {
       filtered: [],
       open: false,
       currentTopic: '',
+      clickCount: '',
     };
     this.props.dispatch(getTopics());
     this._selectTopic = this._selectTopic.bind(this);
     this._textSearch = this._textSearch.bind(this);
     this._handleRequestClose = this._handleRequestClose.bind(this);
     this._check = this._check.bind(this);
+    this._setCount = this._setCount.bind(this);
+    this._removeTopic = this._removeTopic.bind(this);
   }
 
   _selectTopic(e) {
@@ -84,18 +90,61 @@ class Search extends React.Component {
       open: false,
     });
   }
+
+  _setCount() {
+    this.setState({
+      clickCount: 0,
+    })
+  }
+
+  _removeTopic(e) {
+    this.setState({
+      clickCount: this.state.clickCount+=1,
+    });
+    if(this.state.clickCount === 2) {
+      this.props.dispatch(setTopic(0, this.props.mapBounds));
+      this.setState({
+        currentTopic: '',
+      });
+    }
+  }
   
   render() {
+    let activeElement;
+    if(this.props.currentTopicId) {
+      let topic;
+      let icon;
+      if(this.state.clickCount === 1) {
+        topic = "REMOVE";
+        icon = <Backspace />;
+      } else {
+        topic = this.state.currentTopic;
+        icon = <Loyalty />;
+      };
+      activeElement = <FlatButton
+                        label={topic}
+                        labelPosition="before"
+                        primary={true}
+                        icon={icon}  
+                        backgroundColor={'#627072'}
+                        hoverColor={'#F65151'}
+                        onMouseEnter={ this._setCount }
+                        onTouchTap={ this._removeTopic }
+                      />
+    } else {
+      activeElement = <TextField
+                        hintText="Start typing to find a Topic!"
+                        fullWidth={ true }
+                        onChange={ this._textSearch }
+                        onKeyDown={ this._check }
+                        value= { this.state.currentTopic }
+                        inputStyle={{ color : 'white' }}
+                      />
+    }
     return (
       <Searchbar 
           iconElementLeft={<IconButton><EyeGlass color="white" /></IconButton>}
-          title={<TextField
-              hintText="Choose a topic!"
-              fullWidth={ true }
-              onChange={ this._textSearch }
-              onKeyDown={ this._check }
-              value= { this.state.currentTopic }
-            />}
+          title={activeElement}
       >
         <Popover
             open={this.state.open}
@@ -131,6 +180,7 @@ const mapStateToProps = (store) => {
     allTopics: store.pluribusReducer.allTopics,
     myTopics: store.pluribusReducer.myTopics,
     mapBounds: store.pluribusReducer.mapBounds,
+    currentTopicId: store.pluribusReducer.currentTopicId
   };
 };
 
