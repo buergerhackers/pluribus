@@ -7,8 +7,8 @@ var google = new Purest({ provider: 'google' });
 
 module.exports = function (app) {
   /* User Routes */
-  app.route('/api/user')
-    .get(userController.getAllUsers);
+  app.route('/api/user');
+    //.get(userController.getAllUsers);
     //.post(userController.createUser);
 
     //find or delete a user based off their unique Google ID
@@ -16,6 +16,11 @@ module.exports = function (app) {
     .get(userController.getUser)
     //.post(userController.deleteUser)
     .post(userController.findOrCreateUser);
+
+    //find or add user friends
+  app.route('api/user/friend')
+    .get(userController.getFriends)
+    .post(userController.addFriend);
 
   /* Topic Routes */
   app.route('/api/topic')
