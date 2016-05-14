@@ -18,9 +18,12 @@ export default class Message extends React.Component {
     rePosition(this.props.plurb);
   }
   render() {
+    let image = this.props.plurb.picture;
     return (
       <ListItem
-        leftAvatar={<Avatar src={this.props.plurb.picture} />}
+        leftAvatar={<Avatar 
+          onMouseEnter={ () => {console.log('switch to plus!')}} 
+          onClick={ () => {console.log('clicked my face!')} } src={image} />}
         primaryText={ this.props.plurb.text }
         rightIcon={<Pin onClick={ this._reLoc } />}
         style={{width: '96%'}}
