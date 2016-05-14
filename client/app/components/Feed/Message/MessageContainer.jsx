@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 
 import Message from './Message.jsx';
 import { List } from 'material-ui/List';
-import Paper from 'material-ui/Paper';
 import { connect } from 'react-redux';
 import { loadPlurbs, getPlurbs } from '../../../ACTIONS.jsx';
 
@@ -21,9 +20,11 @@ class MessageContainer extends React.Component {
     return (
       <div style={{ height: '400px', overflowY:'scroll' }}>
         <List>
-          { this.props.plurbs.map((plurb) => {
-            return <Paper><Message plurb={ plurb } /></Paper>
-          }) }
+          { 
+            this.props.plurbs.map((plurb) => {
+              return <Message key={plurb.id} plurb={ plurb } />
+            }) 
+          }
         </List>
       </div>
     );
