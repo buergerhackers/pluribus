@@ -127,7 +127,7 @@ class Search extends React.Component {
                         primary={true}
                         icon={icon}  
                         backgroundColor={'#627072'}
-                        hoverColor={'#F93E7E'}
+                        hoverColor={'#F65151'}
                         onMouseEnter={ this._setCount }
                         onTouchTap={ this._removeTopic }
                       />
