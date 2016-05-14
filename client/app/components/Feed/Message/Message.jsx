@@ -1,7 +1,7 @@
 import React from 'react';
 
 // material-ui components
-import MenuItem from 'material-ui/MenuItem';
+import { ListItem } from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
 import Pin from 'material-ui/svg-icons/maps/pin-drop';
 
@@ -19,7 +19,7 @@ export default class Message extends React.Component {
   }
   render() {
     return (
-      <MenuItem
+      <ListItem
         leftAvatar={<Avatar src={this.props.plurb.picture} />}
         primaryText={ this.props.plurb.text }
         rightIcon={<Pin onClick={ this._reLoc } />}
