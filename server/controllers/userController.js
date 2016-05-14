@@ -37,15 +37,26 @@ module.exports = {
       next(user);
     })
     .catch(function (err) {
-      console.error (err);
+      console.error(err);
     });
   },
 
+  //this will add a relationship to the UserFriends table
   addFriend: function (req, res) {
     var googId = req.session.user;
+    var friendId = req.body.friendGoogId;
+    User.find({where: {googid: googId}})
+    .then(function (user) {
+      user.setFriends(friendId);
+      res.status(201).json(user);
+    })
+    .catch(function (err) {
+      console.error(err);
+    });
   },
 
-  getFriends: function (req, res) {
-    var googId = req.session.user;
-  }
+  // getAllFriendsAllPlurbs: function (req, res) {
+  //   var googId = req.session.user;
+  //   res.status(200).json(plurbs);
+  // }
 };

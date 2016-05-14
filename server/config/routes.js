@@ -17,7 +17,8 @@ module.exports = function (app) {
 
     //find or add user friends
   app.route('api/user/friend')
-    .get(userController.getFriends)
+    //TODO: uncomment and fleshout method
+    //.get(userController.getFriends)
     .post(userController.addFriend);
 
   /* Topic Routes */
