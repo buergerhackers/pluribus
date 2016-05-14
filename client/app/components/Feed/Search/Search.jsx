@@ -18,7 +18,7 @@ import {Popover, PopoverAnimationVertical} from 'material-ui/Popover';
 import FlatButton from 'material-ui/FlatButton';
 import Loyalty from 'material-ui/svg-icons/action/loyalty';
 
-import DropdownListItem from './dropdownListItem.jsx';
+import DropdownListItem from './DropdownListItem.jsx';
 
 class Search extends React.Component {
   constructor(props) {
