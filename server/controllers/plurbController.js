@@ -15,11 +15,28 @@ module.exports = {
   createPlurb: function (req, res) {
     var googId = req.session.user;
     var topicId = req.body.topicId;
+    var firstName;
+    var lastName;
+    var picture;
+
+
+    User.find({where: 
+      {googid: googId}
+    })
+    .then(function (user) {
+      console.log(user);
+    });
+
     var plurbData = {
       text: req.body.text,
       lat: req.body.lat,
-      long: req.body.long
+      long: req.body.long,
+      firstName: firstName,
+      lastName: lastName,
+      picture: picture
     };
+
+
     Plurb.create(plurbData)
     .then(function (plurb) {
       plurb.setUser(googId);
@@ -27,7 +44,7 @@ module.exports = {
       res.status(201).json(plurb);
     })
     .catch(function (err) {
-      console.error (err);
+      console.error(err);
     });
   },
 
@@ -38,7 +55,7 @@ module.exports = {
       res.status(200).json(plurb);
     })
     .catch(function (err) {
-      console.error (err);
+      console.error(err);
     });
   },
 
@@ -49,7 +66,7 @@ module.exports = {
       res.status(201);
     })
     .catch(function (err) {
-      console.error (err);
+      console.error(err);
     });
   },
 
@@ -60,7 +77,7 @@ module.exports = {
       res.status(200).json(plurbs);
     })
     .catch(function (err) {
-      console.error (err);
+      console.error(err);
     });
   }, 
 
@@ -98,7 +115,7 @@ module.exports = {
         res.status(200).json(plurbs);
       })
       .catch(function (err) {
-        console.error (err);
+        console.error(err);
       });
     }
   }
