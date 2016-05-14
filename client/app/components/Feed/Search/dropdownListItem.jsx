@@ -10,8 +10,7 @@ export default class DropdownListItem extends React.Component {
 
   render() {
     return (
-      <ListItem ref="thisTopic"
-                primaryText={ this.props.topic.name }
+      <ListItem primaryText={ this.props.topic.name }
                 leftIcon={<Label />}
                 onClick={ this.props.onClick } />
     );
