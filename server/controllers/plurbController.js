@@ -1,4 +1,6 @@
 var Plurb = require('../db/dbconfig').Plurb;
+var User = require('../db/dbconfig').User;
+
 
 module.exports = {
   //currently not being used
@@ -15,19 +17,31 @@ module.exports = {
   createPlurb: function (req, res) {
     var googId = req.session.user;
     var topicId = req.body.topicId;
-    var plurbData = {
-      text: req.body.text,
-      lat: req.body.lat,
-      long: req.body.long
-    };
-    Plurb.create(plurbData)
-    .then(function (plurb) {
-      plurb.setUser(googId);
-      plurb.setTopic(topicId);
-      res.status(201).json(plurb);
+    //make a db call using the googid and returns user data
+    User.find({where: 
+      {googid: googId}
     })
-    .catch(function (err) {
-      console.error (err);
+    .then(function (user) {
+      //set the values for first and last names, picture
+      //put all data into an objected used to create plurb
+      var plurbData = {
+        text: req.body.text,
+        lat: req.body.lat,
+        long: req.body.long,
+        firstName: user.dataValues.firstName,
+        lastName: user.dataValues.lastName,
+        picture: user.dataValues.picture
+      };
+      Plurb.create(plurbData)
+      .then(function (plurb) {
+        //sets the foreign key of googId and topicId
+        plurb.setUser(googId);
+        plurb.setTopic(topicId);
+        res.status(201).json(plurb);
+      })
+      .catch(function (err) {
+        console.error(err);
+      });
     });
   },
 
@@ -38,7 +52,7 @@ module.exports = {
       res.status(200).json(plurb);
     })
     .catch(function (err) {
-      console.error (err);
+      console.error(err);
     });
   },
 
@@ -49,7 +63,7 @@ module.exports = {
       res.status(201);
     })
     .catch(function (err) {
-      console.error (err);
+      console.error(err);
     });
   },
 
@@ -60,7 +74,7 @@ module.exports = {
       res.status(200).json(plurbs);
     })
     .catch(function (err) {
-      console.error (err);
+      console.error(err);
     });
   }, 
 
@@ -98,7 +112,7 @@ module.exports = {
         res.status(200).json(plurbs);
       })
       .catch(function (err) {
-        console.error (err);
+        console.error(err);
       });
     }
   }
