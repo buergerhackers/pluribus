@@ -6,7 +6,6 @@ import Label from 'material-ui/svg-icons/action/label-outline';
 export default class DropdownListItem extends React.Component {
   constructor(props) {
     super(props);
-    console.log(this.props);
   }
 
   render() {

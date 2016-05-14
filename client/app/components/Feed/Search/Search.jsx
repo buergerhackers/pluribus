@@ -39,7 +39,7 @@ class Search extends React.Component {
   }
 
   _selectTopic(topic) {
-    let selected = topic.name;
+    let selected = topic.name || topic;
     let mapBounds = this.props.mapBounds;
 
     // Function that checks the DB for the topic name
@@ -63,11 +63,16 @@ class Search extends React.Component {
   _textSearch(e) {
     let text = e.target.value;
     let allTopics = this.props.allTopics;
-    this.setState({
-      filtered: allTopics.filter((topic) => {
-        return topic.name.includes(text); 
-      }),
-    });
+
+    // Only try to filter if there are topics
+    if(allTopics.length) {
+      this.setState({
+        filtered: allTopics.filter((topic) => {
+          return topic.name.includes(text); 
+        }),
+      });
+    }
+    // Update state as topic changes
     this._handleTouchTap(e);
   }
 
