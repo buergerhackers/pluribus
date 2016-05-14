@@ -62,12 +62,16 @@ export default class Maker extends React.Component {
 
   render() {
     let auth = this.props.authenticated;
+    let topic = this.props.currentTopicId;
+    let hintText = !auth ? "Sign In (upper left-hand corner) to contribute!" :
+                   !topic ? "Select a topic (up top) to contribute!" : "Start typing your message!";
+    let color = !auth || !topic ? {color:"grey"} : {color:"white"};
     return (
       <MakerBar
         iconElementLeft={
           <ActionButton
             backgroundColor={"rgba(246, 81, 81, 1)"}
-            disabled={ !auth }
+            disabled={ !auth || !topic }
             children={<Plus />} 
             onClick={ this._sendPlurb }
           />
@@ -75,9 +79,9 @@ export default class Maker extends React.Component {
         title={
           <TextField
             fullWidth={true}
-            floatingLabelText={ !auth ? "Login to contribute": "" }
-            disabled={ !auth }
-            hintText="Have something to contribute?"
+            disabled={ !auth || !topic }
+            hintText={ hintText }
+            hintStyle={ color }
             onChange={ this._updateMessage }
             onKeyDown={ this._checkPlurb }
             value={ this.state.text }
