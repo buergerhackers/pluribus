@@ -12,37 +12,11 @@ module.exports = {
     });
   },
 
-  // createUser: function (req, res) {
-  //   var userData = {
-  //     firstName: req.body.firstName,
-  //     lastName: req.body.lastName,
-  //     email: req.body.email,
-  //   };
-  //   User.create(userData)
-  //   .then(function (user) {
-  //     res.status(201).json(user);
-  //   })
-  //   .catch(function (err) {
-  //     console.error (err);
-  //   });
-  // },
-
   getUser: function (req, res) {
     var userId = req.params.googid;
     User.findById(userId)
     .then(function (user) {
       res.status(200).json(user);
-    })
-    .catch(function (err) {
-      console.error (err);
-    });
-  },
-
-  deleteUser: function (req, res) {
-    var userId = req.params.googid;
-    User.destroy({where: {googid: userId}})
-    .then(function () {
-      res.status(201);
     })
     .catch(function (err) {
       console.error (err);
@@ -65,5 +39,13 @@ module.exports = {
     .catch(function (err) {
       console.error (err);
     });
+  },
+
+  addFriend: function (req, res) {
+    var googId = req.session.user;
+  },
+
+  getFriends: function (req, res) {
+    var googId = req.session.user;
   }
 };
