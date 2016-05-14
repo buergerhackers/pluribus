@@ -43,7 +43,7 @@ var Plurb = sequelize.define('Plurb', {
 User.belongsToMany(Topic, {through: 'UserTopic'});
 Topic.belongsToMany(User, {through: 'UserTopic'});
 
-User.hasMany(User, {as: 'UserFriends'});
+User.belongsToMany(User, {as: 'Friends', through: 'UserFriends'});
 
 //add one to many relationship between one user and many plurbs and one topic with many plurbs.
 Plurb.belongsTo(User);
