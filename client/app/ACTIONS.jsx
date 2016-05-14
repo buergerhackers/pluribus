@@ -55,6 +55,7 @@ export function getPlurbs(options) {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       },
+      credentials: 'same-origin',
       body: JSON.stringify(options),
     }).then((plurbs) => plurbs.text())
       .then((plurbs) => {

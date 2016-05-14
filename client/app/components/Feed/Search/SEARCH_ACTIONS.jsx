@@ -13,9 +13,10 @@ export function selectTopic(currentTopic, mapBounds) {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
     },
+    credentials: 'same-origin',
     body: JSON.stringify({
       name: currentTopic,
-    }),
+    })
   }).then((topicPromise) => topicPromise.text())
     .then((topicJSON) => {
     store.dispatch(getTopics());
@@ -40,6 +41,7 @@ export function getTopics() {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       },
+      credentials: 'same-origin'
     }).then((topics) => topics.text())
       .then((topics) => {
         store.dispatch(loadTopics(topics));
