@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 // material-ui components
 import { ListItem } from 'material-ui/List';
@@ -7,8 +8,9 @@ import Pin from 'material-ui/svg-icons/maps/pin-drop';
 import Paper from 'material-ui/Paper';
 import Plus from 'material-ui/svg-icons/content/add-circle';
 
-// map utils
+// utils
 import { rePosition } from '../../Map/map_utils.jsx';
+import { selectTopic, setTopic } from '../Search/SEARCH_ACTIONS.jsx';
 
 export default class Message extends React.Component {
   constructor(props) {
@@ -21,7 +23,7 @@ export default class Message extends React.Component {
     this._reLoc = this._reLoc.bind(this);
     this._friendPeek = this._friendPeek.bind(this);
     this._addFriend = this._addFriend.bind(this);
-
+    this._selectTopic = this._selectTopic.bind(this);
   }
   
   _reLoc() {
@@ -58,9 +60,18 @@ export default class Message extends React.Component {
       });
   }
   
+  _selectTopic(chosen) {
+    let mapBounds = this.props.mapBounds;
+    
+    // update the search + store
+    selectTopic(chosen, mapBounds);
+    this.props.dispatch(setTopic(chosen, mapBounds));
+  }
+  
   render() {
     // defaults
     let text = this.props.plurb.text;
+    let topic = <p onClick={ this._selectTopic.bind(this, this.props.plurb.TopicId) }>{"Topic ID: " + this.props.plurb.TopicId}</p>
     let name = this.props.plurb.firstName + ' ' + this.props.plurb.lastName;
     let image = <Avatar
                   onMouseEnter={ this._friendPeek }
@@ -70,6 +81,7 @@ export default class Message extends React.Component {
     // enter friend mode to add user            
     if (this.state.friendMode) {
       text = name;
+      topic = "Follow";
       image = <Plus
                 onClick={ this._addFriend.bind(this, this.props.plurb.UserGoogid) }
                 onMouseLeave={ this._friendPeek }
@@ -81,6 +93,7 @@ export default class Message extends React.Component {
         <ListItem
           leftIcon={ image }
           primaryText={ text }
+          secondaryText={ topic }
           rightIcon={<Pin onClick={ this._reLoc } />}
           style={{width: '96%'}}
         />
@@ -88,3 +101,15 @@ export default class Message extends React.Component {
     )
   }
 }
+
+// map the portion of the state tree desired
+const mapStateToProps = (store) => {
+  return {
+    mapBounds: store.pluribusReducer.mapBounds,
+    currentTopicId: store.pluribusReducer.currentTopicId
+  };
+};
+
+// connect the desired state to the relevant component
+export default connect(mapStateToProps)(Message);
+
