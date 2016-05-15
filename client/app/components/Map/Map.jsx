@@ -1,18 +1,32 @@
 import React from "react";
-import initMap, { heatMap } from './map_utils.jsx';
+import { initMap, initHeatMap, getUserLocation, gradient, getPoints, googleArray } from './map_utils.jsx';
 import { connect } from 'react-redux';
 import { updateMapBounds, getPlurbs } from '../../ACTIONS.jsx';
+
+export let map;
+let heatmap;
 
 class GoogleMap extends React.Component {
 
   constructor(props) {
     super(props);
   }
-  
+
+  componentWillReceiveProps(props) {
+    googleArray.clear();
+    getPoints(props);
+  }
+
+  componentWillMount() {
+    getUserLocation();
+  }
+
   // Once DOM node has rendered
   componentDidMount(rootNode) {
     // initialize map
-    let map = initMap();
+    map = initMap();
+    heatmap = initHeatMap();
+    heatmap.setMap(map);
 
     // When user pauses map movement, updates new bounds
     map.addListener('idle', () => {
@@ -35,9 +49,6 @@ class GoogleMap extends React.Component {
       // update bounds on store, then re-fetch plurbs
       this.props.dispatch(updateMapBounds(query.mapBounds))
       this.props.dispatch(getPlurbs(query))
-      
-      // generate heatmap of plurbs
-      heatMap(this.props.plurbs);
     });
   }
 
