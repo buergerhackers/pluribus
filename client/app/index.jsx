@@ -34,4 +34,7 @@ class Main extends React.Component {
   }
 }
 
+import tapEvents from 'react-tap-event-plugin';
+tapEvents();
+
 ReactDOM.render(<Main />, document.getElementById('main'));
