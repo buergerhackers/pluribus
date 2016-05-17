@@ -4,6 +4,26 @@ import store from '../../../STORE.jsx';
 export const ADD_FRIEND = 'ADD_FRIEND';
 export const GET_FRIENDS = 'GET_FRIENDS';
 export const LOAD_FRIENDS = 'LOAD_FRIENDS';
+export const REMOVE_FRIEND = 'REMOVE_FRIEND';
+
+export function removeFriend(friendGoogId) {
+  // removing friend
+  fetch('/api/removefriend/' + friendGoogId, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    credentials: 'same-origin',
+  }).then((res) => {
+    // update the store friend list (myFriends)
+    store.dispatch(getFriends())
+  }).catch((err) => {
+    console.error(err);
+  });
+  
+  return { type: REMOVE_FRIEND, fetching: true }
+}
 
 export function addFriend(friendGoogId) {
   // adding a new friend
@@ -16,7 +36,6 @@ export function addFriend(friendGoogId) {
       credentials: 'same-origin',
       body: JSON.stringify({friendGoogId}),
     }).then((res) => {
-      console.log('res to addFriend', res);
       // update the store friend list (myFriends)
       store.dispatch(getFriends())
     })
