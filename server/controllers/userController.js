@@ -67,5 +67,17 @@ module.exports = {
     .catch(function (err) {
       console.error(err);
     });
+  },
+
+  removeFriend: function (req, res) {
+    var googId = req.session.user;
+    var friendGoogid = req.params.googid;
+    User.find({where: {googid: googId}})
+    .then(function(user) {
+      user.removeFriend(friendGoogid);
+    })
+    .catch(function (err) {
+      console.error(err);
+    });
   }
 };
