@@ -7,10 +7,12 @@ import Avatar from 'material-ui/Avatar';
 import Pin from 'material-ui/svg-icons/maps/pin-drop';
 import Paper from 'material-ui/Paper';
 import Plus from 'material-ui/svg-icons/content/add-circle';
+import Minus from 'material-ui/svg-icons/content/remove-circle';
 
 // utils
 import { rePosition } from '../../Map/map_utils.jsx';
 import { selectTopic, setTopic } from '../Search/SEARCH_ACTIONS.jsx';
+import { addFriend } from './MESSAGE_ACTIONS.jsx';
 
 export default class Message extends React.Component {
   constructor(props) {
@@ -45,23 +47,18 @@ export default class Message extends React.Component {
   }
   
   _addFriend(friendGoogId) {
-    // adding a new friend
-    fetch('/api/friend', {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        credentials: 'same-origin',
-        body: JSON.stringify({friendGoogId}),
-      }).then((res) => console.log(res))
-        .catch((error) => {
-          console.error(error);
-      });
+    this.props.dispatch(addFriend(friendGoogId))
+  }
+  
+  _removeFriend(friendGoogId) {
+    console.log('remove friendship please');
+    // this.props.dispatch(removeFriend(friendGoogId))
   }
   
   _selectTopic(chosen) {
     let mapBounds = this.props.mapBounds;
+    
+    // Include filter awareness to choose topic/user
     
     // update the search + store
     selectTopic(chosen, mapBounds);
@@ -78,14 +75,26 @@ export default class Message extends React.Component {
                   src={this.props.plurb.picture}
                 />
                 
-    // enter friend mode to add user            
+    // enter friend mode to add user (implement logic to verify if already friend!)           
     if (this.state.friendMode) {
       text = name;
-      topic = "Follow";
-      image = <Plus
-                onClick={ this._addFriend.bind(this, this.props.plurb.UserGoogid) }
-                onMouseLeave={ this._friendPeek }
-              />;
+      let friends = this.props.myFriends;
+      let friend = this.props.plurb.UserGoogid;
+      
+      // existing friendship, remove friend
+      if (friends.includes(friend)) {
+        topic = "Unfollow";
+        image = <Minus 
+                  onClick={ this._removeFriend.bind(this, this.props.plurb.UserGoogid) } 
+                  onMouseLeave={ this._friendPeek } 
+                />;
+      } else {
+        topic = "Follow";
+        image = <Plus
+                  onClick={ this._addFriend.bind(this, this.props.plurb.UserGoogid) }
+                  onMouseLeave={ this._friendPeek }
+                />;
+      }
     }
     
     return (
@@ -106,7 +115,9 @@ export default class Message extends React.Component {
 const mapStateToProps = (store) => {
   return {
     mapBounds: store.pluribusReducer.mapBounds,
-    currentTopicId: store.pluribusReducer.currentTopicId
+    currentTopicId: store.pluribusReducer.currentTopicId,
+    myFriends: store.pluribusReducer.myFriends,
+    filter: store.pluribusReducer.filter
   };
 };
 
