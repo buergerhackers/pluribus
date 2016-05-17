@@ -1,11 +1,12 @@
 var Plurb = require('../db/dbconfig').Plurb;
 var User = require('../db/dbconfig').User;
-
+var Topic = require('../db/dbconfig').Topic;
 
 module.exports = {
-  //currently not being used
   getAllPlurbs: function (req, res) {
-    Plurb.findAll({})
+    Plurb.findAll({
+       include: [Topic]
+    })
     .then(function (plurbs) {
       res.status(200).json(plurbs);
     })
@@ -90,6 +91,7 @@ module.exports = {
     if(!topicId && !googId) {
   //if topic id is 0 and there is no googId, send back all plurbs in that location regardless of topic
       query = {
+        include: [Topic],
         where: {
           lat: {$between: [minLat, maxLat]},
           long: {$between: [minLng, maxLng]}
@@ -97,6 +99,7 @@ module.exports = {
       };
     } else if (!topicId) {
       query = {
+        include: [Topic],
         where: {
           lat: {$between: [minLat, maxLat]},
           long: {$between: [minLng, maxLng]},
@@ -105,6 +108,7 @@ module.exports = {
       };
     } else if (!googId) {
       query = {
+        include: [Topic],
         where: {
           lat: {$between: [minLat, maxLat]},
           long: {$between: [minLng, maxLng]},
@@ -113,6 +117,7 @@ module.exports = {
       };      
     } else {
       query = {
+        include: [Topic],
         where: {
           lat: {$between: [minLat, maxLat]},
           long: {$between: [minLng, maxLng]},
