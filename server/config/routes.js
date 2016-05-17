@@ -10,16 +10,15 @@ module.exports = function (app) {
   app.route('/api/users')
     .get(userController.getAllUsers);
 
-    //find or delete a user based off their unique Google ID
+  //find or delete a user based off their unique Google ID
   app.route('/api/user/:googid')
     .get(userController.getUser)
     .post(userController.findOrCreateUser);
 
-    //find or add user friends
+  //add and find friends
   app.route('/api/friend')
-    .post(userController.addFriend);
-    //TODO: uncomment and fleshout method
-    //.get(userController.getFriends)
+    .post(userController.addFriend)
+    .get(userController.getFriends);
 
   /* Topic Routes */
   app.route('/api/topic')
