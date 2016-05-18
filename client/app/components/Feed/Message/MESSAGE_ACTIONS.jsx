@@ -45,8 +45,8 @@ export function addFriend(friendGoogId) {
   return { type: ADD_FRIEND, fetching:true }
 }
 
-export function getFriends() {
-  // get user's friends
+export function getFriendsPlurbs() {
+  // get user's friends' plurbs
   fetch('/api/friendsplurbs', {
       method: 'GET',
       headers: {
