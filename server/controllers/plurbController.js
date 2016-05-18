@@ -75,6 +75,7 @@ module.exports = {
     var filter = req.body.filter; // filter state of app
     
     var query = {};
+    var promised = false;
     
     //////////////////////////// FILTER set to FRIENDS ///////////////////////
     if (filter === 'FRIENDS') {
@@ -90,9 +91,8 @@ module.exports = {
           // pull all friends
           user.getFriends()
           .then(function(friends){
-            // query array of friends' googIds
             friendsGoogIds = friends.map(function(friend) {
-              return {UserGoogid: Number(friend.dataValues.googid)};
+              return Number(friend.dataValues.googid);
             });
             // final get all plurbs of user's friends query
             query = {
@@ -100,16 +100,20 @@ module.exports = {
               where: {
                 lat: {$between: [minLat, maxLat]},
                 long: {$between: [minLng, maxLng]},
-                $or: friendsGoogIds,
+                UserGoogid: {$in: friendsGoogIds}
               }
             };
           });
         })
         .then(function() {
-          // SEND RESPONSE IN PROMISE CHAIN!!
+          // SEND friends' plurbs in PROMISE CHAIN!!
           Plurb.findAll(query)
           .then(function (plurbs) {
+            console.log('here are all friends plurbs', plurbs.map(function(plurb) {
+              return plurb.dataValues.firstName;
+            }));
             res.status(200).json(plurbs);
+            promised = true;
           })
           .catch(function (err) {
             console.error (err);
@@ -135,7 +139,7 @@ module.exports = {
     if (filter === 'TOPICS') {
       
       // if selectedTopicId is undefined
-      if (selectedTopicID === undefined) {
+      if (selectedTopicId === undefined) {
         // DEFAULT send all plurbs
         query = {
           include: [Topic],
@@ -159,12 +163,17 @@ module.exports = {
     }
     
     // Use built query to find plurbs
-    Plurb.findAll(query)
-    .then(function (plurbs) {
-      res.status(200).json(plurbs);
-    })
-    .catch(function (err) {
-      console.error (err);
-    });
+    if (!promised) { // make sure res was not already sent
+      Plurb.findAll(query)
+      .then(function (plurbs) {
+        console.log('here are all plurbs', plurbs.map(function(plurb) {
+          return plurb.dataValues.text;
+        }));
+        res.status(200).json(plurbs);
+      })
+      .catch(function (err) {
+        console.error (err);
+      }); 
+    }
   },
 };
