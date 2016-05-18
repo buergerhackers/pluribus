@@ -66,45 +66,77 @@ export default class Message extends React.Component {
   
   render() {
     // defaults
+    let friends = this.props.myFriends;
+    let friend = this.props.plurb.UserGoogid;
     let text = this.props.plurb.text;
+    let listStyle = {width: '96%'};
+    let avatarStyle = {border: 'none'};
+    if (friends.includes(friend)) {
+      listStyle.backgroundColor = "rgba(0,188,212,.2)";
+      // avatar needs darker border due to color balance
+      avatarStyle.border = "2px solid rgb(0,142,160)";
+    }
     let topic = <p onClick={ this._selectTopic.bind(this, this.props.plurb.TopicId) }>{this.props.plurb.Topic.name}</p>
     let name = this.props.plurb.firstName + ' ' + this.props.plurb.lastName;
     let image = <Avatar
+                  size={50}
+                  style={avatarStyle}
                   onMouseEnter={ this._friendPeek }
                   src={this.props.plurb.picture}
                 />
-                
+    let location = <Pin 
+                  color={"rgba(246, 110, 110, 1)"} 
+                  hoverColor={"rgba(246, 81, 81, 1)"} 
+                  onClick={ this._reLoc } 
+                />
+             
     // enter friend mode to add user (implement logic to verify if already friend!)           
     if (this.state.friendMode) {
       text = name;
-      let friends = this.props.myFriends;
-      let friend = this.props.plurb.UserGoogid;
       
       // existing friendship, remove friend
       if (friends.includes(friend)) {
         topic = "Unfollow";
         image = <Minus 
+                  color={"grey"}
                   onClick={ this._removeFriend.bind(this, this.props.plurb.UserGoogid) } 
                   onMouseLeave={ this._friendPeek } 
                 />;
       } else {
         topic = "Follow";
         image = <Plus
+                  color={"rgb(0,188,212)"}
                   onClick={ this._addFriend.bind(this, this.props.plurb.UserGoogid) }
                   onMouseLeave={ this._friendPeek }
                 />;
       }
     }
+    let el;
+    // determine which element to render
+    if (!this.state.friendMode){
+      
+      el = <ListItem
+            leftAvatar={ image }
+            primaryText={ text }
+            secondaryText={ topic }
+            secondaryTextLines={1}
+            rightIconButton={ location }
+            style={listStyle}
+          />;
+    } else {
+      el = <ListItem
+            leftCheckbox={ image }
+            primaryText={ text }
+            secondaryText={ topic }
+            secondaryTextLines={1}
+            rightIconButton={ location }
+            style={listStyle}
+          />;
+    }
     
     return (
       <Paper>
-        <ListItem
-          leftIcon={ image }
-          primaryText={ text }
-          secondaryText={ topic }
-          rightIcon={<Pin onClick={ this._reLoc } />}
-          style={{width: '96%'}}
-        />
+        {el}
       </Paper>
     )
   }
