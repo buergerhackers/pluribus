@@ -124,7 +124,8 @@ class Search extends React.Component {
   }
 
   _check(e) {
-    if(e.key === 'Enter') {
+    // no empty topic creations
+    if(e.key === 'Enter' && e.target.value.length > 0) {
       this._selectTopic(e.target.value);
     }
   }
