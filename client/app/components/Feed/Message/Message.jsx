@@ -76,12 +76,21 @@ export default class Message extends React.Component {
     let text = this.props.plurb.text;
     let listStyle = {width: '96%'};
     let avatarStyle = {border: 'none'};
+    
+    // highlight friends' messages
     if (friends.includes(friend)) {
       listStyle.backgroundColor = "rgba(0,188,212,.2)";
       // avatar needs darker border due to color balance
       avatarStyle.border = "2px solid rgb(0,142,160)";
     }
-    let topic = <p onClick={ this._selectTopic.bind(this, this.props.plurb.TopicId, this.props.plurb.Topic.name) }>{this.props.plurb.Topic.name}</p>
+    
+    // determine subheading to render
+    let subheading;
+    if (this.props.filter === 'TOPICS') {
+      subheading = <p onClick={ this._selectTopic.bind(this, this.props.plurb.TopicId, this.props.plurb.Topic.name) }>{this.props.plurb.Topic.name}</p>
+    } else {
+      subheading = <p onClick={ this._selectUser.bind(this, this.props.plurb.UserGoogid) }>{this.props.plurb.firstName + ' ' + this.props.plurb.lastName}</p>
+    }
     let name = this.props.plurb.firstName + ' ' + this.props.plurb.lastName;
     let image = <Avatar
                   size={50}
@@ -101,14 +110,14 @@ export default class Message extends React.Component {
       
       // existing friendship, remove friend
       if (friends.includes(friend)) {
-        topic = "Unfollow";
+        subheading = "Unfollow";
         image = <Minus 
                   color={"grey"}
                   onClick={ this._removeFriend.bind(this, this.props.plurb.UserGoogid) } 
                   onMouseLeave={ this._friendPeek } 
                 />;
       } else {
-        topic = "Follow";
+        subheading = "Follow";
         image = <Plus
                   color={"rgb(0,188,212)"}
                   onClick={ this._addFriend.bind(this, this.props.plurb.UserGoogid) }
@@ -123,7 +132,7 @@ export default class Message extends React.Component {
       el = <ListItem
             leftAvatar={ image }
             primaryText={ text }
-            secondaryText={ topic }
+            secondaryText={ subheading }
             secondaryTextLines={1}
             rightIconButton={ location }
             style={listStyle}
@@ -132,7 +141,7 @@ export default class Message extends React.Component {
       el = <ListItem
             leftCheckbox={ image }
             primaryText={ text }
-            secondaryText={ topic }
+            secondaryText={ subheading }
             secondaryTextLines={1}
             rightIconButton={ location }
             style={listStyle}
@@ -153,7 +162,8 @@ const mapStateToProps = (store) => {
     mapBounds: store.pluribusReducer.mapBounds,
     currentTopicId: store.pluribusReducer.currentTopicId,
     myFriends: store.pluribusReducer.myFriends,
-    filter: store.pluribusReducer.filter
+    filter: store.pluribusReducer.filter,
+    currentUserId: store.pluribusReducer.currentUserId
   };
 };
 
