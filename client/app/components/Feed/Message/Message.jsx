@@ -57,11 +57,16 @@ export default class Message extends React.Component {
   
   _selectTopic(topicId, topicName) {
     let mapBounds = this.props.mapBounds;
-    
-    // Include filter awareness to choose topic/user
-    
+        
     // update the search + store
     this.props.dispatch(setTopic(topicId, mapBounds, topicName));
+  }
+  
+  _selectUser(uid) {
+    let mapBounds = this.props.mapBounds;
+    
+    // update search + store
+    this.props.dispatch(setUser(uid, mapBounds));
   }
   
   render() {
