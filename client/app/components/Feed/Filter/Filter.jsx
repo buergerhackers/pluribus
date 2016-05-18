@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getPlurbs, setFilter } from '../../../ACTIONS.jsx';
-import { getFriendsPlurbs } from '../Message/MESSAGE_ACTIONS.jsx';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
@@ -22,14 +21,13 @@ class Filter extends React.Component {
     // get plurbs according to filter state
     let filt;
     if (this.props.filter === 'TOPICS') {
+      // get plurbs of user's friends
       filt = 'FRIENDS';
-      // get all plurbs of user's friends
-      this.props.dispatch(getFriendsPlurbs({mapBounds:this.props.mapBounds}))
     } else if (this.props.filter === 'FRIENDS') {
+      // get all plurbs
       filt = 'TOPICS';
-      // get all plurbs of all topics and users
-      this.props.dispatch(getPlurbs({mapBounds: this.props.mapBounds}))
     }
+    this.props.dispatch(getPlurbs({mapBounds: this.props.mapBounds, filter: filt}))
     this.props.dispatch(setFilter(filt));
   }
   
