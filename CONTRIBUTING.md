@@ -19,7 +19,7 @@
   - (refactor) Refactor production code
   - (test) Add missing tests, refactor tests; no production code change
   - (chore) Update grunt tasks, etc; no production code change
-1. When you've finished with your fix or feature, Rebase upstream changes into your branch. submit a [pull request][]
+1. When you've finished with your fix or feature, rebase upstream changes into your branch. submit a [pull request][]
    directly to master. Include a description of your changes.
 1. Your pull request will be reviewed by another maintainer. The point of code
    reviews is to help keep the codebase clean and of high quality and, equally
@@ -109,7 +109,7 @@ and picking the versions you want. Be aware that these changes will show
 up in your pull request, so try and incorporate upstream changes as much
 as possible.
 
-You pick a file by `git add`ing it - you do not make commits during a
+You pick a file by `git add`ing it - you do NOT make commits during a
 rebase.
 
 Once you are done fixing conflicts for a specific commit, run:
