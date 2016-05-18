@@ -1,15 +1,15 @@
 var path = require('path');
 var expect = require('chai').expect;
 var request = require('supertest');
-var Sequelize = require("sequelize");
+var Sequelize = require('sequelize');
 var User = require('../db/dbconfig').User;
 var Topic = require('../db/dbconfig').Topic;
 var Plurb = require('../db/dbconfig').Plurb;
 var userController = require('../controllers/userController');
 var topicController = require('../controllers/topicController');
 var plurbController = require('../controllers/plurbController');
-var server = require(path.join(__dirname, '..', './server.js'));
-var app = require('../server');
+var server = require(path.join(__dirname, '..', './server.js')).app;
+var app = require('../server').app;
 
 describe('server', function () {
   'use strict';
@@ -46,22 +46,34 @@ describe('User Controllers', function () {
       expect(userController.getAllUsers).to.be.a('function');
     });
   });
-  describe('createUser()', function () {
-    it('should be a function', function () {
-      expect(userController.createUser).to.exist;
-      expect(userController.createUser).to.be.a('function');
-    });
-  });
   describe('getUser()', function () {
     it('should be a function', function () {
-      expect(userController.createUser).to.exist;
-      expect(userController.createUser).to.be.a('function');
+      expect(userController.getUser).to.exist;
+      expect(userController.getUser).to.be.a('function');
     });
   });
-  describe('deleteUser()', function () {
+  describe('findOrCreateUser()', function () {
     it('should be a function', function () {
-      expect(userController.createUser).to.exist;
-      expect(userController.createUser).to.be.a('function');
+      expect(userController.findOrCreateUser).to.exist;
+      expect(userController.findOrCreateUser).to.be.a('function');
+    });
+  });
+  describe('addFriend()', function () {
+    it('should be a function', function () {
+      expect(userController.addFriend).to.exist;
+      expect(userController.addFriend).to.be.a('function');
+    });
+  });
+  describe('getFriends()', function () {
+    it('should be a function', function () {
+      expect(userController.getFriends).to.exist;
+      expect(userController.getFriends).to.be.a('function');
+    });
+  });
+  describe('removeFriend()', function () {
+    it('should be a function', function () {
+      expect(userController.removeFriend).to.exist;
+      expect(userController.removeFriend).to.be.a('function');
     });
   });
 });
@@ -69,6 +81,7 @@ describe('User Controllers', function () {
 //User Routes
 describe('API routes GET users is functioning', function () {
   var newUser = {
+    googid: '111222333444',
     firstName: 'John',
     lastName: 'Doe',
     email: 'john@gmail.com',
@@ -82,7 +95,7 @@ describe('API routes GET users is functioning', function () {
   });
 
   beforeEach(function (done) {
-    User.create(newUser)
+    User.findOrCreate({where: newUser})
     .then(function () {
       done();
     });
@@ -90,19 +103,19 @@ describe('API routes GET users is functioning', function () {
 
   it('responds with a 200 (OK)', function (done) {
     request(app)
-      .get('api/user')
+      .get('api/users')
       .expect(200);
       done();
   });
 });
 
-describe('It should GET all users', function (){
-    var idCount;
-    var newUser = {
-    firstName: 'Jane',
-    lastName: 'Doe',
-    email: 'jane@gmail.com',
-  };
+// describe('It should GET all users', function (){
+//     var idCount;
+//     var newUser = {
+//     firstName: 'Jane',
+//     lastName: 'Doe',
+//     email: 'jane@gmail.com',
+//   };
   
   //get last id count
   // before(function (done) {
@@ -118,10 +131,11 @@ describe('It should GET all users', function (){
   //get last id count
   //compare it
     //should be total+1
-});
+// });
 
 describe('API route POST users', function () {
   var newUser = {
+    googid: '556677889900',
     firstName: 'Post',
     lastName: 'Tester',
     email: 'pt@gmail.com',
@@ -135,7 +149,7 @@ describe('API route POST users', function () {
   });
 
   beforeEach(function (done) {
-    User.create(newUser)
+    User.findOrCreate({where: newUser})
     .then(function () {
       done();
     });
@@ -158,10 +172,10 @@ describe('Topic Controllers', function () {
       expect(topicController.getAllTopics).to.be.a('function');
     });
   });
-  describe('createTopic', function () {
+  describe('findOrCreateTopic', function () {
     it('should be a function', function () {
-      expect(topicController.createTopic).to.exist;
-      expect(topicController.createTopic).to.be.a('function');
+      expect(topicController.findOrCreateTopic).to.exist;
+      expect(topicController.findOrCreateTopic).to.be.a('function');
     });
   });
   describe('getTopicByName()', function () {
@@ -223,14 +237,32 @@ describe('Plurb Controllers', function () {
   });
   describe('getPlurb()', function () {
     it('should be a function', function () {
-      expect(userController.createUser).to.exist;
-      expect(userController.createUser).to.be.a('function');
+      expect(plurbController.getPlurb).to.exist;
+      expect(plurbController.getPlurb).to.be.a('function');
     });
   });
   describe('deletePlurb()', function () {
     it('should be a function', function () {
-      expect(userController.createUser).to.exist;
-      expect(userController.createUser).to.be.a('function');
+      expect(plurbController.deletePlurb).to.exist;
+      expect(plurbController.deletePlurb).to.be.a('function');
+    });
+  });
+  describe('getPlurbsByGoogId()', function () {
+    it('should be a function', function () {
+      expect(plurbController.getPlurbsByGoogId).to.exist;
+      expect(plurbController.getPlurbsByGoogId).to.be.a('function');
+    });
+  });
+  describe('getPlurbsByLocation()', function () {
+    it('should be a function', function () {
+      expect(plurbController.getPlurbsByLocation).to.exist;
+      expect(plurbController.getPlurbsByLocation).to.be.a('function');
+    });
+  });
+  describe('getAllFriendsAllPlurbs()', function () {
+    it('should be a function', function () {
+      expect(plurbController.getAllFriendsAllPlurbs).to.exist;
+      expect(plurbController.getAllFriendsAllPlurbs).to.be.a('function');
     });
   });
 });
