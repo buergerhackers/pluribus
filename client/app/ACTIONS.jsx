@@ -25,7 +25,7 @@ export function updateMapBounds(mapBounds) {
   return { type: UPDATE_MAP_BOUNDS, mapBounds }
 }
 
-export function createPlurb(plurb, mapBounds) {
+export function createPlurb(plurb, mapBounds, filter) {
   fetch('/api/plurb', {
     method: 'POST',
     headers: {
@@ -35,7 +35,7 @@ export function createPlurb(plurb, mapBounds) {
     credentials: 'same-origin',
     body: JSON.stringify(plurb),
   }).then((body) => {
-    store.dispatch(getPlurbs({topicId:plurb.topicId, mapBounds}));
+    store.dispatch(getPlurbs({topicId:plurb.topicId, mapBounds, filter}));
   }).catch((error) => {
     console.error(error);
   });

@@ -45,7 +45,7 @@ export default class Maker extends React.Component {
         lat: this.state.lat,
         long: this.state.long,
         topicId: this.props.currentTopicId,
-      }, this.props.mapBounds
+      }, this.props.mapBounds, this.props.filter
     ));
 
     // clear the text field
