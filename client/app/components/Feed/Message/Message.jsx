@@ -11,7 +11,7 @@ import Minus from 'material-ui/svg-icons/content/remove-circle';
 
 // utils
 import { rePosition } from '../../Map/map_utils.jsx';
-import { selectTopic, setTopic } from '../Search/SEARCH_ACTIONS.jsx';
+import { setTopic, setUser } from '../Search/SEARCH_ACTIONS.jsx';
 import { addFriend, removeFriend } from './MESSAGE_ACTIONS.jsx';
 
 export default class Message extends React.Component {
@@ -20,7 +20,8 @@ export default class Message extends React.Component {
   
     // identify default states of message
     this.state = {
-      friendMode: false
+      friendMode: false,
+      filterTransition: this.props.filter
     }
     this._reLoc = this._reLoc.bind(this);
     this._friendPeek = this._friendPeek.bind(this);
