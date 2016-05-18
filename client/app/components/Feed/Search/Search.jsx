@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 
 // ACTIONS
 import { getTopics, selectTopic, setTopic, getUsers, setUser, SELECT_TOPIC, SELECT_USER } from './SEARCH_ACTIONS.jsx';
-import { getPlurbs } from '../../../ACTIONS.jsx';
 
 // MATERIAL COMPONENTS
 import Paper from 'material-ui/Paper';
@@ -44,7 +43,8 @@ class Search extends React.Component {
   componentWillReceiveProps (newProps) {
     // When the filter is toggled 
     if (this.state.filter !== newProps.filter) {
-      // transitioning to FRIENDS filter?
+      
+      // FRIENDS filter transition
       if(newProps.filter === 'FRIENDS') {
         // set currentTopic to undefined
         if(this.props.currentTopicId) {
@@ -54,17 +54,19 @@ class Search extends React.Component {
         this.setState({
           currentItem: '',
         });
-        // no user should be set
-        this.props.dispatch(setUser(undefined, this.props.mapBounds));
+        // clean slate for user select
+        this.props.dispatch(setUser(undefined, this.props.mapBounds, newProps.filter));
       } else {
-        // transitioning to TOPICS filter
+      // TOPICS filter transition
         if(this.props.currentUserId) {
+          // reset googId
           this.props.dispatch({ type: SELECT_USER, googId: undefined })
         }
         this.setState({
           currentItem: '',
         });
-        this.props.dispatch(setTopic(undefined, this.props.mapBounds));
+        // clean slate for topic select
+        this.props.dispatch(setTopic(undefined, this.props.mapBounds, undefined, newProps.filter));
       }
     }
 
@@ -95,9 +97,10 @@ class Search extends React.Component {
   _selectTopic(topic) {
     let selected = topic.name || topic;
     let mapBounds = this.props.mapBounds;
+    let filter = this.props.filter;
     
     // Function that checks the DB for the topic name
-    selectTopic(selected, mapBounds);
+    selectTopic(selected, mapBounds, filter);
 
     // Closes the dropdown
     this._handleRequestClose();
@@ -112,7 +115,7 @@ class Search extends React.Component {
     let mapBounds = this.props.mapBounds;
 
     // Function that checks the DB for the user name
-    this.props.dispatch(setUser(user.googid, mapBounds));
+    this.props.dispatch(setUser(user.googid, mapBounds, this.props.filter));
 
     // Closes the dropdown
     this._handleRequestClose();
@@ -172,9 +175,9 @@ class Search extends React.Component {
 
   _removeItem(e) {
     if(this.state.filter === "FRIENDS") {
-      this.props.dispatch(setUser(undefined, this.props.mapBounds));
+      this.props.dispatch(setUser(undefined, this.props.mapBounds, this.state.filter));
     } else {
-      this.props.dispatch(setTopic(undefined, this.props.mapBounds));   
+      this.props.dispatch(setTopic(undefined, this.props.mapBounds, undefined, this.state.filter));   
     }
 
     this.setState({
