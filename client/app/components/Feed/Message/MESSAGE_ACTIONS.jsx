@@ -70,6 +70,29 @@ export function getFriends() {
       .catch((error) => {
         console.error(error);
     });
+  return { type: GET_PLURBS, fetching: true }
+}
+
+export function getFriends() {
+  // get user's friends
+  fetch('/api/friend', {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      credentials: 'same-origin',
+    }).then((res) => res.text()).then((friends) => {
+      if (friends) {
+        store.dispatch(loadFriends(JSON.parse(friends).map((friend) => friend.googid)))
+      } else {
+        // no friends :(
+        store.dispatch(loadFriends([]))
+      }
+    })
+      .catch((error) => {
+        console.error(error);
+    });
   return { type: GET_FRIENDS, fetching: true }
 }
 
