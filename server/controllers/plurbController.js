@@ -69,44 +69,83 @@ module.exports = {
   }, 
 
   getPlurbsByLocation: function (req, res) {
-    var googId = req.body.googId;
-    var topicId = req.body.topicId;
+    
+    // OPTIONAL PARAMS
+    // search terms
+    var selectedUID = req.body.googId;
+    var selectedTopicId = req.body.topicId;
+    var clientUID = req.session.user;
+    
+    // filter state
+    var filter = req.body.filter;
+    
+    // REQUIRED PARAMS
     var minLat = req.body.mapBounds.minLat;
     var maxLat = req.body.mapBounds.maxLat;
     var minLng = req.body.mapBounds.minLng;
     var maxLng = req.body.mapBounds.maxLng;
+    
     var query = {};
     
-    //builds query object based off the presences of googId and/or topicID + mapBounds
-    if(typeof topicId === 'number' && typeof googId === 'number') {
-      // filter both by topicId AND googId
+    // if filter is FRIENDS
+    if (filter === 'FRIENDS') {
+      // if selectedUID is undefined
+      if (selectedUID === undefined) {
+        // default send plurbs of user's friends
+        
+        // INSERT getAllFriendsPlurbs
+        
+      } else {
+        // send plurbs of selectedUID
+        
+        // INSERT getPlurbsByGoogId
+        
+      }
+    }
+    
+    // if filter is TOPICS
+    if (filter === 'TOPICS') {
+      // if selectedTopicId is undefined
+      if (selectedTopicID === undefined) {
+        // default send all plurbs
+        
+      } else {
+        // send plurbs of selectedTopicId
+        
+      }
+    }
+    /////////////////// OLD CODE //////////////////////////////
+    
+    //builds query object based off the presences of selectedUID and/or topicID + mapBounds
+    if(typeof selectedTopicId === 'number' && typeof selectedUID === 'number') {
+      // filter both by selectedTopicId AND selectedUID
       query = {
         include: [Topic],
         where: {
           lat: {$between: [minLat, maxLat]},
           long: {$between: [minLng, maxLng]},
-          UserGoogid: googId,
-          TopicId: topicId,
+          UserGoogid: selectedUID,
+          TopicId: selectedTopicId,
         }
       };
-    } else if (typeof googId === 'number') {
-      // filter ONLY by googId
+    } else if (typeof selectedUID === 'number') {
+      // filter ONLY by selectedUID
       query = {
         include: [Topic],
         where: {
           lat: {$between: [minLat, maxLat]},
           long: {$between: [minLng, maxLng]},
-          UserGoogid: googId,
+          UserGoogid: selectedUID,
         }
       };
-    } else if (typeof topicId === 'number') {
-      // filter ONLY by topicId
+    } else if (typeof selectedTopicId === 'number') {
+      // filter ONLY by selectedTopicId
       query = {
         include: [Topic],
         where: {
           lat: {$between: [minLat, maxLat]},
           long: {$between: [minLng, maxLng]},
-          TopicId: topicId,
+          TopicId: selectedTopicId,
         }
       };      
     } else {
@@ -119,6 +158,8 @@ module.exports = {
         }
       }; 
     }
+    
+    /////// END OF OLD CODE ///////////////////
 
     Plurb.findAll(query)
     .then(function (plurbs) {
