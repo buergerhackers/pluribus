@@ -37,19 +37,12 @@ module.exports = function (app) {
   app.route('/api/plurb')
     .post(checkAuth, plurbController.createPlurb);
 
-  //this is actually a route that just gets plurbs despite the fact that it is a POST request
   app.route('/api/plurbs')
     .post(checkAuth, plurbController.getPlurbsByLocation);
 
   app.route('/api/plurb/:plurbId')
-    .get(checkAuth, plurbController.getPlurb)
     .post(checkAuth, plurbController.deletePlurb);
-
-  app.route('/api/plurbs/:googId')
-    .get(checkAuth, plurbController.getPlurbsByGoogId);
-
-  app.route('/api/friendsplurbs')
-    .post(checkAuth, plurbController.getAllFriendsPlurbs);
+    // .get(checkAuth, plurbController.getPlurb)
 
   //callback route for OAuth
   app.route('/callback')

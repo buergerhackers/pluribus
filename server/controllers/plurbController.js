@@ -66,14 +66,13 @@ module.exports = {
     var selectedTopicId = req.body.topicId;
     var clientUID = req.session.user;
     
-    // filter state
-    var filter = req.body.filter;
     
     // REQUIRED PARAMS
     var minLat = req.body.mapBounds.minLat;
     var maxLat = req.body.mapBounds.maxLat;
     var minLng = req.body.mapBounds.minLng;
     var maxLng = req.body.mapBounds.maxLng;
+    var filter = req.body.filter; // filter state of app
     
     var query = {};
     
