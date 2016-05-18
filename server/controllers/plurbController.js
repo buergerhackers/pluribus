@@ -58,17 +58,6 @@ module.exports = {
     });
   },
 
-  getPlurbsByGoogId: function (req, res) {
-    var googId = req.params.googId;
-    Plurb.findAll({where: {UserGoogid: googId}})
-    .then(function (plurbs) {
-      res.status(200).json(plurbs);
-    })
-    .catch(function (err) {
-      console.error(err);
-    });
-  }, 
-
   getPlurbsByLocation: function (req, res) {
     
     // OPTIONAL PARAMS
@@ -123,6 +112,14 @@ module.exports = {
       }
     } else {
       // send plurbs of selectedUID
+      query = {
+        include: [Topic],
+        where: {
+          lat: {$between: [minLat, maxLat]},
+          long: {$between: [minLng, maxLng]},
+          UserGoogid: selectedUID,
+        }
+      };
       
       // INSERT getPlurbsByGoogId
       
@@ -155,14 +152,6 @@ module.exports = {
       };
     } else if (typeof selectedUID === 'number') {
       // filter ONLY by selectedUID
-      query = {
-        include: [Topic],
-        where: {
-          lat: {$between: [minLat, maxLat]},
-          long: {$between: [minLng, maxLng]},
-          UserGoogid: selectedUID,
-        }
-      };
     } else if (typeof selectedTopicId === 'number') {
       // filter ONLY by selectedTopicId
       query = {
