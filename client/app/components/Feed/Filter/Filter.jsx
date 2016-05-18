@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { loadPlurbs, getPlurbs, setFilter } from '../../../ACTIONS.jsx';
+import { getPlurbs, setFilter } from '../../../ACTIONS.jsx';
+import { getFriendsPlurbs } from '../Message/MESSAGE_ACTIONS.jsx';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
@@ -18,8 +19,17 @@ class Filter extends React.Component {
   }
   
   _handleSwitch() {
-    // this.props.dispatch(loadPlurbs());
-    let filt = this.props.filter === 'TOPICS' ? 'FRIENDS' : 'TOPICS';
+    // get plurbs according to filter state
+    let filt;
+    if (this.props.filter === 'TOPICS') {
+      filt = 'FRIENDS';
+      // get all plurbs of user's friends
+      this.props.dispatch(getFriendsPlurbs({mapBounds:this.props.mapBounds}))
+    } else if (this.props.filter === 'FRIENDS') {
+      filt = 'TOPICS';
+      // get all plurbs of all topics and users
+      this.props.dispatch(getPlurbs({mapBounds: this.props.mapBounds}))
+    }
     this.props.dispatch(setFilter(filt));
   }
   
@@ -41,6 +51,10 @@ class Filter extends React.Component {
 const mapStateToProps = (store) => {
   return {
     filter: store.pluribusReducer.filter,
+    plurbs: store.pluribusReducer.plurbs,
+    mapBounds: store.pluribusReducer.mapBounds,
+    currentTopicId: store.pluribusReducer.currentTopicId,
+    currentUserId: store.pluribusReducer.currentUserId
   };
 };
 

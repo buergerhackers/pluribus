@@ -50,7 +50,7 @@ module.exports = function (app) {
     .get(checkAuth, plurbController.getPlurbsByGoogId);
 
   app.route('/api/friendsplurbs')
-    .get(checkAuth, plurbController.getAllFriendsAllPlurbs);
+    .post(checkAuth, plurbController.getAllFriendsPlurbs);
 
   //callback route for OAuth
   app.route('/callback')
