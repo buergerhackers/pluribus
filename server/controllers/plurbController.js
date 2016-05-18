@@ -35,17 +35,17 @@ module.exports = {
     });
   },
 
-  // Is this handler ever used on FE?
-  getPlurb: function (req, res) {
-    var plurbId = req.params.plurbId;
-    Plurb.findById(plurbId)
-    .then(function (plurb) {
-      res.status(200).json(plurb);
-    })
-    .catch(function (err) {
-      console.error(err);
-    });
-  },
+  // // Is this handler ever used on FE?
+  // getPlurb: function (req, res) {
+  //   var plurbId = req.params.plurbId;
+  //   Plurb.findById(plurbId)
+  //   .then(function (plurb) {
+  //     res.status(200).json(plurb);
+  //   })
+  //   .catch(function (err) {
+  //     console.error(err);
+  //   });
+  // },
 
   deletePlurb: function (req, res) {
     var plurbId = req.params.plurbId;
