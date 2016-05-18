@@ -35,7 +35,6 @@ module.exports = function (app) {
   
   /* Plurb Routes */
   app.route('/api/plurb')
-    .get(checkAuth, plurbController.getAllPlurbs)
     .post(checkAuth, plurbController.createPlurb);
 
   //this is actually a route that just gets plurbs despite the fact that it is a POST request

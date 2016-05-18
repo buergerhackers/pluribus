@@ -3,17 +3,6 @@ var User = require('../db/dbconfig').User;
 var Topic = require('../db/dbconfig').Topic;
 
 module.exports = {
-  getAllPlurbs: function (req, res) {
-    Plurb.findAll({
-       include: [Topic]
-    })
-    .then(function (plurbs) {
-      res.status(200).json(plurbs);
-    })
-    .catch(function (err) {
-      console.error(err);
-    });
-  },
 
   createPlurb: function (req, res) {
     var googId = req.session.user;
