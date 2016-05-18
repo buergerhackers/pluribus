@@ -45,10 +45,15 @@ export function createPlurb(plurb, mapBounds) {
 
 // ASYNC ACTIONS
 export function getPlurbs(options) {
-  // update getPlurbs to handle text filtering on CLIENT-SIDE
-  // all plurbs are stored on client on first render, then filter on client-side
-  // after initial load, only updates come from server
-  // filter param 'PUBLIC', 'PRIVATE', {text}, {location}, etc. for individual plurbs
+  // API:
+  // options = {
+  //   mapBounds: (required),
+  //   filter: (required),
+  //   topicId: (optional),
+  //   googId: (optional)
+  // }
+  // NOTE: googId(selected user)
+  
   fetch('/api/plurbs', {
       method: 'POST',
       headers: {
