@@ -77,7 +77,7 @@ module.exports = {
     
     var query = {};
     
-    // if filter is FRIENDS
+    //////////////////////////// FILTER set to FRIENDS ///////////////////////
     if (filter === 'FRIENDS') {
       
       // if selectedUID is undefined
@@ -106,74 +106,58 @@ module.exports = {
             };
           });
         })
+        .then(function() {
+          // SEND RESPONSE IN PROMISE CHAIN!!
+          Plurb.findAll(query)
+          .then(function (plurbs) {
+            res.status(200).json(plurbs);
+          })
+          .catch(function (err) {
+            console.error (err);
+          });
+        })
         .catch(function(err) {
           console.error(err);
         });
       }
     } else {
-      // send plurbs of selectedUID
+      // SEARCH plurbs of selectedUID
       query = {
         include: [Topic],
         where: {
           lat: {$between: [minLat, maxLat]},
           long: {$between: [minLng, maxLng]},
           UserGoogid: selectedUID,
-        }
-      };
-      
-      // INSERT getPlurbsByGoogId
-      
-    }
-    
-    // if filter is TOPICS
-    if (filter === 'TOPICS') {
-      // if selectedTopicId is undefined
-      if (selectedTopicID === undefined) {
-        // default send all plurbs
-        
-      } else {
-        // send plurbs of selectedTopicId
-        
-      }
-    }
-    /////////////////// OLD CODE //////////////////////////////
-    
-    //builds query object based off the presences of selectedUID and/or topicID + mapBounds
-    if(typeof selectedTopicId === 'number' && typeof selectedUID === 'number') {
-      // filter both by selectedTopicId AND selectedUID
-      query = {
-        include: [Topic],
-        where: {
-          lat: {$between: [minLat, maxLat]},
-          long: {$between: [minLng, maxLng]},
-          UserGoogid: selectedUID,
-          TopicId: selectedTopicId,
-        }
-      };
-    } else if (typeof selectedUID === 'number') {
-      // filter ONLY by selectedUID
-    } else if (typeof selectedTopicId === 'number') {
-      // filter ONLY by selectedTopicId
-      query = {
-        include: [Topic],
-        where: {
-          lat: {$between: [minLat, maxLat]},
-          long: {$between: [minLng, maxLng]},
-          TopicId: selectedTopicId,
         }
       };      
-    } else {
-      // all plurbs
-      query = {
-        include: [Topic],
-        where: {
-          lat: {$between: [minLat, maxLat]},
-          long: {$between: [minLng, maxLng]},
-        }
-      }; 
     }
     
-    /////// END OF OLD CODE ///////////////////
+    //////////////////////////// FILTER set to TOPICS ///////////////////////
+    if (filter === 'TOPICS') {
+      
+      // if selectedTopicId is undefined
+      if (selectedTopicID === undefined) {
+        // DEFAULT send all plurbs
+        query = {
+          include: [Topic],
+          where: {
+            lat: {$between: [minLat, maxLat]},
+            long: {$between: [minLng, maxLng]},
+          }
+        }; 
+        
+      } else {
+        // SEARCH plurbs of selectedTopicId
+        query = {
+          include: [Topic],
+          where: {
+            lat: {$between: [minLat, maxLat]},
+            long: {$between: [minLng, maxLng]},
+            TopicId: selectedTopicId,
+          }
+        };       
+      }
+    }
     
     // Use built query to find plurbs
     Plurb.findAll(query)
