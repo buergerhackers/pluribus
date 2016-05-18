@@ -35,6 +35,7 @@ module.exports = {
     });
   },
 
+  // Is this handler ever used on FE?
   getPlurb: function (req, res) {
     var plurbId = req.params.plurbId;
     Plurb.findById(plurbId)
@@ -89,18 +90,42 @@ module.exports = {
     
     // if filter is FRIENDS
     if (filter === 'FRIENDS') {
+      
       // if selectedUID is undefined
       if (selectedUID === undefined) {
-        // default send plurbs of user's friends
-        
-        // INSERT getAllFriendsPlurbs
-        
-      } else {
-        // send plurbs of selectedUID
-        
-        // INSERT getPlurbsByGoogId
-        
+        // DEFAULT send plurbs of user's friends
+        var friendsGoogIds = [];
+
+        // Find user's friends' googIds
+        User.find({where: {googid: clientUID}})
+        .then(function(user) {
+          // pull all friends
+          user.getFriends()
+          .then(function(friends){
+            // query array of friends' googIds
+            friendsGoogIds = friends.map(function(friend) {
+              return {UserGoogid: Number(friend.dataValues.googid)};
+            });
+            // final get all plurbs of user's friends query
+            query = {
+              include: [Topic],
+              where: {
+                lat: {$between: [minLat, maxLat]},
+                long: {$between: [minLng, maxLng]},
+                $or: friendsGoogIds,
+              }
+            };
+          });
+        })
+        .catch(function(err) {
+          console.error(err);
+        });
       }
+    } else {
+      // send plurbs of selectedUID
+      
+      // INSERT getPlurbsByGoogId
+      
     }
     
     // if filter is TOPICS
@@ -160,7 +185,8 @@ module.exports = {
     }
     
     /////// END OF OLD CODE ///////////////////
-
+    
+    // Use built query to find plurbs
     Plurb.findAll(query)
     .then(function (plurbs) {
       res.status(200).json(plurbs);
@@ -169,49 +195,4 @@ module.exports = {
       console.error (err);
     });
   },
-
-  getAllFriendsPlurbs: function (req, res) {
-    var googId = req.session.user;
-    var minLat = req.body.mapBounds.minLat;
-    var maxLat = req.body.mapBounds.maxLat;
-    var minLng = req.body.mapBounds.minLng;
-    var maxLng = req.body.mapBounds.maxLng;
-    var friendsGoogIds = [];
-
-    // Create array of all friends googIds
-    User.find({where: {googid: googId}})
-    .then(function(user) {
-      //this built in Sequelize method will pull all friends
-      user.getFriends()
-       .then(function(friends){
-        friends.forEach(function(friend) {
-          //push each friend googid to the array
-          friendsGoogIds.push(Number(friend.dataValues.googid));
-        });
-       })
-       .then(function(){
-        var googIds = friendsGoogIds.map(function(googId) {
-          return {UserGoogid: googId};
-        })
-        //find all plurbs that have the friend googIds as UserGoogId (meaning they authored the plurb)
-          Plurb.findAll({
-            include: [Topic],
-            where: {
-              lat: {$between: [minLat, maxLat]},
-              long: {$between: [minLng, maxLng]},
-              $or: googIds,
-            }
-          })
-            .then(function (plurbs) {
-              res.status(200).json(plurbs);
-            })
-            .catch(function (err) {
-              console.error(err);
-            });
-       });
-    })
-    .catch(function (err) {
-      console.error(err);
-    });
-  }
 };
