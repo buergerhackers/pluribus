@@ -87,26 +87,31 @@ module.exports = {
     var minLng = req.body.mapBounds.minLng;
     var maxLng = req.body.mapBounds.maxLng;
     var query = {};
-  //builds query object based off the presences of googId and/or topicId
-    if(!topicId && !googId) {
-  //if topic id is 0 and there is no googId, send back all plurbs in that location regardless of topic
-      query = {
-        include: [Topic],
-        where: {
-          lat: {$between: [minLat, maxLat]},
-          long: {$between: [minLng, maxLng]}
-        }
-      };
-    } else if (!topicId) {
+    
+    //builds query object based off the presences of googId and/or topicID + mapBounds
+    if(typeof topicId === 'number' && typeof googId === 'number') {
+      // filter both by topicId AND googId
       query = {
         include: [Topic],
         where: {
           lat: {$between: [minLat, maxLat]},
           long: {$between: [minLng, maxLng]},
-          UserGoogid: googId
+          UserGoogid: googId,
+          TopicId: topicId,
         }
       };
-    } else if (!googId) {
+    } else if (typeof googId === 'number') {
+      // filter ONLY by googId
+      query = {
+        include: [Topic],
+        where: {
+          lat: {$between: [minLat, maxLat]},
+          long: {$between: [minLng, maxLng]},
+          UserGoogid: googId,
+        }
+      };
+    } else if (typeof topicId === 'number') {
+      // filter ONLY by topicId
       query = {
         include: [Topic],
         where: {
@@ -116,13 +121,12 @@ module.exports = {
         }
       };      
     } else {
+      // all plurbs
       query = {
         include: [Topic],
         where: {
           lat: {$between: [minLat, maxLat]},
           long: {$between: [minLng, maxLng]},
-          TopicId: topicId,
-          UserGoogid: googId
         }
       }; 
     }
