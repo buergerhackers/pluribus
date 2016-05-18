@@ -44,22 +44,27 @@ class Search extends React.Component {
   componentWillReceiveProps (newProps) {
     // When the filter is toggled 
     if (this.state.filter !== newProps.filter) {
+      // transitioning to FRIENDS filter?
       if(newProps.filter === 'FRIENDS') {
+        // set currentTopic to undefined
         if(this.props.currentTopicId) {
-          this.props.dispatch({ type: SELECT_TOPIC, topicId: null })
+          // reset topicId
+          this.props.dispatch({ type: SELECT_TOPIC, topicId: undefined })
         }
         this.setState({
           currentItem: '',
         });
-        this.props.dispatch(setUser(0, this.props.mapBounds));
+        // no user should be set
+        this.props.dispatch(setUser(undefined, this.props.mapBounds));
       } else {
+        // transitioning to TOPICS filter
         if(this.props.currentUserId) {
-          this.props.dispatch({ type: SELECT_USER, googId: 0 })
+          this.props.dispatch({ type: SELECT_USER, googId: undefined })
         }
         this.setState({
           currentItem: '',
         });
-        this.props.dispatch(setTopic(0, this.props.mapBounds));
+        this.props.dispatch(setTopic(undefined, this.props.mapBounds));
       }
     }
 
@@ -90,9 +95,9 @@ class Search extends React.Component {
   _selectTopic(topic) {
     let selected = topic.name || topic;
     let mapBounds = this.props.mapBounds;
-
+    
     // Function that checks the DB for the topic name
-    selectTopic(selected, mapBounds, selected);
+    selectTopic(selected, mapBounds);
 
     // Closes the dropdown
     this._handleRequestClose();
@@ -166,9 +171,9 @@ class Search extends React.Component {
 
   _removeItem(e) {
     if(this.state.filter === "FRIENDS") {
-      this.props.dispatch(setUser(0, this.props.mapBounds));
+      this.props.dispatch(setUser(undefined, this.props.mapBounds));
     } else {
-      this.props.dispatch(setTopic(0, this.props.mapBounds));   
+      this.props.dispatch(setTopic(undefined, this.props.mapBounds));   
     }
 
     this.setState({
