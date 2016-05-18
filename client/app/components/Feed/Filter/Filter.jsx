@@ -15,20 +15,18 @@ class Filter extends React.Component {
   constructor(props) {
     super(props);
     this._handleSwitch = this._handleSwitch.bind(this);
+    this.state = {
+      filter: "TOPICS"
+    };
   }
   
-  _handleSwitch() {
-    // get plurbs according to filter state
-    let filt;
-    if (this.props.filter === 'TOPICS') {
-      // get plurbs of user's friends
-      filt = 'FRIENDS';
-    } else if (this.props.filter === 'FRIENDS') {
-      // get all plurbs
-      filt = 'TOPICS';
-    }
-    this.props.dispatch(getPlurbs({mapBounds: this.props.mapBounds, filter: filt}))
+  _handleSwitch(e) {
+    let filt = e.props.value;
+    this.setState({
+      filter: filt
+    });
     this.props.dispatch(setFilter(filt));
+    this.props.dispatch(getPlurbs({mapBounds: this.props.mapBounds, filter: filt}))
   }
   
   render() {
@@ -36,10 +34,9 @@ class Filter extends React.Component {
       <Tabs 
         value={ this.props.filter }
         inkBarStyle={{ backgroundColor:'#F65151' }}
-
       >
-        <Tab value="TOPICS" icon={<Topics />} onClick={ this._handleSwitch } />
-        <Tab value="FRIENDS" icon={<Friends />} onClick={ this._handleSwitch } />
+        <Tab value="TOPICS" icon={<Topics />} onActive={ this._handleSwitch } />
+        <Tab value="FRIENDS" icon={<Friends />} onActive={ this._handleSwitch } />
       </Tabs>
     </MuiThemeProvider>
   }
