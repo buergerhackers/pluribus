@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 // ACTIONS
-import { getTopics, selectTopic, setTopic } from './SEARCH_ACTIONS.jsx';
+import { getTopics, selectTopic, setTopic, getUsers, setUser, SELECT_TOPIC, SELECT_USER } from './SEARCH_ACTIONS.jsx';
+import { getPlurbs } from '../../../ACTIONS.jsx';
 
 // MATERIAL COMPONENTS
 import Paper from 'material-ui/Paper';
@@ -21,18 +22,68 @@ class Search extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      helperText: "Start typing to search Topics!",
+      toolTip: "Remove Topic",
+      filter: this.props.filter,
       filtered: [],
+      data: [],
       open: false,
-      currentTopic: '',
-      clickCount: '',
+      currentItem: '',
     };
+
     this.props.dispatch(getTopics());
+    this.props.dispatch(getUsers());
     this._selectTopic = this._selectTopic.bind(this);
     this._textSearch = this._textSearch.bind(this);
     this._handleRequestClose = this._handleRequestClose.bind(this);
     this._check = this._check.bind(this);
-    this._setCount = this._setCount.bind(this);
-    this._removeTopic = this._removeTopic.bind(this);
+    this._removeItem = this._removeItem.bind(this);
+    this._selectUser = this._selectUser.bind(this);
+  }
+
+  componentWillReceiveProps (newProps) {
+    // When the filter is toggled 
+    if (this.state.filter !== newProps.filter) {
+      if(newProps.filter === 'FRIENDS') {
+        if(this.props.currentTopicId) {
+          this.props.dispatch({ type: SELECT_TOPIC, topicId: null })
+        }
+        this.setState({
+          currentItem: '',
+        });
+        this.props.dispatch(setUser(0, this.props.mapBounds));
+      } else {
+        if(this.props.currentUserId) {
+          this.props.dispatch({ type: SELECT_USER, googId: 0 })
+        }
+        this.setState({
+          currentItem: '',
+        });
+        this.props.dispatch(setTopic(0, this.props.mapBounds));
+      }
+    }
+
+    if (newProps.filter === 'FRIENDS') {
+      // this.newProps.dispatch(setTopic(0, this.newProps.mapBounds));
+      this.setState({
+        filter: newProps.filter,
+        data: newProps.allUsers,
+        helperText: "Start typing to search Users!",
+        filtered: [],
+        toolTip: "Remove User",
+      });
+    }
+
+    if (newProps.filter === 'TOPICS') {
+      this.setState({
+        filter: newProps.filter,
+        data: newProps.allTopics,
+        helperText: "Start typing to search Topics!",
+        filtered: [],
+        toolTip: "Remove Topic",
+      });
+    }
+
   }
 
   _selectTopic(topic) {
@@ -47,7 +98,22 @@ class Search extends React.Component {
 
     // Set's the local state
     this.setState({
-      currentTopic: selected,
+      currentItem: selected,
+    });
+  }
+
+  _selectUser(user) {
+    let mapBounds = this.props.mapBounds;
+
+    // Function that checks the DB for the user name
+    this.props.dispatch(setUser(user.googid, mapBounds));
+
+    // Closes the dropdown
+    this._handleRequestClose();
+
+    // Set's the local state
+    this.setState({
+      currentItem: user.firstName + " " + user.lastName,
     });
   }
 
@@ -58,14 +124,21 @@ class Search extends React.Component {
   }
   
   _textSearch(e) {
+    let state = this.props.filter;
     let text = e.target.value;
-    let allTopics = this.props.allTopics;
+    let data = this.state.data;
 
     // Only try to filter if there are topics
-    if(allTopics.length) {
+    if (data.length) {
       this.setState({
-        filtered: allTopics.filter((topic) => {
-          return topic.name.includes(text); 
+        filtered: data.filter((item) => {
+          if (state === "FRIENDS") {
+            name = item.firstName +" "+ item.lastName;
+          } else {
+            name = item.name;
+          }
+
+          return name.includes(text); 
         }),
       });
     }
@@ -80,7 +153,7 @@ class Search extends React.Component {
     this.setState({
       open: true,
       anchorEl: e.currentTarget,
-      currentTopic: e.target.value,
+      currentItem: e.target.value,
     });
   }
 
@@ -90,45 +163,44 @@ class Search extends React.Component {
     });
   }
 
-  _setCount() {
-    this.setState({
-      clickCount: 0,
-    })
-  }
+  _removeItem(e) {
+    if(this.state.filter === "FRIENDS") {
+      this.props.dispatch(setUser(0, this.props.mapBounds));
+    } else {
+      this.props.dispatch(setTopic(0, this.props.mapBounds));   
+    }
 
-  _removeTopic(e) {
-    this.props.dispatch(setTopic(0, this.props.mapBounds));
     this.setState({
-      currentTopic: '',
+      currentItem: '',
     });
   }
   
   render() {
-    let element;      
-    let topic = this.state.currentTopic;
-    let icon = (<IconButton tooltip="Remove Topic" tooltipPosition="top-center" onTouchTap={this._removeTopic}>
+    let element;
+    let topic = this.state.currentItem;
+    let icon = (<IconButton tooltip={this.state.toolTip} tooltipPosition="top-center" onTouchTap={this._removeItem}>
                 <Close />
               </IconButton>);
-    if (this.props.currentTopicId) {
+    if (this.props.currentTopicId || this.props.currentUserId) {
       element = (
-      <Paper style={{'marginTop':'10px', 'display': 'inline-block'}}>
+      <Paper style={{'backgroundColor': '#F65151', 'marginTop':'10px', 'display': 'inline-block'}}>
         <span style={{'display': 'inline-block', 'verticalAlign': 'middle', marginBottom: '16px', paddingLeft:'10px'}}>{topic}</span>
         <span>{icon}</span>
       </Paper>); 
     } else {
       element = (
       <TextField
-        hintText="Start typing to search Topics!"
+        hintText={this.state.helperText}
         fullWidth={ false }
         onChange={ this._textSearch }
         onKeyDown={ this._check }
-        value= { this.state.currentTopic }
+        value= { this.state.currentItem }
         inputStyle={{ color : 'white' }}
       />);
     }
 
     return (
-      <div style={{'backgroundColor': '#00BCD4', 'width':'100%', paddingBottom:'10px'}}>
+      <div style={{'backgroundColor': '#00BCD4', 'width':'100%', paddingBottom:'10px', height:'65px'}}>
           <div style={{paddingLeft:'10px', 'display': 'inline-block', 'verticalAlign': 'middle'}}><EyeGlass color="white" /></div>
           <div style={{'display': 'inline-block', 'verticalAlign': 'middle', paddingLeft:'10px'}}>{element}</div>
         <DropDownContainer
@@ -136,7 +208,9 @@ class Search extends React.Component {
           anchorEl={this.state.anchorEl}
           handleReqClose={this._handleRequestClose}
           filtered={this.state.filtered}
-          selectTopic={this._selectTopic}>
+          selectTopic={this._selectTopic}
+          selectUser={this._selectUser}
+          filter={this.props.filter}>
         </DropDownContainer>
       </div>
     );
@@ -149,7 +223,10 @@ const mapStateToProps = (store) => {
     allTopics: store.pluribusReducer.allTopics,
     myTopics: store.pluribusReducer.myTopics,
     mapBounds: store.pluribusReducer.mapBounds,
-    currentTopicId: store.pluribusReducer.currentTopicId
+    currentTopicId: store.pluribusReducer.currentTopicId,
+    filter: store.pluribusReducer.filter,
+    allUsers: store.pluribusReducer.allUsers,
+    currentUserId: store.pluribusReducer.currentUserId,
   };
 };
 

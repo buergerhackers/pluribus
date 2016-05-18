@@ -5,6 +5,7 @@ import pluribusApp from './REDUCERS.jsx'
 const initialState = {
   authenticated: false,
   currentTopicId: 0,
+  currentUserId: null,
   mapBounds: {
     maxLat:38.87,
     maxLng:-76.95,
@@ -16,6 +17,8 @@ const initialState = {
   myFriends: [],
   myTopics: [],
   allTopics: [],
+  allUsers: [],
+  myUsers: [],
   fetching: false,
 }
 
