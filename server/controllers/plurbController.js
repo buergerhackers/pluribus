@@ -160,14 +160,16 @@ module.exports = {
         });
        })
        .then(function(){
+        var googIds = friendsGoogIds.map(function(googId) {
+          return {UserGoogid: googId};
+        })
         //find all plurbs that have the friend googIds as UserGoogId (meaning they authored the plurb)
           Plurb.findAll({
+            include: [Topic],
             where: {
               lat: {$between: [minLat, maxLat]},
               long: {$between: [minLng, maxLng]},
-              $or: [
-                {UserGoogid: friendsGoogIds}
-              ]
+              $or: googIds,
             }
           })
             .then(function (plurbs) {
