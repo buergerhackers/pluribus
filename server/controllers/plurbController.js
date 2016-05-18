@@ -136,11 +136,15 @@ module.exports = {
     });
   },
 
-  getAllFriendsAllPlurbs: function (req, res) {
+  getAllFriendsPlurbs: function (req, res) {
     var googId = req.session.user;
+    var minLat = req.body.mapBounds.minLat;
+    var maxLat = req.body.mapBounds.maxLat;
+    var minLng = req.body.mapBounds.minLng;
+    var maxLng = req.body.mapBounds.maxLng;
     var friendsGoogIds = [];
 
-    //Create array of all friends googIds
+    // Create array of all friends googIds
     User.find({where: {googid: googId}})
     .then(function(user) {
       //this built in Sequelize method will pull all friends
@@ -155,6 +159,8 @@ module.exports = {
         //find all plurbs that have the friend googIds as UserGoogId (meaning they authored the plurb)
           Plurb.findAll({
             where: {
+              lat: {$between: [minLat, maxLat]},
+              long: {$between: [minLng, maxLng]},
               $or: [
                 {UserGoogid: friendsGoogIds}
               ]
