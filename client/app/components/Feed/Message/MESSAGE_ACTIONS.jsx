@@ -45,6 +45,22 @@ export function addFriend(friendGoogId) {
   return { type: ADD_FRIEND, fetching:true }
 }
 
+export function deletePlurb(plurbId) {
+  // delete owner's plurb
+  fetch('/api/plurb/' + plurbId, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    credentials: 'same-origin',
+  }).then((res) => {
+    console.log('deleted plurb:',res);
+    // send event to server
+    socket.emit('plurb removed');
+  });
+}
+
 export function getFriends() {
   // get user's friends
   fetch('/api/friend', {

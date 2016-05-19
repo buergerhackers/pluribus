@@ -8,11 +8,12 @@ import Pin from 'material-ui/svg-icons/maps/pin-drop';
 import Paper from 'material-ui/Paper';
 import Plus from 'material-ui/svg-icons/content/add-circle';
 import Minus from 'material-ui/svg-icons/content/remove-circle';
+import Delete from 'material-ui/svg-icons/content/clear';
 
 // utils
 import { rePosition } from '../../Map/map_utils.jsx';
 import { setTopic, setUser } from '../Search/SEARCH_ACTIONS.jsx';
-import { addFriend, removeFriend } from './MESSAGE_ACTIONS.jsx';
+import { addFriend, removeFriend, deletePlurb } from './MESSAGE_ACTIONS.jsx';
 
 export default class Message extends React.Component {
   constructor(props) {
@@ -21,6 +22,7 @@ export default class Message extends React.Component {
     // identify default states of message
     this.state = {
       friendMode: false,
+      owner: false,
       filter: this.props.filter
     }
     this._reLoc = this._reLoc.bind(this);
@@ -28,6 +30,7 @@ export default class Message extends React.Component {
     this._addFriend = this._addFriend.bind(this);
     this._selectTopic = this._selectTopic.bind(this);
     this._selectUser = this._selectUser.bind(this);
+    this._delete = this._delete.bind(this);
   }
   
   _reLoc() {
@@ -36,14 +39,21 @@ export default class Message extends React.Component {
   }
   
   _friendPeek() {
+    let creator = this.props.plurb.UserGoogid;
+    let self = this.props.clientID;
+    
     // toggle state
     if (this.state.friendMode) {
       this.setState({
         friendMode: false
       });
-    } else {
+    } else if (creator !== self) {
       this.setState({
         friendMode: true
+      });
+    } else {
+      this.setState({
+        owner: !this.state.owner
       });
     }
   }
@@ -73,6 +83,11 @@ export default class Message extends React.Component {
     
     // update search + store
     this.props.dispatch(setUser(uid, mapBounds, filter));
+  }
+  
+  _delete() {
+    console.log('delete plurb');
+    deletePlurb(this.props.plurb.id);
   }
   
   render() {
@@ -109,6 +124,11 @@ export default class Message extends React.Component {
                   hoverColor={"rgba(246, 81, 81, 1)"} 
                   onClick={ this._reLoc } 
                 />
+    let remove = <Delete
+                  color={"rgba(246, 81, 81, 1)"}
+                  onClick={ this._delete }
+                  onMouseLeave={ this._friendPeek }
+               />
              
     // enter friend mode to add user (implement logic to verify if already friend!)           
     if (this.state.friendMode) {
@@ -133,10 +153,16 @@ export default class Message extends React.Component {
     }
     let el;
     // determine which element to render
-    if (!this.state.friendMode){
-      
+    if (this.state.owner){
       el = <ListItem
-            leftAvatar={ image }
+            leftCheckbox={ remove }
+            primaryText={"Remove"}
+            style={{backgroundColor:"rgba(246, 81, 81, .3)"}}
+          />;
+      
+    } else if (this.state.friendMode) {
+      el = <ListItem
+            leftCheckbox={ image }
             primaryText={ text }
             secondaryText={ subheading }
             secondaryTextLines={1}
@@ -145,7 +171,7 @@ export default class Message extends React.Component {
           />;
     } else {
       el = <ListItem
-            leftCheckbox={ image }
+            leftAvatar={ image }
             primaryText={ text }
             secondaryText={ subheading }
             secondaryTextLines={1}
@@ -165,6 +191,7 @@ export default class Message extends React.Component {
 // map the portion of the state tree desired
 const mapStateToProps = (store) => {
   return {
+    clientID: store.pluribusReducer.clientID,
     mapBounds: store.pluribusReducer.mapBounds,
     currentTopicId: store.pluribusReducer.currentTopicId,
     myFriends: store.pluribusReducer.myFriends,
