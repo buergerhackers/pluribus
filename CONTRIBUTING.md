@@ -150,10 +150,10 @@ Thanks for contributing!
     - Keep your code DRY (Don't Repeat Yourself).
     - Apply the [boy scout rule](http://deviq.com/boy-scout-rule/).
     - Follow [STYLE-GUIDE.md](STYLE-GUIDE.md)
-1. Run the [tests][] before submitting a pull request.
+1. Run the tests before submitting a pull request.
 1. Tests are very, very important. Submit tests if your pull request contains
    new, testable behavior.
-1. Your pull request is comprised of a single ([squashed][]) commit.
+1. Your pull request is comprised of a single squashed commit.
 
 ## Checklist:
 
