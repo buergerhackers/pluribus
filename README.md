@@ -1,10 +1,6 @@
 # [Pluribus](https://pluribus-app.herokouapp.com)
 
-A socal media platform built with the MERN stack:
-MySQL
-Express
-React/Redux
-Node
+A socal media platform built with the MERN stack: MySQL, Express, React/Redux, Node
 
 ## Team
 
