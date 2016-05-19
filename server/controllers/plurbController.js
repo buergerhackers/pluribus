@@ -24,9 +24,14 @@ module.exports = {
       };
       Plurb.create(plurbData)
       .then(function (plurb) {
-        //sets the foreign key of googId and topicId
-        plurb.setUser(googId);
-        plurb.setTopic(topicId);
+        //sets the foreign key of googId
+        return plurb.setUser(googId);
+      })
+        // sets the foreign key of topicId
+      .then(function(plurb) {
+        return plurb.setTopic(topicId);
+      })
+      .then(function(plurb){
         res.status(201).json(plurb);
       })
       .catch(function (err) {
