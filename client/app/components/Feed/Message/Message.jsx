@@ -27,6 +27,7 @@ export default class Message extends React.Component {
     this._friendPeek = this._friendPeek.bind(this);
     this._addFriend = this._addFriend.bind(this);
     this._selectTopic = this._selectTopic.bind(this);
+    this._selectUser = this._selectUser.bind(this);
   }
   
   _reLoc() {
@@ -55,18 +56,23 @@ export default class Message extends React.Component {
     this.props.dispatch(removeFriend(friendGoogId))
   }
   
-  _selectTopic(topicId, topicName) {
+  _selectTopic() {
     let mapBounds = this.props.mapBounds;
-        
+    let topicId = this.props.plurb.TopicId;
+    let topicName = this.props.plurb.Topic.name;
+    let filter = this.props.filter;
+
     // update the search + store
-    this.props.dispatch(setTopic(topicId, mapBounds, topicName));
+    this.props.dispatch(setTopic(topicId, mapBounds, topicName, filter));
   }
   
-  _selectUser(uid) {
+  _selectUser() {
     let mapBounds = this.props.mapBounds;
+    let filter = this.props.filter;
+    let uid = this.props.plurb.UserGoogid;
     
     // update search + store
-    this.props.dispatch(setUser(uid, mapBounds));
+    this.props.dispatch(setUser(uid, mapBounds, filter));
   }
   
   render() {
@@ -87,9 +93,9 @@ export default class Message extends React.Component {
     // determine subheading to render
     let subheading;
     if (this.props.filter === 'TOPICS') {
-      subheading = <p>{"TOPICS"}</p>;//<p onClick={ this._selectTopic.bind(this, this.props.plurb.TopicId, this.props.plurb.Topic.name) }>{this.props.plurb.Topic.name}</p>
+      subheading = <p onClick={ this._selectTopic }>{this.props.plurb.Topic.name}</p>
     } else {
-      subheading = <p>{"FRIENDS"}</p>;//<p onClick={ this._selectUser.bind(this, this.props.plurb.UserGoogid) }>{this.props.plurb.firstName + ' ' + this.props.plurb.lastName}</p>
+      subheading = <p onClick={ this._selectUser }>{this.props.plurb.firstName + ' ' + this.props.plurb.lastName}</p>
     }
     let name = this.props.plurb.firstName + ' ' + this.props.plurb.lastName;
     let image = <Avatar
