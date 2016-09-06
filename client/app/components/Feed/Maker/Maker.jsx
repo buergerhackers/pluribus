@@ -6,7 +6,7 @@ import ActionButton from 'material-ui/FloatingActionButton';
 import Plus from 'material-ui/svg-icons/content/add';
 import MakerBar from 'material-ui/AppBar';
 
-export default class Maker extends React.Component {
+export class Maker extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
