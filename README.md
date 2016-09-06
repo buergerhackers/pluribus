@@ -59,7 +59,7 @@ GOOGLE_CSECRET=itsasecret
 SESSION_SECRET="somethinghere"
 ```
 
-### Launching App
+### Launching App Locally (Development)
 
 Launch the MySQL server by running:
 
@@ -67,17 +67,23 @@ Launch the MySQL server by running:
 mysql.server start
 ```
 
-Then create a MySQl table called `pluribus`.
+Then create a local MySQl database called `pluribus`.
+In the command line:
+
+```
+mysql [OR] sudo mysql
+mysql> CREATE DATABASE pluribus;
+```
 
 In the root folder, run:
 ```
 webpack -w
 ``` 
 
-In the /server folder, run:
+In the root directory, run:
 
 ```
-npm server.js
+npm start
 ```
 
 Finally, navigate to `http://localhost:3000` on your web browser.
