@@ -18,6 +18,8 @@ var grant = new Grant({
     callback: '/callback',
     transport: 'session',
     state: true,
+    resave: true,
+    saveUninitialized: true
   },
   google: {
     key: process.env.GOOGLE_CID,
