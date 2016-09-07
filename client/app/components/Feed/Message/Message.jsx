@@ -15,7 +15,7 @@ import { rePosition } from '../../Map/map_utils.jsx';
 import { setTopic, setUser } from '../Search/SEARCH_ACTIONS.jsx';
 import { addFriend, removeFriend, deletePlurb } from './MESSAGE_ACTIONS.jsx';
 
-export default class Message extends React.Component {
+export class Message extends React.Component {
   constructor(props) {
     super(props);
   
